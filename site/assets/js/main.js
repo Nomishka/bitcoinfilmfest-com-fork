@@ -194,8 +194,35 @@
     var target = document.getElementById(targetId);
     if (!target) return;
 
-    var behavior = prefersReduced.matches ? 'auto' : 'smooth';
-    target.scrollIntoView({ behavior: behavior, block: 'start', inline: 'nearest' });
+    if (prefersReduced.matches) {
+      target.scrollIntoView({ behavior: 'auto', block: 'start', inline: 'nearest' });
+      return;
+    }
+
+    var startY = window.scrollY;
+    var targetY = Math.max(0, startY + target.getBoundingClientRect().top);
+    var distance = Math.abs(targetY - startY);
+    var duration = Math.min(1200, Math.max(650, distance * 0.8));
+    var startTime = null;
+
+    // Use a gentle ease-in-out curve so same-page navigation feels deliberate
+    // rather than like a browser jump. The duration scales with distance while
+    // staying within a comfortable range.
+    var easeInOutCubic = function (progress) {
+      return progress < 0.5
+        ? 4 * progress * progress * progress
+        : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+    };
+
+    var animate = function (timestamp) {
+      if (startTime === null) startTime = timestamp;
+      var progress = Math.min(1, (timestamp - startTime) / duration);
+      var eased = easeInOutCubic(progress);
+      window.scrollTo(0, startY + ((targetY - startY) * eased));
+      if (progress < 1) window.requestAnimationFrame(animate);
+    };
+
+    window.requestAnimationFrame(animate);
   }
 
   async function navigate(url, options) {
