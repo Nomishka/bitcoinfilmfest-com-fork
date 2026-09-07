@@ -202,22 +202,19 @@
     var startY = window.scrollY;
     var targetY = Math.max(0, startY + target.getBoundingClientRect().top);
     var distance = Math.abs(targetY - startY);
-    var duration = Math.min(1800, Math.max(1000, distance * 1.15));
+    var duration = Math.min(3500, Math.max(2200, distance * 1.8));
     var startTime = null;
 
-    // A longer, softer ease-in-out curve makes same-page navigation feel
-    // deliberate and fluid instead of like a browser jump. The duration
-    // scales with distance while staying within a comfortable range.
-    var easeInOutQuint = function (progress) {
-      return progress < 0.5
-        ? 16 * Math.pow(progress, 5)
-        : 1 - Math.pow(-2 * progress + 2, 5) / 2;
+    // A slower sine curve keeps the movement gentle at both ends and avoids
+    // the feeling of a sudden acceleration through the middle of the scroll.
+    var easeInOutSine = function (progress) {
+      return -(Math.cos(Math.PI * progress) - 1) / 2;
     };
 
     var animate = function (timestamp) {
       if (startTime === null) startTime = timestamp;
       var progress = Math.min(1, (timestamp - startTime) / duration);
-      var eased = easeInOutQuint(progress);
+      var eased = easeInOutSine(progress);
       window.scrollTo(0, startY + ((targetY - startY) * eased));
       if (progress < 1) window.requestAnimationFrame(animate);
     };
