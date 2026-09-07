@@ -175,6 +175,29 @@
     return true;
   }
 
+  function shouldScrollCurrentPageLink(event, link) {
+    if (!link || event.defaultPrevented || event.button !== 0) return false;
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return false;
+    if (link.hasAttribute('download') || link.target) return false;
+
+    var href = link.getAttribute('href');
+    if (!href || href.charAt(0) !== '#') return false;
+
+    var url = new URL(link.href, window.location.href);
+    return url.origin === window.location.origin &&
+      url.pathname === window.location.pathname &&
+      url.search === window.location.search;
+  }
+
+  function scrollToCurrentPageTarget(link) {
+    var targetId = decodeURIComponent(link.getAttribute('href').slice(1));
+    var target = document.getElementById(targetId);
+    if (!target) return;
+
+    var behavior = prefersReduced.matches ? 'auto' : 'smooth';
+    target.scrollIntoView({ behavior: behavior, block: 'start', inline: 'nearest' });
+  }
+
   async function navigate(url, options) {
     options = options || {};
     if (navigating) return;
@@ -237,6 +260,13 @@
 
   document.addEventListener('click', function (event) {
     var link = event.target.closest('a[href]');
+
+    if (shouldScrollCurrentPageLink(event, link)) {
+      event.preventDefault();
+      scrollToCurrentPageTarget(link);
+      return;
+    }
+
     if (shouldHandleLink(event, link)) {
       event.preventDefault();
       navigate(new URL(link.href, window.location.href), { push: true });
