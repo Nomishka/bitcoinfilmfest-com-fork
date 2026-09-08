@@ -3,6 +3,8 @@ name: Pull request safety and preview build
 on:
   pull_request:
     branches: [main]
+  push:
+    branches: [fix/current-page-scroll]
   workflow_dispatch:
 
 # PRs receive no repository secrets and cannot deploy production.
