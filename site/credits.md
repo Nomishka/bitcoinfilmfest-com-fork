@@ -7,6 +7,36 @@ permalink: /credits/
 screen: credits
 ---
 
+<style>
+  /* Credits page redesign: larger names, white-only type, centered layout. */
+  .credits-page,
+  .credits-page .page-masthead,
+  .credits-page .credits-roll,
+  .credits-page .credits-section,
+  .credits-page .credits-section ul {
+    text-align: center;
+  }
+
+  .credits-page .page-context,
+  .credits-page .page-masthead,
+  .credits-page .page-masthead h1,
+  .credits-page .page-masthead > p,
+  .credits-page .credits-section h2,
+  .credits-page .credits-section a,
+  .credits-page .credits-date {
+    color: var(--color-on-dark);
+  }
+
+  .credits-page .credits-section a {
+    font-size: clamp(var(--text-lg), 3vw, var(--text-2xl));
+  }
+
+  .credits-page .credits-section a:hover,
+  .credits-page .credits-section a:focus-visible {
+    color: var(--color-on-dark);
+  }
+</style>
+
 <article class="credits-page">
   <header class="page-masthead">
     <p class="page-context">A festival is a collective production</p>
