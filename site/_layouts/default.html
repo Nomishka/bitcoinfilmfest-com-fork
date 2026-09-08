@@ -41,8 +41,10 @@
   </div>
 </main>
 
+{% unless page.screen == 'credits' %}
 <!-- Footer is separate from page-swapped content, but visually remains inside the cinema screen. -->
 {% include footer.html %}
+{% endunless %}
 
 <img class="cinema-seats" src="{{ '/assets/images/cinema-seats.png' | relative_url }}" width="2322" height="202" alt="" aria-hidden="true">
 <div class="sr-only" id="route-status" aria-live="polite" aria-atomic="true"></div>
