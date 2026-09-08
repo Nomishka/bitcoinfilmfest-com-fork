@@ -199,22 +199,19 @@
       return;
     }
 
-    var startY = window.scrollY;
+    // Always use the browser's actual scrolling element. This handles browsers
+    // where the body, rather than window.scrollY, owns the vertical scroll.
+    var scroller = document.scrollingElement || document.documentElement;
+    var startY = scroller.scrollTop;
     var targetY = Math.max(0, startY + target.getBoundingClientRect().top);
     var distance = Math.abs(targetY - startY);
-    var duration = Math.min(3500, Math.max(2200, distance * 1.8));
+    var duration = Math.min(3500, Math.max(1200, distance * 1.8));
     var startTime = null;
     var root = document.documentElement;
     var previousScrollBehavior = root.style.scrollBehavior;
 
-    // The site has global `scroll-behavior: smooth` for normal anchor links.
-    // Temporarily disable it while the custom animation is running; otherwise
-    // every requestAnimationFrame call starts another native smooth scroll and
-    // the browser ignores our slower timing curve.
     root.style.scrollBehavior = 'auto';
 
-    // A slower sine curve keeps the movement gentle at both ends and avoids
-    // the feeling of a sudden acceleration through the middle of the scroll.
     var easeInOutSine = function (progress) {
       return -(Math.cos(Math.PI * progress) - 1) / 2;
     };
@@ -227,10 +224,11 @@
       if (startTime === null) startTime = timestamp;
       var progress = Math.min(1, (timestamp - startTime) / duration);
       var eased = easeInOutSine(progress);
-      window.scrollTo(0, startY + ((targetY - startY) * eased));
+      scroller.scrollTop = startY + ((targetY - startY) * eased);
       if (progress < 1) {
         window.requestAnimationFrame(animate);
       } else {
+        scroller.scrollTop = targetY;
         restoreScrollBehavior();
       }
     };
