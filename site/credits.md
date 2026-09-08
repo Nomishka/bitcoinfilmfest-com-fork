@@ -108,9 +108,7 @@ screen: credits
 
 <article class="credits-page">
   <header class="page-masthead">
-    <p class="page-context">A festival is a collective production</p>
     <h1>Credits</h1>
-    <p>People and organizations who have helped bring Bitcoin cinema to the screen.</p>
   </header>
 
   <div class="credits-roll" data-credits-roll>
