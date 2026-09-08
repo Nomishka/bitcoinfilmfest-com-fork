@@ -204,6 +204,14 @@
     var distance = Math.abs(targetY - startY);
     var duration = Math.min(3500, Math.max(2200, distance * 1.8));
     var startTime = null;
+    var root = document.documentElement;
+    var previousScrollBehavior = root.style.scrollBehavior;
+
+    // The site has global `scroll-behavior: smooth` for normal anchor links.
+    // Temporarily disable it while the custom animation is running; otherwise
+    // every requestAnimationFrame call starts another native smooth scroll and
+    // the browser ignores our slower timing curve.
+    root.style.scrollBehavior = 'auto';
 
     // A slower sine curve keeps the movement gentle at both ends and avoids
     // the feeling of a sudden acceleration through the middle of the scroll.
@@ -211,12 +219,20 @@
       return -(Math.cos(Math.PI * progress) - 1) / 2;
     };
 
+    var restoreScrollBehavior = function () {
+      root.style.scrollBehavior = previousScrollBehavior;
+    };
+
     var animate = function (timestamp) {
       if (startTime === null) startTime = timestamp;
       var progress = Math.min(1, (timestamp - startTime) / duration);
       var eased = easeInOutSine(progress);
       window.scrollTo(0, startY + ((targetY - startY) * eased));
-      if (progress < 1) window.requestAnimationFrame(animate);
+      if (progress < 1) {
+        window.requestAnimationFrame(animate);
+      } else {
+        restoreScrollBehavior();
+      }
     };
 
     window.requestAnimationFrame(animate);
