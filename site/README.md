@@ -6,7 +6,7 @@ The Bitcoin FilmFest website is a static Jekyll site with a shared cinematic she
 
 ## What is here
 
-- Homepage, Storyboard, Reel, Credits, Contribute, BFF'24, BFF'25, BFF'26, BFF'27, 404, and a migrated newsletter.
+- Homepage, Storyboard, Reel, Credits, Contribute, BFF'24, BFF'25, BFF'26, BFF'27, one Cinema catalogue page, Minis & roadshows, 404, and a migrated newsletter.
 - Shared navigation, footer, cinema bezel shadow, fixed seats, logo-home control, and framed screen ending.
 - Progressive same-origin navigation with ordinary navigation as fallback.
 - A tokenized visual system in `design.md` and `tokens.css`.
@@ -64,7 +64,7 @@ Create `site/_newsletters/YYYY-MM-DD-your-title.md`. The collection automaticall
 
 ### Change menu links
 
-Edit only `_data/navigation.yml`. Reel is a direct route; Festivals is the only current grouped menu. The footer intentionally has no repeated menu links.
+Edit only `_data/navigation.yml`. Festivals is the grouped menu; Cinema is one direct route containing the overview, film browser and company directory. The footer intentionally has no repeated menu links.
 
 ### Change credits
 
@@ -89,7 +89,7 @@ Edit `_data/credits.json`. `credits.md` renders this structured data. `credits.y
 | `assets/css/cinema-frame.css` | Screen/frame/component styling. Use token variables, not ad-hoc design values. |
 | `assets/js/main.js` | Mobile menu, active states, accessible soft navigation, route announcements. |
 | `assets/js/credits-roll.js` | Optional Credits auto-scroll; stops after user input/reduced-motion. |
-| `assets/js/subscribe.js` | Current safe fallback subscription behavior - no backend exists yet. |
+| `assets/js/subscribe.js` | FormSubmit AJAX adapter; forwards e-mail/npub signups to the festival inbox and redirects to `/thanks/`. |
 | `assets/images/` | Local production image assets. |
 
 ## GitHub Pages status
@@ -116,7 +116,7 @@ When the custom domain is ready, update the deployment configuration deliberatel
 ## Known gaps
 
 - Around 40+ catalogued archive/content routes still need migration.
-- Subscription is not connected to a mailing-list/database backend.
+- Subscription uses a FormSubmit AJAX relay to notify `mails@bitcoinfilmfest.com`; it is not a subscriber database or campaign-management system.
 - The final custom-domain switch and DNS are intentionally deferred.
 - Credits auto-scroll is accessibility-safe but should be visually checked in a normal browser with motion enabled after future UI changes.
 
