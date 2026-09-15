@@ -1313,6 +1313,16 @@ form[data-subscribe] input::placeholder {
   color: color-mix(in oklch, var(--color-on-dark) 58%, transparent);
 }
 
+form[data-subscribe] .form-honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  min-height: 1px;
+  padding: 0;
+  opacity: 0;
+}
+
 form[data-subscribe] button {
   margin-block-start: calc(var(--rule-thin) * -1);
   padding-inline: var(--space-lg);
