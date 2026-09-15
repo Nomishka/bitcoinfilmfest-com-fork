@@ -26,7 +26,8 @@ social:
   github: "https://github.com/itstomekk/bitcoinfilmfest-com"
   linkedin: "https://linkedin.com/company/bitcoin-filmfest"
 
-# Nostr npub for the DM-based subscribe form (see assets/js/subscribe.js)
+# Public Nostr identity used by the site (the subscription form accepts an npub
+# as text and forwards it through FormSubmit; no private signing key is present).
 nostr_npub: "npub1rjtrs7xqdvj3588r9njrexh2n750j7jdwx9qs543nutmdsj6ljaqpfmp8a"
 
 # Jekyll's native blog engine — used for newsletters/digest posts

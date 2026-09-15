@@ -20,6 +20,12 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Require a dated website changelog entry
+        if: github.event_name == 'push' && github.event.before != '0000000000000000000000000000000000000000'
+        run: python3 scripts/check-changelog.py --base "${{ github.event.before }}" --head "${{ github.sha }}"
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1

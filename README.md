@@ -96,7 +96,8 @@ Open `http://127.0.0.1:4000/` for the local preview.
 ### How decisions are logged
 
 - **Code comments** explain local implementation choices and safety boundaries.
-- **`BUILD-LOG.md`** records verified milestones, tests, and known gaps.
+- **`CHANGELOG.md`** records short, dated public changes; CI requires an entry when website source changes.
+- **`BUILD-LOG.md`** records detailed verified milestones, tests, deployment results, and known gaps.
 - **`BUILDER-GUIDE.md`** records ownership and non-regression rules.
 - **`HANDOFF-CURRENT.md`** records the current operational state.
 - **Git commit messages and pull requests** record the change history.
