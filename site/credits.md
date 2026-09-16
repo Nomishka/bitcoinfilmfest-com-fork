@@ -37,7 +37,7 @@ screen: credits
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 5rem;
+    gap: 9rem;
   }
 
   .credits-page .credits-section {
@@ -49,9 +49,9 @@ screen: credits
 
   .credits-page .credits-section h2 {
     width: 100%;
-    margin: 0 0 1.25rem;
+    margin: 0 0 1rem;
     color: #fff !important;
-    font-size: clamp(2.25rem, 6vw, 3.5rem);
+    font-size: clamp(1.5rem, 4vw, 2.25rem);
     line-height: 1;
     text-align: center;
   }
@@ -61,7 +61,7 @@ screen: credits
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 0.55rem;
+    gap: 0.4rem;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -79,7 +79,7 @@ screen: credits
     width: 100%;
     color: #fff !important;
     font-family: var(--font-display);
-    font-size: clamp(2.25rem, 6vw, 3.5rem);
+    font-size: clamp(1.5rem, 4vw, 2.25rem);
     line-height: 1;
     text-align: center;
     text-decoration-color: rgba(255, 255, 255, 0.28);
@@ -88,6 +88,7 @@ screen: credits
   .credits-page .credits-date {
     margin-top: 3rem;
     color: #fff !important;
+    font-size: var(--text-sm);
     text-align: center;
   }
 </style>
