@@ -2,6 +2,10 @@
 
 Short, human-readable record of public website changes. One dated entry is required for every source change that affects the website.
 
+## 2026-09-16 — Credits page text sizing
+
+- Matched the Credits names to the same text size and line height used by the section topics.
+
 ## 2026-09-16 — Credits page heading cleanup
 
 - Removed the redundant “Credits” heading from the top of the Credits page so the page starts directly with “CREW”.
