@@ -2,6 +2,13 @@
 
 Short, human-readable record of public website changes. One dated entry is required for every source change that affects the website.
 
+## 2026-09-16 — Archive visual and photo-loading pass
+
+- Rebalanced archive/current edition composition with a stronger BFF’27 hero mark treatment and a deliberately asymmetric BFF’24 selection lead.
+- Kept the complete BFF’23 (554 frames) and BFF’25 (152 frames) public albums, but moved them behind native disclosure controls so the first view stays focused while every image remains lazy-loaded.
+- Fixed BFF’27 archive-accent color resolution and preserved the shared cinema shell, fixed seats, responsive grids, focus styles, and reduced-motion behavior.
+- Verified the Jekyll build, edition validators, local asset loading, keyboard focus, mobile widths, and album toggles.
+
 ## 2026-09-15 — Public documentation and repository cleanup
 
 - Reworked the root README into a branded guide for collaborators and future builders.

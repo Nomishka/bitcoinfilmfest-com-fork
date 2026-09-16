@@ -2,6 +2,7 @@
 
 **Written:** 2026-08-31
 **Status:** agreed direction, Phase 0/1 foundation and the first Cinema ecosystem release verified on `main`; the historical edition set `/23/`–`/26/` and canonical `/25/` route are now deployed at version `0.6.0`. Phase 2 cinema work and Phase 3 historical enrichment are active. The next iteration mines the private knowledge base and edition photo folders for public-safe additions, then builds out the BFF’27 current-event page in small, source-backed batches. Owner brain-dump questions are part of every iteration.
+**Latest implementation pass (2026-09-16):** the archive/current edition visual pass is complete on a review branch. Full BFF’23 (554) and BFF’25 (152) albums remain public and lazy-loaded, but are closed behind native disclosure controls; BFF’27 received a scoped hero/token polish. Build and route QA pass locally. Deployment remains gated on PR review.
 **Website:** `C:/Users/Lenovo/OneDrive/Bitcoin FilmFest/website/rebuild-jekyll-bff26/`
 
 **Private source:** `C:\Users\Lenovo\OneDrive\Bitcoin FilmFest\Claude news\`

@@ -2,6 +2,24 @@
 
 This is a short operational record for builders. It records verified facts and active blockers. For implementation details, use `BUILDER-GUIDE.md` and `site/README.md`.
 
+## 2026-09-16 — Archive/current edition visual pass
+
+### Verified
+
+- Created review branch `redesign/bff-editions-visual-pass-2026-09-16` from the fast-forwarded `main` at `bc513f9`; no direct deployment was performed.
+- Refined BFF’27’s scoped hero treatment and fixed its missing `--archive-blue` token resolution; the shared BFF’26 shell was not changed.
+- Kept the full BFF’23 and BFF’25 albums public, but placed the 554-frame and 152-frame collections behind native `<details>` controls. The existing `loading="lazy"` behavior remains on every full-album image.
+- Added a non-card asymmetric lead treatment to the BFF’24 selection and clearer index hover feedback for BFF’23/BFF’24.
+- Jekyll build passed with `cmd.exe /d /c "C:/Ruby33-x64/bin/bundle.bat exec jekyll build --trace"`.
+- Contract and route checks passed: BFF’27 tests/checks, BFF’23/BFF’24 archive tests/check, BFF’25 tests/check, BFF’26 regression check, and `git diff --check`.
+- Playwright QA passed for `/23/`, `/24/`, `/25/`, `/26/`, `/27/` at 1280×900, 390×844, and 320×700: one nav/footer, no horizontal overflow, no failed local image requests, all loaded local images valid, visible keyboard focus, reduced-motion CSS present, and album toggles open 554/152 figures.
+- Screenshots saved outside the repository at `C:\Users\Lenovo\AppData\Local\Temp\bff-screens-final\` (`bff27-desktop.png`, `bff27-mobile.png`, `bff23-gallery-desktop.png`, `bff25-gallery-desktop.png`).
+
+### Remaining
+
+- PR review is still required before merge; GitHub Pages/live deployment was not changed or claimed.
+- Screenshots are local verification evidence and have not been independently owner-approved.
+
 ## 2026-08-29 - Builder clarity and cinema polish pass
 
 ### Verified
