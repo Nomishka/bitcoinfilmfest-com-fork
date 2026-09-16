@@ -334,15 +334,17 @@ image_alt: "Bitcoin FilmFest 2025 poster: Beyond the Frame, 22–25 May, Kinotek
         <figure><img src="{{ '/25/25-assets/event-124.jpg' | relative_url }}" alt="Bitcoin FilmFest 2025 participants gathered on stage" width="2200" height="1467" loading="lazy"><figcaption>BFF25 · participants</figcaption></figure>
         <figure><img src="{{ '/25/25-assets/event-142.jpg' | relative_url }}" alt="Large group gathered at the Bitcoin FilmFest 2025 venue" width="2200" height="1466" loading="lazy"><figcaption>BFF25 · the crowd</figcaption></figure>
       </div>
-      <div class="bff25-full-album">
-        <h3>Full event album</h3>
-        <p class="bff25-archive-note">The MVP now publishes all 152 photographs from the BFF25 event-photo folder as resized, lazy-loaded derivatives. The original delivery archive remains outside Git.</p>
-        <div class="bff25-photo-ledger bff25-photo-ledger--full">
-          {% for photo in site.data.bff25_gallery %}
-            <figure><img src="{{ photo.path | relative_url }}" alt="{{ photo.alt }}" loading="lazy"><figcaption>{{ photo.caption }}</figcaption></figure>
-          {% endfor %}
+      <details class="bff25-full-album">
+        <summary><span>Full event album</span><strong>152 archive frames</strong></summary>
+        <div class="bff25-full-album-body">
+          <p class="bff25-archive-note">The MVP now publishes all 152 photographs from the BFF25 event-photo folder as resized, lazy-loaded derivatives. The original delivery archive remains outside Git.</p>
+          <div class="bff25-photo-ledger bff25-photo-ledger--full">
+            {% for photo in site.data.bff25_gallery %}
+              <figure><img src="{{ photo.path | relative_url }}" alt="{{ photo.alt }}" loading="lazy"><figcaption>{{ photo.caption }}</figcaption></figure>
+            {% endfor %}
+          </div>
         </div>
-      </div>
+      </details>
     </div>
   </section>
 
