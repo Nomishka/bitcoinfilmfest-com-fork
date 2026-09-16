@@ -2,6 +2,12 @@
 
 Short, human-readable record of public website changes. One dated entry is required for every source change that affects the website.
 
+## 2026-09-16 — Credits page spacing and text size
+
+- Increased the gap between Credits sections substantially while keeping names within each section grouped together.
+- Reduced the size of the topic headings and names while keeping them at the same size.
+- Reduced the supporting Credits date text as well.
+
 ## 2026-09-16 — Credits page section spacing
 
 - Increased the spacing between each Credits section while keeping names within a section closely grouped.
