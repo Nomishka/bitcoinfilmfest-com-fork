@@ -21,7 +21,6 @@ screen: credits
     color: #fff;
   }
 
-  .credits-page .page-masthead,
   .credits-page .credits-roll,
   .credits-page .credits-section,
   .credits-page .credits-section ul,
@@ -32,19 +31,6 @@ screen: credits
     margin-inline: auto;
     box-sizing: border-box;
     text-align: center;
-  }
-
-  .credits-page .page-masthead {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .credits-page .page-masthead > * {
-    width: 100%;
-    margin-inline: auto;
-    text-align: center;
-    color: #fff !important;
   }
 
   .credits-page .credits-roll {
@@ -107,10 +93,6 @@ screen: credits
 </style>
 
 <article class="credits-page">
-  <header class="page-masthead">
-    <h1>Credits</h1>
-  </header>
-
   <div class="credits-roll" data-credits-roll>
     {% for section in site.data.credits.sections %}
       <section class="credits-section">
