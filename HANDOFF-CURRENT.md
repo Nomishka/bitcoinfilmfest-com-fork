@@ -5,11 +5,11 @@ Updated: 2026-09-16
 
 The website is a curated public projection of the wider private project knowledge base in `C:\Users\Lenovo\OneDrive\Bitcoin FilmFest\Claude news\`. The CRM remains split across its existing local files and spreadsheets for now. Do not import the private KB or CRM into the Jekyll build. Read `PLAN-WEBSITE-ROADMAP.md` and `C:\Users\Lenovo\OneDrive\Bitcoin FilmFest\Claude news\HANDOFF-TO-VERIFIER-2026-08-31.md` before reorganizing or adding broad content.
 
-The Git state and cinema status below were reconciled against the live checkout before the 2026-09-16 visual pass. The current review branch is based on `origin/main` at `bc513f9`; no direct deployment was performed.
+The Git state and cinema status below were reconciled against the live checkout after the 2026-09-16 visual pass. PR #12 was merged into `main` at `4635bce`, and the corresponding GitHub Pages build/deploy completed successfully.
 
 ## Where this stands
 
-The Jekyll rebuild is live at the temporary GitHub Pages URL. On top of the existing site (homepage, festival editions, Reel, Credits), the `/cinema/` section now contains the film database and company directory foundations, the essential-ten curation, the industry-footprint strip, and the first roadshow structure. The coherent Cinema ecosystem update was originally committed at `517c87f` and is included in the current `main`/`origin/main` at `bc513f9`. Build and HTTP deployment verification passed.
+The Jekyll rebuild is live at the temporary GitHub Pages URL. On top of the existing site (homepage, festival editions, Reel, Credits), the `/cinema/` section now contains the film database and company directory foundations, the essential-ten curation, the industry-footprint strip, and the first roadshow structure. The coherent Cinema ecosystem update was originally committed at `517c87f` and is included in the current `main`/`origin/main` at `4635bce`. Build and HTTP deployment verification passed.
 
 ### Current implementation after 2026-08-31 owner steer
 
@@ -26,7 +26,7 @@ The Jekyll rebuild is live at the temporary GitHub Pages URL. On top of the exis
 - BFF’27’s hero art no longer reads as a generic bordered card, and the page now defines the archive accent token used by its index/fact treatments.
 - BFF’24’s first selection feature is given an asymmetric lead layout on wide screens; BFF’23/BFF’24 archive indexes have visible hover movement.
 - The shared BFF’26 shell and its scoped styles were not changed.
-- PR #12 is open with the visual/photo-loading pass; its public-safe preview build passed. Until merge, the temporary live URL continues to serve `main` at `bc513f9`, so the new pass is not live yet.
+- PR #12 was merged into `main` at `4635bce`; its GitHub Pages workflow build and deploy both passed. HTTPS verification confirmed the updated `/23/`, `/24/`, `/25/`, `/26/`, and `/27/` routes live.
 
 **Repository:** https://github.com/itstomekk/bitcoinfilmfest-com
 **Temporary live site:** https://itstomekk.github.io/bitcoinfilmfest-com/
