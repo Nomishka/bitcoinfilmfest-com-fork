@@ -17,7 +17,7 @@ This is a short operational record for builders. It records verified facts and a
 
 ### Remaining
 
-- PR review is still required before merge; GitHub Pages/live deployment was not changed or claimed.
+- PR #12 is open with the visual/photo-loading pass; its public-safe preview build passed. Until merge, the temporary live URL continues to serve `main` at `bc513f9`.
 - Screenshots are local verification evidence and have not been independently owner-approved.
 
 ## 2026-08-29 - Builder clarity and cinema polish pass

@@ -26,6 +26,7 @@ The Jekyll rebuild is live at the temporary GitHub Pages URL. On top of the exis
 - BFF’27’s hero art no longer reads as a generic bordered card, and the page now defines the archive accent token used by its index/fact treatments.
 - BFF’24’s first selection feature is given an asymmetric lead layout on wide screens; BFF’23/BFF’24 archive indexes have visible hover movement.
 - The shared BFF’26 shell and its scoped styles were not changed.
+- PR #12 is open with the visual/photo-loading pass; its public-safe preview build passed. Until merge, the temporary live URL continues to serve `main` at `bc513f9`, so the new pass is not live yet.
 
 **Repository:** https://github.com/itstomekk/bitcoinfilmfest-com
 **Temporary live site:** https://itstomekk.github.io/bitcoinfilmfest-com/
