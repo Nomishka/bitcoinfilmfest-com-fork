@@ -9,7 +9,7 @@ The Git state and cinema status below were reconciled against the live checkout 
 
 ## Where this stands
 
-The Jekyll rebuild is live at the temporary GitHub Pages URL. On top of the existing site (homepage, festival editions, Reel, Credits), the `/cinema/` section now contains the film database and company directory foundations, the essential-ten curation, the industry-footprint strip, and the first roadshow structure. The coherent Cinema ecosystem update was originally committed at `517c87f` and is included in the current `main`/`origin/main` at `4635bce`. Build and HTTP deployment verification passed.
+The Jekyll rebuild is live at the temporary GitHub Pages URL. On top of the existing site (homepage, festival editions, Reel, Credits), the `/cinema/` section now contains the film database and company directory foundations, the essential-ten curation, the industry-footprint strip, and the first roadshow structure. The coherent Cinema ecosystem update was originally committed at `517c87f` and is included in the current `main`; the archive/current-edition visual pass landed in merge commit `4635bce`. Build and HTTP deployment verification passed.
 
 ### Current implementation after 2026-08-31 owner steer
 
@@ -81,7 +81,7 @@ The Jekyll rebuild is live at the temporary GitHub Pages URL. On top of the exis
 
 ## Git state note
 
-At the latest verification before this pass, `main` and `origin/main` both pointed to `bc513f9` (`Add changelog gate and explain release versioning`). The review branch now contains only the visual/photo-loading changes and the required dated documentation updates; inspect `git status --short` before staging anything else.
+The review branch has been merged; `main` includes merge commit `4635bce` plus the follow-up handoff/build-log synchronization. Inspect `git status --short` before staging anything else.
 
 The private source material remains outside the Jekyll build:
 - `C:\Users\Lenovo\OneDrive\Bitcoin FilmFest\Claude news\bitcoin-cinema-kb.md`
