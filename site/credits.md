@@ -79,8 +79,8 @@ screen: credits
     width: 100%;
     color: #fff !important;
     font-family: var(--font-display);
-    font-size: clamp(1rem, 2vw, 1.3rem);
-    line-height: 1.4;
+    font-size: clamp(2.25rem, 6vw, 3.5rem);
+    line-height: 1;
     text-align: center;
     text-decoration-color: rgba(255, 255, 255, 0.28);
   }
