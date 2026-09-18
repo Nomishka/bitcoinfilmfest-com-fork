@@ -1,206 +1,167 @@
-# Bitcoin FilmFest website
+<p align="center">
+  <img src="site/assets/images/brand/bff-logo-white.png" alt="Bitcoin FilmFest" width="180">
+</p>
 
-Welcome. This repository contains the source code, content, visual design system, and deployment instructions for the Bitcoin FilmFest website.
+<h1 align="center">Bitcoin FilmFest — the heart of Bitcoin Cinema</h1>
 
-**Live temporary website**
+<p align="center">
+  <strong>A cinematic, editorial website for films, filmmakers, festivals, and the culture around Bitcoin.</strong>
+</p>
+
+<p align="center">
+  <a href="https://itstomekk.github.io/bitcoinfilmfest-com/">Live site</a> ·
+  <a href="https://github.com/itstomekk/bitcoinfilmfest-com/actions">Build status</a> ·
+  <a href="https://bitcoinfilmfest.com">Future canonical domain</a>
+</p>
+
+---
+
+## What this repository is
+
+This is the public source repository for [bitcoinfilmfest.com](https://bitcoinfilmfest.com). It contains the Jekyll source, editorial content, design system, image assets, and GitHub Actions deployment workflow.
+
+The site is intentionally static:
+
+```text
+Markdown + YAML + local media
+            ↓
+Jekyll layouts, includes, CSS, and JavaScript
+            ↓
+GitHub Actions builds site/_site
+            ↓
+GitHub Pages publishes the website
+```
+
+The current public preview is:
 
 https://itstomekk.github.io/bitcoinfilmfest-com/
 
-**Source repository**
+The custom domain is deliberately not connected yet. Do not add a `CNAME` file or change DNS until the domain cutover checklist is approved.
 
-https://github.com/itstomekk/bitcoinfilmfest-com
+## The BFF experience
 
-The public URL will later move to `bitcoinfilmfest.com`. Until then, do not add a `CNAME` file or edit DNS records. The owner-approved release procedure is documented in `DOMAIN-SEO-CUTOVER.md`.
+Bitcoin FilmFest is not a generic conference landing page. The site is built as a cinema room:
 
-## 🎬 What this project is
+- **blue screen** for the homepage and festival editions;
+- **warm paper** for readable articles, newsletters, and catalogue pages;
+- a persistent bezel, theatre seats, rabbit mark, and shared footer;
+- editorial routes for the festival archive and the wider Bitcoin Cinema ecosystem;
+- a shared subscription form that sends signups to the festival inbox through FormSubmit.
 
-This is a **Jekyll static website**. Jekyll turns Markdown content, data files, templates, CSS, images, and JavaScript into ordinary HTML files. GitHub Actions performs that build whenever `main` changes, then GitHub Pages publishes the result.
+The visual rules live in [`site/design.md`](site/design.md), while reusable values live in [`site/tokens.css`](site/tokens.css).
 
-You do not need to be a developer to make routine changes. Most content work happens in Markdown (`.md`) and YAML (`.yml`) files.
+## Start here
 
-## 🧭 Start here
-
-| If you want to... | Read or edit... |
+| Goal | Read or edit |
 | --- | --- |
-| Understand the project in plain language | This README |
-| Add or edit a page | `site/README.md` |
-| Make a page match the visual system | `site/design.md` |
-| Change primary navigation links | `site/_data/navigation.yml` |
-| Understand technical ownership and non-regression rules | `BUILDER-GUIDE.md` |
-| See verified milestones and current open work | `BUILD-LOG.md` |
-| Follow the current future-builder handoff | `HANDOFF-CURRENT.md` |
-| See the old-site migration roadmap | `REBUILD-PHASES.md` |
+| Make a normal page | [`site/README.md`](site/README.md) |
+| Add a newsletter | [`site/_newsletters/`](site/_newsletters/) |
+| Edit navigation | [`site/_data/navigation.yml`](site/_data/navigation.yml) |
+| Edit credits | [`site/_data/credits.json`](site/_data/credits.json) |
+| Change the shared footer | [`site/_includes/footer.html`](site/_includes/footer.html) |
+| Change the shared page shell | [`site/_layouts/default.html`](site/_layouts/default.html) |
+| Change visual tokens | [`site/tokens.css`](site/tokens.css) |
+| Add component styling | [`site/assets/css/cinema-frame.css`](site/assets/css/cinema-frame.css) |
+| Change interactive behavior | [`site/assets/js/`](site/assets/js/) |
+| Understand the migration plan | [`REBUILD-PHASES.md`](REBUILD-PHASES.md) |
+| Understand current handoff and ownership | [`BUILDER-GUIDE.md`](BUILDER-GUIDE.md) |
+| See verified milestones | [`BUILD-LOG.md`](BUILD-LOG.md) |
+| Review public/private boundaries | [`docs/PUBLIC-REPO-SAFETY.md`](docs/PUBLIC-REPO-SAFETY.md) |
 
-## 🗂️ Folder map
+## Local development on Windows
 
-```text
-.
-├── site/                         The actual website source
-│   ├── index.md                  Homepage content
-│   ├── *.md                      Standalone pages: editions, Storyboard, Credits, Reel...
-│   ├── _newsletters/             One Markdown file per newsletter
-│   ├── _data/                    Editable structured data: navigation, credits, builder-only route inventory
-│   ├── _includes/                Shared fragments: navigation, footer, HTML head
-│   ├── _layouts/                 Shared page structures
-│   ├── assets/                   Browser files: images, CSS, JavaScript
-│   ├── tokens.css                Shared visual values: colours, type, spacing, layering
-│   ├── design.md                 Written visual system for custom page work
-│   └── README.md                 Practical editing and local-build guide
-├── .github/workflows/            GitHub Actions deployment instructions
-├── BUILDER-GUIDE.md              Builder and agent handoff guide
-├── BUILD-LOG.md                  Verified history and open work
-├── HANDOFF-CURRENT.md            Current operational handoff
-├── REBUILD-PHASES.md             Phased old-site migration roadmap
-└── HANDOFF*.md                   Historical session records, not the current manual
+The verified local toolchain is RubyInstaller Ruby 3.3.12, Bundler 2.5.22, GitHub Pages 232, and Jekyll 3.10.0.
+
+```bash
+cd site
+C:/Ruby33-x64/bin/bundle.bat install
+C:/Ruby33-x64/bin/bundle.bat exec jekyll build --trace
+C:/Ruby33-x64/bin/jekyll.bat serve --host 127.0.0.1 --port 4000 --trace
 ```
 
-`site/` is a conventional, short name for the Jekyll source directory. It is called the **website source** throughout the documentation. We are intentionally keeping this folder name because changing it would add needless deployment and documentation churn without changing the public website.
+Open `http://127.0.0.1:4000/` for the local preview.
 
-## How information flows
+## Contribution workflow
+
+1. Start from an up-to-date `main` branch.
+2. Create one focused branch for one change.
+3. Edit the smallest responsible source file.
+4. Add a short comment when the code has a non-obvious reason, boundary, fallback, or future replacement point. Do not comment obvious syntax.
+5. Run the Jekyll build and inspect the affected route at desktop and mobile widths.
+6. Run `git diff --check` and the public-repository safety check.
+7. Commit with an honest message such as `Add BFF25 newsletter route` or `Fix mobile cinema navigation`.
+8. Open a pull request. A push to `main` triggers GitHub Pages deployment.
+9. Verify the public URL and the green Actions run before calling the work complete.
+
+### How decisions are logged
+
+- **Code comments** explain local implementation choices and safety boundaries.
+- **`CHANGELOG.md`** records short, dated public changes; CI requires an entry when website source changes.
+- **`BUILD-LOG.md`** records detailed verified milestones, tests, deployment results, and known gaps.
+- **`BUILDER-GUIDE.md`** records ownership and non-regression rules.
+- **`HANDOFF-CURRENT.md`** records the current operational state.
+- **Git commit messages and pull requests** record the change history.
+- **`docs/`** holds durable research and public/private data-boundary guidance.
+
+Do not put private conversations, credentials, raw contact lists, or unverified claims into comments or commit messages.
+
+## Why the CSS is large
+
+The CSS is not a framework dump. It is the implementation of the site’s single shared cinema system:
+
+- theatre frame, bezel, screen surfaces, and fixed seats;
+- responsive navigation and disclosure states;
+- homepage, edition, catalogue, newsletter, credits, footer, and form components;
+- typography, focus states, reduced-motion behavior, and mobile layouts;
+- film-grain and projector details that create the BFF atmosphere.
+
+The repository currently has roughly **2,316 lines of CSS**, compared with about **434 lines of JavaScript**. That is expected for a design-led static site: the browser needs explicit rules for every responsive visual state, while the JavaScript is deliberately small and limited to navigation, progressive enhancement, credits motion, and subscription submission.
+
+The important split is:
+
+- `site/tokens.css` — canonical colours, typography, spacing, motion, and layering values;
+- `site/assets/css/cinema-frame.css` — layout and component rules;
+- `site/design.md` — the human-readable design contract.
+
+Prefer changing a token or shared component over adding a one-off page rule.
+
+## Public repository safety
+
+This repository is public. Anything committed here is readable by anyone, even if Jekyll does not publish it as a web page.
+
+Never commit:
+
+- passwords, API keys, private keys, cookies, or access tokens;
+- mailing-list exports or private contact databases;
+- film contracts, licensing documents, or private production notes;
+- `.env` files, backups, local databases, or private cloud links;
+- information that is only safe because a page is currently unlinked.
+
+The repository includes a dependency-free safety check in [`scripts/check-public-repo.py`](scripts/check-public-repo.py). It runs in pull-request checks and scans tracked files for forbidden paths and common credential patterns. See [`docs/PUBLIC-REPO-SAFETY.md`](docs/PUBLIC-REPO-SAFETY.md) for the audit and the current known review items.
+
+## Project structure
 
 ```text
-Markdown pages + YAML data + local images
-                ↓
-Jekyll templates and shared cinema frame
-                ↓
-GitHub Actions builds static HTML into site/_site
-                ↓
-GitHub Pages publishes the generated website
+site/                       Jekyll website source
+site/_includes/             Shared navigation, footer, and head fragments
+site/_layouts/              Shared page structures
+site/_data/                 Navigation, credits, and builder data
+site/_films/                Public film records
+site/_companies/            Public company/ecosystem records
+site/_chronicle/            Builder/editorial chronology
+site/_newsletters/          Published newsletter records
+site/assets/css/            Cinema-frame component styling
+site/assets/js/             Progressive-enhancement behavior
+site/assets/images/         Local production media
+.github/workflows/          Build and GitHub Pages deployment
+scripts/                    Repository safety checks
+
+docs/                       Durable research and safety guidance
+BUILD-LOG.md                Verified project record
+BUILDER-GUIDE.md            Ownership and builder rules
+HANDOFF-CURRENT.md          Current project handoff
 ```
 
-### Where content comes from
+## License and content use
 
-| Information | Current source | Where to change it now |
-| --- | --- | --- |
-| Homepage, editions, Storyboard, Reel, Credits, Contribute | Markdown files in `site/` | Edit the matching `.md` file |
-| Navigation and footer links | `site/_data/navigation.yml` | Edit that one file |
-| Credits roster | Recovered from the historic PHP Credits page | `site/_data/credits.json` |
-| Newsletter content | Markdown in `site/_newsletters/` | Add or edit newsletter files |
-| Brand logo, rabbit, cinema imagery | Local production assets | `site/assets/images/` |
-| Site title, social links, collections | `site/_config.yml` | Edit carefully, then restart local Jekyll |
-| Visual language | `site/design.md` and `site/tokens.css` | Read first; change tokens before component CSS |
-| Interactive behavior | JavaScript files in `site/assets/js/` | See comments at the top of each file |
-
-## 🔒 Important: public versus private
-
-This repository is public. **Anything committed here is readable by anyone**, even if it is not published as a web page.
-
-- A folder outside `site/` is not automatically published to GitHub Pages, but it is still visible in the public repository.
-- `.gitignore` prevents a file from being committed. It does not hide a file that was already committed.
-- Never commit passwords, API keys, mailing-list exports, private contact lists, raw movie-license documents, or a private movie database.
-
-### Can this website use private movie data?
-
-Yes, with a deliberate data boundary:
-
-1. Keep the original movie database in a **separate private repository** or a real database service.
-2. Store access credentials only as **GitHub Actions secrets**, never in this repository.
-3. During the build, a script can fetch approved public fields, such as title, year, director, image, screening status, and synopsis.
-4. Generate a small public YAML/JSON snapshot inside the build output.
-5. Remember: any information sent to the visitor’s browser becomes public. A static website cannot keep browser-delivered data secret.
-
-This is a good next phase when the movie catalogue is ready. It should be designed before adding credentials or database code.
-
-## Safe editing for non-developers
-
-- **Menu labels and links:** `site/_data/navigation.yml`
-- **A normal page:** create or edit a file such as `site/26.md`
-- **Newsletter:** create or edit `site/_newsletters/YYYY-MM-DD-title.md`
-- **Credits names:** edit `site/_data/credits.json`
-- **Social links:** `site/_config.yml`
-
-Do not copy navigation, footer, cinema seats, or frame markup into a new page. They arrive automatically through the shared layout.
-
-## 💾 Offline copy, Git workflow, and collaboration
-
-Yes, there is an offline maintained copy. The local Git clone is:
-
-`C:\Users\Lenovo\OneDrive\Bitcoin FilmFest\website\rebuild-jekyll`
-
-It holds the full source and Git history. GitHub is the shared remote backup and the publishing trigger, not the only copy.
-
-### Default process for every collaborator
-
-1. Start from fresh shared work:
-   ```bash
-   git switch main
-   git pull --ff-only origin main
-   ```
-2. Create a branch for one clear task:
-   ```bash
-   git switch -c content/add-bff26-press
-   ```
-3. Make the smallest focused edit. Coordinate before two people edit the same page, data file, or shared component.
-4. Build locally from `site/`:
-   ```bash
-   C:/Ruby33-x64/bin/bundle.bat exec jekyll build --trace
-   ```
-5. Review the changed page at desktop and mobile sizes. Then inspect the exact change:
-   ```bash
-   git diff --check
-   git status --short
-   ```
-6. Commit with an honest, focused message, push the branch, and open a pull request. Merge only after the change is reviewed.
-7. GitHub Actions deploys only after a change reaches `main`. Confirm the Actions run is green and read the public URL back.
-
-For a one-line urgent correction, a trusted maintainer may push to `main` after a local build. Branches and pull requests remain the normal safer process.
-
-### Backup and milestones
-
-- A pushed commit can be restored from Git history. Do not delete history to “clean up”.
-- Before a large phase, create and push an annotated tag such as `phase-2-ready`.
-- Store unreleased source files, private databases, contracts, and sensitive material separately. A public repository is not private storage.
-
-## 🚀 Development and deployment
-
-- A change pushed to `main` runs `.github/workflows/deploy-pages.yml`.
-- The workflow uses Ruby 3.3, installs Jekyll dependencies, builds the `site/` folder, and deploys the generated output to GitHub Pages.
-- The source files remain in `site/`; only the generated site output is published.
-- Before changing or approving code, run the documented local build in `site/README.md`.
-
-## Design rules that protect the BFF character
-
-- Real BFF logo and rabbit assets, never recreated as styled text or generic illustrations.
-- One shared cinema shell on every page: navigation, soft bezel shadow, fixed seats, and charcoal footer canvas.
-- Navigation structure is data-driven, hover/focus accessible, and works on mobile.
-- Custom pages must use `site/design.md` and token variables from `site/tokens.css`.
-- Motion is progressive enhancement and must respect reduced-motion preferences.
-
-## 🧱 Old-site rebuild roadmap
-
-The public Site map page was intentionally removed: visitors should not see the migration queue. Builders can use `REBUILD-PHASES.md`, `site/SITEMAP-PLAN.md`, and `site/_data/sitemap.json` to plan internally.
-
-The next work sequence is: archive triage and redirect decisions, completed festival edition hubs, a real Reel/publication archive, and then a safe build-time private movie-catalogue pipeline. Schema, a reviewed public XML sitemap, and `AGENTS.md` are later discovery/onboarding work, once enough real routes and data exist.
-
-## ✨ Questions and improvements
-
-Jekyll currently includes SEO metadata, feed support, and GitHub Pages compatibility. Schema and XML sitemap work are intentionally deferred. See `site/README.md` and `BUILD-LOG.md` before adding a plugin. Because deployment uses GitHub Actions, we can add carefully chosen build-time plugins later, but every plugin must be documented, pinned, and verified in the deployment workflow.
-
-## Recent changes
-
-This is the simplified, day-grouped change summary. `BUILD-LOG.md` remains the detailed verified record; Git history is the complete source of every file-level change.
-
-### 2026-08-30
-
-- Added SEO assets, structured metadata, `robots.txt`, XML sitemap, and the web manifest.
-- Added safe pull-request checks, a downloadable PR build artifact, and collaboration guidance.
-- Refined the cinema shell: optimized supplied favicon, SVG social marks, film-reel controls, screen texture, seat overlay/zoom, hero, footer, and navigation.
-- Current temporary production URL remains the GitHub Pages project site. No custom-domain DNS/CNAME change was made.
-
-### 2026-08-29
-
-- Published the modular Jekyll rebuild through GitHub Actions Pages.
-- Added shared navigation, Credits roll, footer, public builder guides, and the custom-domain cutover checklist.
-
-## 🧾 Historical records
-
-`HANDOFF.md`, `HANDOFF-SESSION-2.md`, and `HANDOFF-SESSION-3.md` are preserved snapshots of earlier work. They explain why decisions were made, but they are not the current source of truth. `HANDOFF-CURRENT.md` is the live handoff.
-
-For current work, use:
-
-1. `HANDOFF-CURRENT.md`
-2. `BUILDER-GUIDE.md`
-3. `site/README.md`
-4. `site/design.md`
-5. `REBUILD-PHASES.md`
-6. `BUILD-LOG.md`
+The repository is a collaboration and publishing source for Bitcoin FilmFest. Code and content may have different rights. Do not reuse festival logos, photography, film stills, contributor names, or third-party editorial material without checking the relevant permission and source notes.

@@ -2,8 +2,8 @@
 # Equivalent to the old inc/config.php constants (SITE_NAME, NAV, FOOTER_LINKS, SOCIAL).
 
 title: "Bitcoin FilmFest"
-tagline: "at the 🧡of Bitcoin Cinema"
-version: "0.4.0"
+tagline: "at the 🧡 of Bitcoin Cinema"
+version: "0.6.0"
 description: "Orange-pill cinema, unfiat the culture. BFF'27 — June 24–27, 2027, Warsaw."
 url: "https://bitcoinfilmfest.com"
 baseurl: ""
@@ -26,7 +26,8 @@ social:
   github: "https://github.com/itstomekk/bitcoinfilmfest-com"
   linkedin: "https://linkedin.com/company/bitcoin-filmfest"
 
-# Nostr npub for the DM-based subscribe form (see assets/js/subscribe.js)
+# Public Nostr identity used by the site (the subscription form accepts an npub
+# as text and forwards it through FormSubmit; no private signing key is present).
 nostr_npub: "npub1rjtrs7xqdvj3588r9njrexh2n750j7jdwx9qs543nutmdsj6ljaqpfmp8a"
 
 # Jekyll's native blog engine — used for newsletters/digest posts
@@ -35,6 +36,10 @@ nostr_npub: "npub1rjtrs7xqdvj3588r9njrexh2n750j7jdwx9qs543nutmdsj6ljaqpfmp8a"
 # the private research KB; a curator hand-writes/reviews every file that lands
 # here, per the plan's data-source boundary.
 collections:
+  reel:
+    output: true
+    permalink: /reel/:name/
+    sort_by: date
   newsletters:
     output: true
     permalink: /:collection/:name/
@@ -56,6 +61,14 @@ defaults:
       type: "pages"
     values:
       layout: "default"
+      image: "/assets/images/social/bff-social-default.jpg"
+  - scope:
+      path: ""
+      type: "reel"
+    values:
+      layout: "reel"
+      nav_label: "Reel"
+      screen: "paper"
       image: "/assets/images/social/bff-social-default.jpg"
   - scope:
       path: ""

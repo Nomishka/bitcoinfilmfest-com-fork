@@ -18,9 +18,12 @@ lives in assets/js/subscribe.js. Keep this footer in the shared layout.
     <div class="footer-subscribe">
       <h2>Stay on set</h2>
       <p>Bitcoin cinema, festival notes, and community news.</p>
-      <form data-subscribe>
+      <form data-subscribe action="https://formsubmit.co/ajax/mails@bitcoinfilmfest.com" method="POST">
         <label class="sr-only" for="footer-contact">Your e-mail or npub</label>
         <input id="footer-contact" type="text" name="contact" placeholder="your e-mail or npub" autocomplete="email" required>
+        <input type="hidden" name="_subject" value="New Bitcoin FilmFest signup">
+        <input type="hidden" name="_next" value="https://itstomekk.github.io/bitcoinfilmfest-com/thanks/">
+        <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" class="form-honeypot">
         <button type="submit">Subscribe</button>
         <p data-subscribe-status class="form-status" aria-live="polite"></p>
       </form>

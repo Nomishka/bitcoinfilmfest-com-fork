@@ -22,9 +22,14 @@ jobs:
     steps:
       - name: Check out pull request
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Check public repository boundaries
         run: python3 scripts/check-public-repo.py
+
+      - name: Require a dated website changelog entry
+        run: python3 scripts/check-changelog.py --base "${{ github.event.pull_request.base.sha }}" --head "${{ github.sha }}"
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1

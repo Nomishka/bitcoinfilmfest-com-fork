@@ -2,6 +2,37 @@
 
 This is a short operational record for builders. It records verified facts and active blockers. For implementation details, use `BUILDER-GUIDE.md` and `site/README.md`.
 
+## 2026-09-16 — Reel migration integration and media safety
+
+### Implemented
+
+- Integrated the FormSubmit `_next` redirect fix, BFF’25 canonical route audit, route-map reconciliation, and exactly 10 unified Reel entries under `site/_reel/`.
+- Added 10 `noindex, follow` legacy compatibility routes under `site/legacy-redirects/`; `/25/` remains canonical and `/bff25/` remains redirect-only.
+- Removed all article image front matter and inline image markup from the migrated Reel entries because the available WordPress and `/media/` assets were not verified local, public, rights-cleared derivatives. The entries retain their public text and source links.
+- Rechecked the Reel source set for private contacts and internal project notes; no email addresses, telephone details, private KB/Notion/Drive references, CRM notes, licensing notes, or `owner-review` markers were found.
+
+### Verification pending final integration pass
+
+- Run the complete Windows build, route/JSON validators, public-repository safety scan, repo-wide WordPress-upload scan, browser/HTTP smoke checks, exact diff review, and GitHub PR checks before publication.
+
+## 2026-09-16 — Archive/current edition visual pass
+
+### Verified
+
+- Created review branch `redesign/bff-editions-visual-pass-2026-09-16` from the fast-forwarded `main` at `bc513f9`; no direct deployment was performed.
+- Refined BFF’27’s scoped hero treatment and fixed its missing `--archive-blue` token resolution; the shared BFF’26 shell was not changed.
+- Kept the full BFF’23 and BFF’25 albums public, but placed the 554-frame and 152-frame collections behind native `<details>` controls. The existing `loading="lazy"` behavior remains on every full-album image.
+- Added a non-card asymmetric lead treatment to the BFF’24 selection and clearer index hover feedback for BFF’23/BFF’24.
+- Jekyll build passed with `cmd.exe /d /c "C:/Ruby33-x64/bin/bundle.bat exec jekyll build --trace"`.
+- Contract and route checks passed: BFF’27 tests/checks, BFF’23/BFF’24 archive tests/check, BFF’25 tests/check, BFF’26 regression check, and `git diff --check`.
+- Playwright QA passed for `/23/`, `/24/`, `/25/`, `/26/`, `/27/` at 1280×900, 390×844, and 320×700: one nav/footer, no horizontal overflow, no failed local image requests, all loaded local images valid, visible keyboard focus, reduced-motion CSS present, and album toggles open 554/152 figures.
+- Screenshots saved outside the repository at `C:\Users\Lenovo\AppData\Local\Temp\bff-screens-final\` (`bff27-desktop.png`, `bff27-mobile.png`, `bff23-gallery-desktop.png`, `bff25-gallery-desktop.png`).
+
+### Remaining
+
+- PR #12 was merged into `main` at `4635bce`; its GitHub Pages workflow build and deploy both passed. HTTPS verification confirmed the updated `/23/`, `/24/`, `/25/`, `/26/`, and `/27/` routes live.
+- Screenshots are local verification evidence and have not been independently owner-approved.
+
 ## 2026-08-29 - Builder clarity and cinema polish pass
 
 ### Verified
@@ -84,3 +115,18 @@ Before the repository was made public, GitHub returned HTTP 422 because private 
 - Credits auto-scroll needs a final visual check in a normal browser where reduced motion is not active.
 - The rabbit slightly overlaps one BFF'26 showtime label; minor visual polish only.
 - Final custom-domain configuration will require a separate small commit and DNS changes when the owner is ready.
+
+## 2026-09-16 - Next ten public BFF Cinema film profiles
+
+### Verified
+
+- Added ten new public film profiles to `site/_films/`: Aimy in a Cage, New Money, What the F*ck Is My Password?!, LifeHack, Bitcoin Heist, Immutable Democracy, Unbankable, Death Athletic: A Dissident Architecture, The 1Up Fever, and God Bless Bitcoin.
+- Windows Jekyll build passed from `site/` using `C:/Ruby33-x64/bin/bundle.bat exec jekyll build --trace --config _config.yml,_config.github-pages.yml`.
+- Public-repository safety check passed: `python3 scripts/check-public-repo.py` — 145 tracked files scanned, no forbidden paths or credentials.
+- All ten profile routes verified under `site/_site/cinema/films/`.
+- Dated CHANGELOG.md entry covers all ten film additions.
+- GitHub Actions run 35175347569 (workflow_dispatch, head 4467028) completed successfully: safety check, Jekyll build, crawler/identity file checks, and preview artifact upload all passed.
+
+### Known follow-up
+
+- The PR-triggered workflow run on the original head `bbf59b1` failed only because the dated CHANGELOG entry was added in a later commit. The current head has the changelog entry and a successful workflow_dispatch run; a fresh PR-triggered run is pending.
