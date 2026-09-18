@@ -2,6 +2,19 @@
 
 This is a short operational record for builders. It records verified facts and active blockers. For implementation details, use `BUILDER-GUIDE.md` and `site/README.md`.
 
+## 2026-09-16 — Reel migration integration and media safety
+
+### Implemented
+
+- Integrated the FormSubmit `_next` redirect fix, BFF’25 canonical route audit, route-map reconciliation, and exactly 10 unified Reel entries under `site/_reel/`.
+- Added 10 `noindex, follow` legacy compatibility routes under `site/legacy-redirects/`; `/25/` remains canonical and `/bff25/` remains redirect-only.
+- Removed all article image front matter and inline image markup from the migrated Reel entries because the available WordPress and `/media/` assets were not verified local, public, rights-cleared derivatives. The entries retain their public text and source links.
+- Rechecked the Reel source set for private contacts and internal project notes; no email addresses, telephone details, private KB/Notion/Drive references, CRM notes, licensing notes, or `owner-review` markers were found.
+
+### Verification pending final integration pass
+
+- Run the complete Windows build, route/JSON validators, public-repository safety scan, repo-wide WordPress-upload scan, browser/HTTP smoke checks, exact diff review, and GitHub PR checks before publication.
+
 ## 2026-09-16 — Archive/current edition visual pass
 
 ### Verified

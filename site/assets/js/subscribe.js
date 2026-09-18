@@ -32,7 +32,8 @@
           });
         })
         .then(function () {
-          window.location.href = '/thanks/';
+          var next = form.querySelector('input[name="_next"]');
+          if (next && next.value) window.location.href = next.value;
         })
         .catch(function (error) {
           if (button) {

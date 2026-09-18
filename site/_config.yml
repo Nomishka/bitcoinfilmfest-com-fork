@@ -36,6 +36,10 @@ nostr_npub: "npub1rjtrs7xqdvj3588r9njrexh2n750j7jdwx9qs543nutmdsj6ljaqpfmp8a"
 # the private research KB; a curator hand-writes/reviews every file that lands
 # here, per the plan's data-source boundary.
 collections:
+  reel:
+    output: true
+    permalink: /reel/:name/
+    sort_by: date
   newsletters:
     output: true
     permalink: /:collection/:name/
@@ -57,6 +61,14 @@ defaults:
       type: "pages"
     values:
       layout: "default"
+      image: "/assets/images/social/bff-social-default.jpg"
+  - scope:
+      path: ""
+      type: "reel"
+    values:
+      layout: "reel"
+      nav_label: "Reel"
+      screen: "paper"
       image: "/assets/images/social/bff-social-default.jpg"
   - scope:
       path: ""
