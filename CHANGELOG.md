@@ -8,6 +8,11 @@ Short, human-readable record of public website changes. One dated entry is requi
 - Removed unreconciled WordPress and `/media/` image hotlinks from every Reel entry instead of publishing unverified image assets; the text remains available while local rights-cleared derivatives are absent.
 - Kept `/25/` as the canonical BFF’25 route and changed the migrated Luke Willms links to point there rather than to the redirect-only `/bff25/` route.
 
+## 2026-09-16 — Next ten public cinema profiles
+
+- Added ten new public Bitcoin Cinema film profiles: Aimy in a Cage, New Money, What the F*ck Is My Password?!, LifeHack, Bitcoin Heist, Immutable Democracy, Unbankable, Death Athletic: A Dissident Architecture, The 1Up Fever, and God Bless Bitcoin.
+- Profiles use public sources only and add no private data or media.
+
 ## 2026-09-16 — Archive visual and photo-loading pass
 
 - Rebalanced archive/current edition composition with a stronger BFF’27 hero mark treatment and a deliberately asymmetric BFF’24 selection lead.
