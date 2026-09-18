@@ -1,132 +1,95 @@
-# Bitcoin FilmFest sitemap plan
+# Bitcoin FilmFest route reconciliation
 
-Generated from the current Jekyll scaffold, the 53-page static-site/mirror source, and five reusable Wayback-only routes. This is a migration map, not a claim that every route has already been rebuilt.
+This is the builder-safe route inventory for the current Jekyll source. It replaces the older 64/66-route migration estimate, which mixed legacy source URLs with pages that now belong inside the Cinema and Reel hubs.
 
-## Counts
+## Current build counts
 
-- **Discovered Routes:** 64
-- **Public Or Planned Routes:** 60
-- **Implemented Now:** 10
-- **Planned:** 48
-- **Redirect Candidates:** 2
-- **Excluded Or Separate:** 4
+- Generated routes: 66
+- Public/indexable routes: 54
+- Shared core pages: 16
+- Compatibility redirect outputs: 11
+- Film profiles: 20
+- Company profiles: 7
+- Newsletter detail pages: 1
+- Reel detail pages: 10
+- Builder-only/private route: 1 (`/effect-lab/`, `noindex, nofollow`)
+- Legacy-only routes still requiring a decision: 48 planned rows plus 2 redirect candidates
 
-## Festival & editions
+The generated-route count includes the root route. The public/indexable count excludes `/bff25/` and `/effect-lab/`. The 10 `_chronicle/` files are source notes with `output: false` and produce no routes. Private source material is not part of this inventory.
 
-| Route | Title | State | Source |
-|---|---|---|---|
-| `/about/` | About Bitcoin FilmFest | implemented | `site/about.md` |
-| `/bff25/` | BFF’25 | implemented — Local shared-shell edition landing; full programme migration remains later. | `website/static-site/bff25/index.php` |
-| `/26/` | BFF’26 | implemented — Local shared-shell edition landing; the production microsite remains the rich source. | `BFF26-guest-page/index.html` |
-| `/27/` | BFF’27 | implemented — Local shared-shell edition landing; full programme remains a later migration step. | `BFF27-guest-page/index.html` |
-| `/` | Bitcoin FilmFest | implemented | `site/index.md` |
-| `/bff24-event-coverage-bitesize-media-may-2024/` | BFF24 in a guest post by Sean McNamara | planned | `website/static-site/bff24-event-coverage-bitesize-media-may-2024/index.php` |
-| `/bff2024/` | BFF’24 | redirect candidate — Keep as the historical 2024 route until canonical edition routing is decided. | `website/static-site/bff2024/index.php` |
-| `/26/laurels/` | BFF’26 laurels & press kit | planned | `website/wayback-recovered-2026-08-28/26-laurels.md` |
-| `/bff26/` | Bitcoin FilmFest 2026: June 4-7, Warsaw 🐇 - see you at BFF’26! | redirect candidate — Prefer canonical /26/. | `website/static-site/bff26/index.php` |
-| `/bff24-official-selection-freedom-themed-films/` | Bitcoin FilmFest Warsaw | Official Selection - BFF24 | planned | `website/static-site/bff24-official-selection-freedom-themed-films/index.php` |
-| `/festival-flashbacks/` | Festival Flashbacks | planned | `website/static-site/festival-flashbacks/index.php` |
+## Current public routes
 
-## Participate & connect
+### Shared core and compatibility output (16 + 11 redirects)
 
-| Route | Title | State | Source |
-|---|---|---|---|
-| `/join/` | Contribute | implemented | `website/static-site/join/index.php` |
-| `/credits/` | Credits | implemented | `website/static-site/credits/index.php` |
-| `/bff-rabits/` | Friends & family | planned | `website/static-site/bff-rabits/index.php` |
-| `/press-and-media/` | Press and Media Coverage | Bitcoin FilmFest 2024 | planned | `website/static-site/press-and-media/index.php` |
+| Route | Source | State |
+|---|---|---|
+| `/` | `site/index.md` | implemented |
+| `/about/` | `site/about.md` | implemented |
+| `/23/` | `site/23.md` | implemented |
+| `/24/` | `site/24.md` | implemented |
+| `/25/` | `site/bff25.md` | implemented, canonical BFF'25 |
+| `/26/` | `site/26.md` | implemented |
+| `/27/` | `site/27.md` | implemented |
+| `/awards/` | `site/awards.md` | implemented |
+| `/cinema/` | `site/cinema.md` | implemented, Cinema hub |
+| `/cinema/films/` | `site/cinema-films.md` | implemented, film hub |
+| `/cinema/companies/` | `site/cinema-companies.md` | implemented, company hub |
+| `/credits/` | `site/credits.md` | implemented |
+| `/festivals/roadshows/` | `site/festivals-roadshows.md` | implemented |
+| `/join/` | `site/join.md` | implemented |
+| `/reel/` | `site/reel.md` | implemented, unified Reel archive |
+| `/thanks/` | `site/thanks.md` | implemented |
+| `/bff25/` | `site/bff25-legacy.md` | compatibility redirect to `/25/`, not a page |
 
-## Bitcoin cinema
+`/bff25/` and the 10 migrated legacy article routes are listed for link compatibility but are not counted as additional public pages. Thus the canonical public page count is 54, while the generated build has 66 route outputs including 11 redirects and the private effect lab.
 
-| Route | Title | State | Source |
-|---|---|---|---|
-| `/cinema-digest-monthly-content/` | BFF Monthly Digest: updates from the heart of bitcoin cinema | planned | `website/static-site/cinema-digest-monthly-content/index.php` |
-| `/cinematic-hub/` | Bitcoin FilmFest Cinematic Hub | planned | `website/static-site/cinematic-hub/index.php` |
-| `/blog/` | Blog | planned | `website/static-site/blog/index.php` |
-| `/cinema-digest/` | Cinema Digest | planned | `website/static-site/cinema-digest/index.php` |
-| `/part-two-official-selection-experimental-shorts-at-bff25/` | Experimental Shorts at BFF25 | Official Selection - Part Two | planned | `website/static-site/part-two-official-selection-experimental-shorts-at-bff25/index.php` |
-| `/part-one-official-selection-feature-films-at-bff25/` | Feature Films at BFF25 | Official Selection - Part One | planned | `website/static-site/part-one-official-selection-feature-films-at-bff25/index.php` |
+### Collection routes
 
-## Newsletters
+- 20 film details under `/cinema/films/<slug>/`, from `site/_films/`.
+- 7 company details under `/cinema/companies/<slug>/`, from `site/_companies/`.
+- 1 newsletter detail under `/newsletters/2024-06-19-summer-2024/`, from `site/_newsletters/`.
+- 10 Reel details under `/reel/<slug>/`, from `site/_reel/`; interviews, guest posts, and the BFF24 event report share this collection.
+- 10 legacy article routes redirect to their corresponding Reel detail; these are `noindex, follow` compatibility outputs, not duplicate content pages.
 
-| Route | Title | State | Source |
-|---|---|---|---|
-| `/newsletters/2024-06-19-summer-2024/` | Bitcoin Cinema Digest: Summer 2024 | implemented | `site/_newsletters/2024-06-19-summer-2024.md` |
-| `/newsletters/2023-12-bitcoin-cinema-digest/` | Bitcoin Cinema Digest — December 2023 | planned | `website/wayback-recovered-2026-08-28/bitcoin-cinema-digest-dec23.md` |
-| `/newsletters/2024-01/` | Bitcoin Cinema Digest — January 2024 | planned | `website/wayback-recovered-2026-08-28/newsletter-jan2024.md` |
-| `/august-2024-newsletter/` | Bitcoin Cinema Digest: August 2024 | planned | `website/static-site/august-2024-newsletter/index.php` |
-| `/december-2024-newsletter/` | Bitcoin Cinema Digest: December 2024 | planned | `website/static-site/december-2024-newsletter/index.php` |
-| `/february-2025-newsletter/` | Bitcoin Cinema Digest: February 2025 | planned | `website/static-site/february-2025-newsletter/index.php` |
-| `/january-2025-newsletter/` | Bitcoin Cinema Digest: January 2025 | planned | `website/static-site/january-2025-newsletter/index.php` |
-| `/march-april-2025-newsletter/` | Bitcoin Cinema Digest: March - April 2025 | planned | `website/static-site/march-april-2025-newsletter/index.php` |
-| `/may-2024-newsletter/` | Bitcoin Cinema Digest: May 2024 | planned | `website/static-site/may-2024-newsletter/index.php` |
-| `/november-2024-newsletter/` | Bitcoin Cinema Digest: November 2024 | planned | `website/static-site/november-2024-newsletter/index.php` |
-| `/october-2024-newsletter/` | Bitcoin Cinema Digest: October 2024 | planned | `website/static-site/october-2024-newsletter/index.php` |
-| `/september-2024-special-edition/` | Bitcoin Cinema Digest: September 2024 | planned | `website/static-site/september-2024-special-edition/index.php` |
-| `/june-2024/` | Bitcoin Cinema Digest: Summer 2024 | planned | `website/static-site/june-2024/index.php` |
-| `/july-2024/` | July 2024 Newsletter | planned | `website/static-site/july-2024/index.php` |
+### Builder-only route
 
-## Interviews & features
+- `/effect-lab/` is a local effect comparison tool. It is deliberately `noindex, nofollow`, should not be promoted in navigation, and must not be treated as public content or a migration target.
 
-| Route | Title | State | Source |
-|---|---|---|---|
-| `/bff-interviews/` | BFF Interviews | planned | `website/static-site/bff-interviews/index.php` |
-| `/alana-mediavilla-dec-2023/` | BFF Interviews: Alana Mediavilla, DIRTY COIN | planned | `website/static-site/alana-mediavilla-dec-2023/index.php` |
-| `/graham-rittener-jan-2024/` | BFF Interviews: Graham Rittener, DARE TO DREAM | planned | `website/static-site/graham-rittener-jan-2024/index.php` |
-| `/indeehub-bitcoin-friendly-vod-platform/` | BFF interviews: IndeeHub Studio | planned | `website/static-site/indeehub-bitcoin-friendly-vod-platform/index.php` |
-| `/jessica-solce-feb-2024/` | BFF Interviews: Jessica Solce, DEATH ATHLETIC | planned | `website/static-site/jessica-solce-feb-2024/index.php` |
-| `/luke-willms-unbankable-may-2025/` | BFF interviews: Luke Willms about his work | planned | `website/static-site/luke-willms-unbankable-may-2025/index.php` |
-| `/naeem-mahmood-april-2024/` | BFF interviews: Naeem Mahmood | planned | `website/static-site/naeem-mahmood-april-2024/index.php` |
-| `/zack-mahoney-and-indeehub-sep-2024/` | BFF interviews: Zack Mahoney and the IndeeHub Studio | planned | `website/static-site/zack-mahoney-and-indeehub-sep-2024/index.php` |
-| `/guest-post-bff-magazine-daniel-prince-2024/` | BFF Magazine 2024: Guest post by Daniel Prince | planned | `website/static-site/guest-post-bff-magazine-daniel-prince-2024/index.php` |
-| `/bff-magazine-2024-kudzai-kutukwa/` | BFF Magazine 2024: Guest post by Kudzai Kutukwa | planned | `website/static-site/bff-magazine-2024-kudzai-kutukwa/index.php` |
-| `/bitcoin-news-chatting-with-mr-rabbit/` | Bitcoin News and Mr. Rabbit in an exclusive chat | planned | `website/static-site/bitcoin-news-chatting-with-mr-rabbit/index.php` |
-| `/authors/tomek-k/` | Tomek K. — author archive | planned | `website/wayback-recovered-2026-08-28/author-tomekk.md` |
+## Legacy reconciliation
 
-## Special projects
+The legacy map's 48 planned rows are not 48 new top-level pages. Use these destinations when migrating public-safe material:
 
-| Route | Title | State | Source |
-|---|---|---|---|
-| `/wall/` | Bitcoin FilmFest - thank you for coming! | planned | `website/static-site/wall/index.php` |
-| `/qr/` | Bitcoin FilmFest - the heart of Bitcoin Cinema | planned | `website/static-site/qr/index.php` |
-| `/linktree/` | European Halving Party X Bitcoin FilmFest! Warsaw, 20/4/2024 | planned | `website/static-site/linktree/index.php` |
-| `/bitcoin-filmfest-2024-european-halving-party-🐇/` | European Halving Party 🟪🥳🟧 Celebrate Bitcoin in Warsaw | planned | `website/static-site/bitcoin-filmfest-2024-european-halving-party-🐇/index.php` |
-| `/european-halving-party-thankyou/` | European Halving Party 🟪🥳🟧 Celebrate Bitcoin in Warsaw | planned | `website/static-site/european-halving-party-thankyou/index.php` |
-| `/europeanhalvingparty/` | European Halving Party 🟪🥳🟧 Celebrate Bitcoin in Warsaw | planned | `website/static-site/europeanhalvingparty/index.php` |
-| `/infoboard/` | Infoboard | planned | `website/static-site/infoboard/index.php` |
-| `/pow/` | POW! | planned | `website/static-site/pow/index.php` |
-| `/unique-bitcoin-video-ads/` | Unique Bitcoin Ads | 6 unique commercials combined in 2 videos | planned | `website/static-site/unique-bitcoin-video-ads/index.php` |
-| `/26/wintrezor/` | Win a Trezor | planned | `website/wayback-recovered-2026-08-28/26-wintrezor.md` |
+### Fold into existing hubs or edition pages
 
-## Utility & legal
-
-| Route | Title | State | Source |
-|---|---|---|---|
-| `/sitemap/` | Site map | implemented | `site/sitemap.md` |
-| `/privacy-policy/` | privacy-policy | planned | `website/static-site/privacy-policy/index.php` |
-
-## Explicitly excluded or separate
-
-| Route | Reason |
+| Legacy routes | Destination |
 |---|---|
-| `/shop/` | WooCommerce/shop was already retired and is outside the static rebuild. |
-| `/refund_returns/` | Commerce policy route; retain only as a redirect or archival record if legally required. |
-| `/tickets/` | Moving to an external ticketing system; explicitly out of scope. |
-| `/analytics/` | Matomo remains separate from the GitHub-hosted static site. |
+| `/bff24-event-coverage-bitesize-media-may-2024/`, `/bff24-official-selection-freedom-themed-films/` | `/24/` or a Reel entry linked from `/24/` |
+| `/26/laurels/` | `/26/` |
+| `/festival-flashbacks/` | `/reel/` archive, with edition links where relevant |
+| `/bff-rabits/`, `/press-and-media/` | `/about/` or `/reel/`, depending on verified public copy |
+| `/cinema-digest-monthly-content/`, `/cinematic-hub/`, `/blog/`, `/cinema-digest/`, `/bff-interviews/` | `/cinema/` and/or `/reel/` |
+| `/part-one-official-selection-feature-films-at-bff25/`, `/part-two-official-selection-experimental-shorts-at-bff25/` | `/25/` |
+| `/wall/`, `/qr/`, `/linktree/`, `/bitcoin-filmfest-2024-european-halving-party-🐇/`, `/european-halving-party-thankyou/`, `/europeanhalvingparty/` | `/24/` |
+| `/pow/` | `/awards/` |
+| `/26/wintrezor/` | `/26/` |
+| `/unique-bitcoin-video-ads/` | `/reel/` |
 
-## Navigation recommendation
+These are folds, not permission to copy private notes or recreate campaign microsites.
 
-- **Editions:** BFF’27 · BFF’26 · BFF’25, with older editions added after their canonical routes are decided.
-- **About:** festival identity and history.
-- **Cinema:** blog, Cinema Digest, interviews, official selections, and the cinematic hub.
-- **Contribute:** participation paths.
-- **Credits:** crew and collaborators, visible in the primary menu.
-- **Site map:** full route index in the footer and utility menu.
+### Separate public pages worth migrating
 
-## Migration stages
+- Newsletter entries: preserve the original legacy URL as redirect metadata, but publish the content as ordinary Reel entries under `/reel/<slug>/` unless it is explicitly retained as a newsletter detail.
+- Individual interviews and features: the first 10 are now ordinary Reel entries under `/reel/<slug>/`; `/bff-interviews/` remains a hub concept, not a second collection.
+- `/privacy-policy/`: keep as a separate legal page when verified and public-safe.
+- `/authors/tomek-k/`: only create if an author archive is needed after Reel content exists; otherwise fold author links into Reel metadata.
 
-1. Shared shell, home, editions menu, credits, sitemap, transitions, and active navigation.
-2. Core public pages: join, press, flashbacks, cinematic hub, privacy, and blog/archive indexes.
-3. Edition archives and official-selection pages.
-4. Newsletters, interviews, and long-form features with local images.
-5. Redirects, broken-link audit, metadata review, and final XML sitemap validation.
+### Redirects
+
+- `/bff25/` -> `/25/` (implemented compatibility redirect; never duplicate the BFF'25 page).
+- `/bff26/` -> `/26/` (legacy alias; use a redirect if the old URL is retained).
+- `/bff2024/` -> `/24/` (legacy alias; use a redirect if the old URL is retained).
+- Legacy individual article, interview, and newsletter URLs should redirect to their Reel entry after migration. Do not create duplicate top-level pages for them.
+
+## Source boundaries and next step
+
+Only reviewed Markdown under `site/` is public source. `_chronicle/` is non-output working material, and private KB/Drive material must stay outside the public repository. The first 10 public-safe Reel entries are now built under `site/_reel/`, with 10 `noindex, follow` compatibility routes preserving their original public URLs.

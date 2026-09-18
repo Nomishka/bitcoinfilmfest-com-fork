@@ -11,6 +11,13 @@ The Git state and cinema status below were reconciled against the live checkout 
 
 The Jekyll rebuild is live at the temporary GitHub Pages URL. On top of the existing site (homepage, festival editions, Reel, Credits), the `/cinema/` section now contains the film database and company directory foundations, the essential-ten curation, the industry-footprint strip, and the first roadshow structure. The coherent Cinema ecosystem update was originally committed at `517c87f` and is included in the current `main`; the archive/current-edition visual pass landed in merge commit `4635bce`. Build and HTTP deployment verification passed.
 
+### 2026-09-16 Reel migration integration
+
+- The unified Reel archive now contains exactly 10 migrated public-safe legacy pieces under `site/_reel/`, all rendered at `/reel/<slug>/` with 10 noindex compatibility redirects under `site/legacy-redirects/`.
+- `/25/` remains the only canonical BFF’25 route. `/bff25/` is redirect-only, and migrated Reel links use `/25/` rather than the legacy alias.
+- The 10 entries contain text and verified external source links only. Unverified WordPress `/wp-content/uploads/` and `/media/` image hotlinks were removed from front matter and bodies; no private contact, CRM, KB, Notion, Drive, licensing, or internal review material was copied into the public entries.
+- The FormSubmit AJAX success path reads the footer form’s configured `_next` value, preserving the shared `/thanks/` destination without hardcoding it in JavaScript.
+
 ### Current implementation after 2026-08-31 owner steer
 
 - `/cinema/` is the single public Cinema destination: overview, essential films, searchable/filterable film catalogue, and companies/platforms on one page.

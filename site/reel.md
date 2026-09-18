@@ -15,11 +15,30 @@ screen: paper
   </header>
 
   <nav class="reel-nav" aria-label="Reel sections">
+    <a href="#archive">Archive</a>
     <a href="#chronicle">Chronicle</a>
     <a href="#newsletter">Newsletter</a>
-    <a href="#press">Press</a>
-    <a href="#blog">Blog</a>
   </nav>
+
+  <section id="archive" class="reel-section">
+    <p class="section-label">The Reel archive</p>
+    <h2>Stories from Bitcoin cinema</h2>
+    <p class="reel-lede">Interviews, guest posts, and features from the people making, screening, and supporting independent cinema.</p>
+
+    {% assign reel_entries = site.reel | sort: 'date' | reverse %}
+    {% if reel_entries.size > 0 %}
+      <ul class="reel-list">
+        {% for entry in reel_entries %}
+          <li>
+            <a href="{{ entry.url | relative_url }}">{{ entry.title }}</a>
+            <time datetime="{% if entry.date_precision == 'month' %}{{ entry.date | date: "%Y-%m" }}{% else %}{{ entry.date | date_to_xmlschema }}{% endif %}">{% if entry.published_label %}{{ entry.published_label }}{% else %}{{ entry.date | date: "%B %Y" }}{% endif %}</time>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="reel-empty">The Reel archive is being assembled. Check back soon for the first entries.</p>
+    {% endif %}
+  </section>
 
   <section id="chronicle" class="reel-section">
     <p class="section-label">Bitcoin Cinema Chronicle</p>
@@ -63,17 +82,4 @@ screen: paper
     {% endif %}
   </section>
 
-  <section id="press" class="reel-section">
-    <p class="section-label">Coverage</p>
-    <h2>Press</h2>
-    <p class="reel-lede">Coverage and mentions from outlets writing about Bitcoin FilmFest.</p>
-    <p class="reel-empty">Press archive migration is in progress. Verified coverage will appear here as it is restored.</p>
-  </section>
-
-  <section id="blog" class="reel-section">
-    <p class="section-label">Stories</p>
-    <h2>Blog</h2>
-    <p class="reel-lede">Interviews, guest posts, and stories from the Bitcoin Cinema Hub.</p>
-    <p class="reel-empty">Blog migration is in progress. Interviews and stories will appear here as they are restored.</p>
-  </section>
 </article>
