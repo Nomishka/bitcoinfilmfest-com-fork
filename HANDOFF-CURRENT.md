@@ -1,6 +1,10 @@
 # Handoff — Bitcoin FilmFest Jekyll rebuild
 Updated: 2026-09-16
 
+## Fork workflow (added 2026-09-23)
+
+Work also happens in the fork `Nomishka/bitcoinfilmfest-com-fork`. Agents follow `CLAUDE.md`: changes go through PRs into the fork's `main`, every session ends with an `ORGANISATION-LOG.md` entry and a handoff update, and Nomishka sends merged work upstream using `docs/GITHUB-GUIDE-NOMISHKA.md`.
+
 ## Cross-project architecture
 
 The website is a curated public projection of the wider private project knowledge base in `C:\Users\Lenovo\OneDrive\Bitcoin FilmFest\Claude news\`. The CRM remains split across its existing local files and spreadsheets for now. Do not import the private KB or CRM into the Jekyll build. Read `PLAN-WEBSITE-ROADMAP.md` and `C:\Users\Lenovo\OneDrive\Bitcoin FilmFest\Claude news\HANDOFF-TO-VERIFIER-2026-08-31.md` before reorganizing or adding broad content.
