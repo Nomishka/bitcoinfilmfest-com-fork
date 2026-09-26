@@ -21,7 +21,8 @@ Entry template:
 - Who: Claude (agent) merged PR 5 at Nomishka's request; Nomishka fixed the Cloudflare dashboard settings.
 - Done: https://github.com/Nomishka/bitcoinfilmfest-com-fork/pull/5 merged into the fork's `main`. The GitHub Pages deploy passed (the fork site is styled again). The Cloudflare Workers build of `main` passed: Jekyll build, 1,162 files uploaded, deployed to the fork's `workers.dev` address. Final Cloudflare settings: build command `bash scripts/cloudflare-build.sh`, deploy command `npx wrangler deploy`, root directory `/` (it was `site`, which broke the build).
 - PR: this log entry only.
-- Open / next: (1) The "Enable Preview Builds" option was not visible under Branch control. Check it on the next PR: if no preview-link comment appears, look again in Settings → Build. (2) Nomishka decides what to send upstream to Tomek: the fork-subpath fix in `deploy-pages.yml` is safe for upstream; the Cloudflare files are fork-specific.
+- Preview links: preview builds are on (Cloudflare posted a "Deploying Preview" comment on PR 6), but the first preview build failed. Worker Previews (`npx wrangler preview`) require a `previews` block in `wrangler.jsonc`; an empty `"previews": {}` was added in PR 6.
+- Open / next: (1) Confirm the PR 6 preview build passes and posts a preview URL. If not, read its Cloudflare build log. (2) Nomishka decides what to send upstream to Tomek: the fork-subpath fix in `deploy-pages.yml` is safe for upstream; the Cloudflare files are fork-specific.
 
 ## 2026-09-26 — Cloudflare preview links for pull requests
 

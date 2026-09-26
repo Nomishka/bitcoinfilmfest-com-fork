@@ -10,5 +10,9 @@
     "directory": "./site/_site",
     "html_handling": "auto-trailing-slash",
     "not_found_handling": "404-page"
-  }
+  },
+  // Required by Worker Previews (`npx wrangler preview`, run for every
+  // non-main branch). Empty because a static site has no bindings or vars;
+  // "assets" above stays top-level and is uploaded for each Preview too.
+  "previews": {}
 }
