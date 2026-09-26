@@ -16,6 +16,13 @@ Entry template:
 
 ---
 
+## 2026-09-26 — Fork website showed without styles
+
+- Who: Claude (agent), asked by Nomishka.
+- Done: The fork's GitHub Pages site (served under `/bitcoinfilmfest-com-fork/`) loaded as plain unstyled text. After the custom-domain cutover, `main` builds with an empty base path, so on the fork every CSS/JS/image link pointed to the wrong place. `.github/workflows/deploy-pages.yml` now reads the real base path from GitHub (`actions/configure-pages`). Verified by a local Jekyll build and a browser screenshot of the fork path: page fully styled, 0 missing files. The upstream build output is unchanged (empty base path).
+- PR: https://github.com/Nomishka/bitcoinfilmfest-com-fork/pull/5 (added to the open PR).
+- Open / next: Nomishka merges PR 5 and checks the fork site. The fix is also worth sending upstream to Tomek, so any fork of the repo renders correctly.
+
 ## 2026-09-26 — Cloudflare check failing on PR 5
 
 - Who: Claude (agent), asked by Nomishka.

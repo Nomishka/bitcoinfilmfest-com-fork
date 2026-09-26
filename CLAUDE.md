@@ -22,7 +22,7 @@ When documents disagree: `BUILDER-GUIDE.md`, `site/README.md`, the actual source
 - Any change under `site/` needs a dated entry in `CHANGELOG.md` (`## YYYY-MM-DD — Title`), or the PR check fails.
 - This repo (`Nomishka/bitcoinfilmfest-com-fork`) is a fork of `itstomekk/bitcoinfilmfest-com`. Open the PR into the fork's `main` first; Nomishka then sends it upstream to Tomek (see `docs/GITHUB-GUIDE-NOMISHKA.md`).
 - Run `python3 scripts/check-public-repo.py` and `git diff --check` before every commit.
-- The cloud sandbox usually cannot run `jekyll build`; rely on the PR check's build and say so in the PR.
+- Build and check the site before pushing: see the sandbox build steps under "Gotchas" in `HANDOFF-CURRENT.md`. If the build cannot run, say so in the PR and rely on the PR check.
 
 ## 3. Always log and hand off
 

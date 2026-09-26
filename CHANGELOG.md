@@ -2,6 +2,10 @@
 
 Short, human-readable record of public website changes. One dated entry is required for every source change that affects the website.
 
+## 2026-09-26 — Fix unstyled site on forks
+
+- The Pages deploy now asks GitHub for the repository's own Pages address before building. Forks such as `Nomishka/bitcoinfilmfest-com-fork` (served at `/bitcoinfilmfest-com-fork/`) load their styles, scripts, and images again instead of showing a plain unstyled page. The main site on `bitcoinfilmfest.com` builds exactly as before.
+
 ## 2026-09-24 — Add official Banking on Bitcoin and The New Radical posters
 
 - Added Banking on Bitcoin poster artwork from director Christopher Cannucciari's official portfolio.
