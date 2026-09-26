@@ -30,6 +30,8 @@ Only Tomek's `main` publishes the website. Nothing in your fork can break the li
    - red ❌ = tell Claude "the check failed on PR #…" and it will fix it.
 5. Want a change? Click **Files changed** → hover a line → click the blue **+** → write your comment → **Start a review** → **Submit review**. Then tell Claude.
 
+**Preview link:** once Cloudflare previews are set up, the Cloudflare bot posts a comment on each PR with a link. Open it to see the changed website before merging. Check the pages that changed on both a computer and a phone.
+
 ## Step 2 — Merge it into your fork
 
 1. On the PR's **Conversation** tab, click **Merge pull request** → **Confirm merge**.

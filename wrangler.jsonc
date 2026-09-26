@@ -1,0 +1,14 @@
+// Cloudflare Workers Builds config for PR preview links.
+// This is a static-assets-only Worker: no server code, it just serves the
+// Jekyll output. GitHub Pages remains the production site.
+// "name" must match the Worker connected in the Cloudflare dashboard.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "bitcoinfilmfest-com-fork",
+  "compatibility_date": "2026-09-01",
+  "assets": {
+    "directory": "./site/_site",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  }
+}

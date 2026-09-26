@@ -16,6 +16,13 @@ Entry template:
 
 ---
 
+## 2026-09-26 — Cloudflare preview links for pull requests
+
+- Who: Claude (agent), asked by Nomishka (chose option B: preview links).
+- Done: The Cloudflare Worker `bitcoinfilmfest-com-fork` was only a "Hello world" placeholder, and the repo had no build instructions for it, so every `Workers Builds` check failed at once. Added `wrangler.jsonc` (serves the built Jekyll site as static files), `scripts/cloudflare-build.sh` (the build command) and `.ruby-version` (Ruby 3.3, same as GitHub Actions). Verified locally: the Jekyll build passes, `wrangler deploy --dry-run` accepts the config (about 1,300 files), and `wrangler dev` serves `/`, `/cinema/`, CSS and the 404 page correctly. GitHub Pages stays the production site.
+- PR: https://github.com/Nomishka/bitcoinfilmfest-com-fork/pull/5
+- Open / next: Nomishka sets 2 things in the Cloudflare dashboard (build command, and turning on builds for non-production branches), then checks that the bot posts a working preview link. Before this goes upstream, the `name` in `wrangler.jsonc` must match Tomek's own Worker, or leave these files out.
+
 ## 2026-09-26 — Fork website showed without styles
 
 - Who: Claude (agent), asked by Nomishka.
