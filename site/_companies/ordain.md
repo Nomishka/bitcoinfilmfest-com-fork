@@ -1,5 +1,6 @@
 ---
 title: "Ordain"
+description: "A Bitcoin Lightning-native film commission platform that reverses the usual crowdfunding model: commissioners publish creative briefs with Bitcoin…"
 type: Funding Platform
 status: active
 website: "https://ordain.art/"
@@ -16,5 +17,5 @@ sources:
   - label: Hacker News — Ordain launch discussion
     url: "https://news.ycombinator.com/item?id=47175726"
   - label: Bitcoin FilmFest BFF26
-    url: "https://bitcoinfilmfest.com/bff26/"
+    url: "https://bitcoinfilmfest.com/26/"
 ---

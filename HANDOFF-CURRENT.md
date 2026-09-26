@@ -1,5 +1,5 @@
 # Handoff — Bitcoin FilmFest Jekyll rebuild
-Updated: 2026-09-16
+Updated: 2026-09-19
 
 ## Fork workflow (added 2026-09-23)
 
@@ -9,18 +9,42 @@ Work also happens in the fork `Nomishka/bitcoinfilmfest-com-fork`. Agents follow
 
 The website is a curated public projection of the wider private project knowledge base in `C:\Users\Lenovo\OneDrive\Bitcoin FilmFest\Claude news\`. The CRM remains split across its existing local files and spreadsheets for now. Do not import the private KB or CRM into the Jekyll build. Read `PLAN-WEBSITE-ROADMAP.md` and `C:\Users\Lenovo\OneDrive\Bitcoin FilmFest\Claude news\HANDOFF-TO-VERIFIER-2026-08-31.md` before reorganizing or adding broad content.
 
-The Git state and cinema status below were reconciled against the live checkout after the 2026-09-16 visual pass. PR #12 was merged into `main` at `4635bce`, and the corresponding GitHub Pages build/deploy completed successfully.
+The Git state and cinema status below were reconciled against the live checkout after the 2026-09-19 dead-route integration. The four focused repair branches were merged into `main` at `e35e159`, and GitHub Actions run `35417053924` completed its build and Pages deploy successfully.
 
 ## Where this stands
 
-The Jekyll rebuild is live at the temporary GitHub Pages URL. On top of the existing site (homepage, festival editions, Reel, Credits), the `/cinema/` section now contains the film database and company directory foundations, the essential-ten curation, the industry-footprint strip, and the first roadshow structure. The coherent Cinema ecosystem update was originally committed at `517c87f` and is included in the current `main`; the archive/current-edition visual pass landed in merge commit `4635bce`. Build and HTTP deployment verification passed.
+The Jekyll rebuild is live through GitHub Pages and the configured custom domain. On top of the existing site (homepage, festival editions, Reel, Credits), the `/cinema/` section now contains the film database and company directory foundations, the essential-ten curation, the industry-footprint strip, and the first roadshow structure. The coherent Cinema ecosystem update was originally committed at `517c87f` and is included in the current `main`; the archive/current-edition visual pass landed in merge commit `4635bce`. The latest build and Pages deployment passed.
 
-### 2026-09-16 Reel migration integration
+### 2026-09-23 webmail compatibility route
 
-- The unified Reel archive now contains exactly 10 migrated public-safe legacy pieces under `site/_reel/`, all rendered at `/reel/<slug>/` with 10 noindex compatibility redirects under `site/legacy-redirects/`.
-- `/25/` remains the only canonical BFF’25 route. `/bff25/` is redirect-only, and migrated Reel links use `/25/` rather than the legacy alias.
-- The 10 entries contain text and verified external source links only. Unverified WordPress `/wp-content/uploads/` and `/media/` image hotlinks were removed from front matter and bodies; no private contact, CRM, KB, Notion, Drive, licensing, or internal review material was copied into the public entries.
+- Added a source route at `/webmail/` that redirects to `https://webmail.bitcoinfilmfest.com/`, preserving the SmartHost mail service while the website stays on GitHub Pages.
+- Updated redirect metadata so external targets are emitted as real external URLs; existing internal legacy redirects still build correctly.
+- Local build and public-repository safety checks pass. The route is not live until this local change is published through the GitHub Pages workflow.
+
+### 2026-09-19 dead-route repair integration
+
+- Merged `fix/sponsor-page-stub`, `fix/press-and-media-page`, `fix/gallery-page`, and `fix/small-dead-links` into `main` at `e35e159` using a clean worktree; unrelated local changes in the primary checkout were left untouched.
+- Added working `/sponsor/`, `/press-and-media/`, and `/gallery/` routes. The gallery renders all 51 existing photos with non-empty content alt text; no primary navigation or homepage link was added.
+- Repaired the six small dead internal links without inventing replacement destinations where no real target existed.
+- Local safety scan, Jekyll build, generated-route checks, gallery asset checks, and `git diff --check` passed. The Actions build and Pages deploy passed in run `35417053924`.
+- The deployed route content is reachable, but normal HTTPS verification for `bitcoinfilmfest.com` is still pending: GitHub Pages reports `https_enforced: false` and the current certificate fails hostname verification. Do not call the custom domain TLS-ready until the certificate is corrected and HTTPS enforcement is enabled.
+
+### 2026-09-18 Reel/newsletter migration integration
+
+- The Reel archive is now the single editorial collection for interviews, articles, and newsletters. The former `_newsletters` collection is gone; all entries live under `site/_reel/` with `category: interviews`, `category: articles`, or `category: newsletters`.
+- The collection contains 23 public entries: 10 prior interviews/articles plus 13 Bitcoin Cinema Digest issues, including the previously migrated Summer 2024 issue. Every migrated entry carries `archived: true`; future writing can use the Posts view without entering the archive.
+- `/reel/` now renders Chronicle, Posts, then Archive. Posts has a deliberate empty state, while Archive is a single newest-first list with visible category labels. All 23 detail routes render real body content.
+- The migration build passed with the Windows Ruby toolchain. Source and generated Reel output contain no WordPress `/wp-content/uploads/` or raw `bitcoinfilmfest.com/media` references; `/25/` remains the canonical BFF’25 route.
+- The entries contain text and verified external source links only. No private contact, CRM, KB, Notion, Drive, licensing, or internal review material was copied into the public entries.
 - The FormSubmit AJAX success path reads the footer form’s configured `_next` value, preserving the shared `/thanks/` destination without hardcoding it in JavaScript.
+
+### 2026-09-18 press kit and BFF’26 press room
+
+- `/presskit/` now preserves the local branding book: BFF logos, rabbit mark, posters, laurels, SVG/PDF vectors, colours and Syne Mono/Courier Prime specimens. The source was `C:\Users\Lenovo\OneDrive\Bitcoin FilmFest\logos-page\`; only its public HTML and 14 prepared assets were copied.
+- Storyboard links to `/presskit/`, and the BFF’26 Press Kit section links to `/26/press/`, `/presskit/`, and the existing `/25/#gallery` archive.
+- `/26/press/` restores 34 local static EN/PL pages from `BFF26-guest-page\press\`: hub, info-base, recaps, previews, interviews, evergreen articles and shared CSS. Private source notes, FTP scripts and archive backups were excluded.
+- Restored press pages use the current `/presskit/` and local project-relative paths rather than the old `/26/laurels/`, `/logos`, and `/gallery/` destinations.
+- Route inventory is now 101 generated / 89 public-indexable outputs.
 
 ### Current implementation after 2026-08-31 owner steer
 
@@ -40,7 +64,8 @@ The Jekyll rebuild is live at the temporary GitHub Pages URL. On top of the exis
 - PR #12 was merged into `main` at `4635bce`; its GitHub Pages workflow build and deploy both passed. HTTPS verification confirmed the updated `/23/`, `/24/`, `/25/`, `/26/`, and `/27/` routes live.
 
 **Repository:** https://github.com/itstomekk/bitcoinfilmfest-com
-**Temporary live site:** https://itstomekk.github.io/bitcoinfilmfest-com/
+**GitHub Pages preview:** https://itstomekk.github.io/bitcoinfilmfest-com/
+**Configured custom domain:** https://bitcoinfilmfest.com (content deployed; TLS/enforcement pending verification above)
 **Local checkout:** `C:\Users\Lenovo\OneDrive\Bitcoin FilmFest\website\rebuild-jekyll-bff26`
 **Deployment:** GitHub Actions builds and deploys `main` to GitHub Pages.
 
@@ -78,7 +103,8 @@ The Jekyll rebuild is live at the temporary GitHub Pages URL. On top of the exis
 
 ## Decisions and why
 
-- **Jekyll collections, not a YAML array**, for films/companies. Each entry is one Markdown file with front matter. Chosen because it mirrors the existing `_newsletters/` pattern already in this repo, gives free per-entry URLs, and is far easier for a small delegated agent (or a non-technical collaborator) to add one file correctly than to hand-edit a growing array without breaking YAML syntax elsewhere in the file.
+- **Jekyll collections, not a YAML array**, for films/companies and Reel editorial entries. Each entry is one Markdown file with front matter, gives free per-entry URLs, and is far easier for a small delegated agent (or a non-technical collaborator) to add one file correctly than to hand-edit a growing array without breaking YAML syntax elsewhere in the file.
+- **One Reel collection for editorial writing.** Interviews, newsletters, guest posts, features, and event reports all render under `/reel/<slug>/`; `category` is metadata with only `interviews`, `newsletters`, or `articles` allowed. `archived: true` marks the 23 explicitly migrated legacy entries and is reserved for archived content.
 - **Row list, not cards**, for film/company indexes. `site/design.md` explicitly rules out generic rounded cards for this site's visual language ("look like programme/showtime rows"). `cinema-row.html` extends the existing `.showtime` pattern instead of inventing a new component.
 - **Private KB stays private.** Every entry is hand-curated from `Claude news/bitcoin-cinema-kb.md` (157 entries, sourcing caveats, internal tags) into clean public Markdown — never a build-time import. `_cinema-schema.md` has the exact list of tags/notes that must never reach a public file. Revisit only if Tomek explicitly wants a faster, less-curated pipeline.
 - **BFF-PARTNERS-DATABASE.md (89 event sponsors) is explicitly excluded from `/cinema/companies/`.** Sponsors are not the same thing as Bitcoin-cinema production/distribution companies — don't merge the two lists later.
@@ -92,7 +118,7 @@ The Jekyll rebuild is live at the temporary GitHub Pages URL. On top of the exis
 
 ## Git state note
 
-The review branch has been merged; `main` includes merge commit `4635bce` plus the follow-up handoff/build-log synchronization. Inspect `git status --short` before staging anything else.
+The four dead-route repair branches have been merged; `main` includes the integration result at `e35e159`. Inspect `git status --short` before staging anything else.
 
 The private source material remains outside the Jekyll build:
 - `C:\Users\Lenovo\OneDrive\Bitcoin FilmFest\Claude news\bitcoin-cinema-kb.md`

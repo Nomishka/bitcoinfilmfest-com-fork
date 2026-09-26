@@ -916,6 +916,106 @@ article,
   padding-block-end: var(--space-2xl);
 }
 
+/* Long-document content grid (Reel articles, newsletters, generic content
+   pages — design.md's "Long Document" family). Body text stays in a
+   readable center column via --prose-max; the freed-up side space is not
+   just padding: .breakout lets media/tables/quotes span the full screen
+   width as a section break, and .rail-note puts margin content (a table
+   of contents, a pull quote, a callout) in the side column instead of
+   leaving it empty. Collapses to a single column below 64rem. */
+.reel-entry,
+.newsletter,
+.page-content {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) min(var(--prose-max), 100%) minmax(0, 1fr);
+  column-gap: clamp(var(--space-lg), 4vw, var(--space-2xl));
+}
+
+.reel-entry > *,
+.newsletter > *,
+.page-content > * {
+  grid-column: 2;
+}
+
+.reel-entry .breakout,
+.newsletter .breakout,
+.page-content .breakout {
+  grid-column: 1 / -1;
+  width: 100%;
+  max-width: none;
+  margin-inline: 0;
+}
+
+.reel-entry .rail-note,
+.newsletter .rail-note,
+.page-content .rail-note {
+  grid-column: 3;
+  align-self: start;
+  max-width: none;
+  padding-inline-start: var(--space-md);
+  border-inline-start: var(--rule-thin) solid var(--color-ink);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+
+.reel-entry .rail-note--left,
+.newsletter .rail-note--left,
+.page-content .rail-note--left {
+  grid-column: 1;
+  padding-inline-start: 0;
+  padding-inline-end: var(--space-md);
+  border-inline-start: 0;
+  border-inline-end: var(--rule-thin) solid var(--color-ink);
+}
+
+.rail-note.toc {
+  position: sticky;
+  top: calc(var(--nav-height) + var(--space-lg));
+}
+
+.rail-note.toc p {
+  max-width: none;
+}
+
+.rail-note.toc ol,
+.rail-note.toc ul {
+  max-width: none;
+  margin: 0;
+  padding-inline-start: var(--space-md);
+}
+
+.rail-note.toc a {
+  color: inherit;
+}
+
+@media (max-width: 64rem) {
+  .reel-entry,
+  .newsletter,
+  .page-content {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .reel-entry > *,
+  .newsletter > *,
+  .page-content > * {
+    grid-column: 1;
+  }
+
+  .reel-entry .rail-note,
+  .newsletter .rail-note,
+  .page-content .rail-note,
+  .reel-entry .rail-note--left,
+  .newsletter .rail-note--left,
+  .page-content .rail-note--left {
+    grid-column: 1;
+    margin-block: var(--space-lg);
+    padding-inline: var(--space-md);
+    border-inline: 0;
+    border-block-start: var(--rule-thin) solid var(--color-ink);
+    position: static;
+  }
+}
+
 .page-masthead {
   max-width: 54rem;
   margin-block-end: clamp(var(--space-2xl), 8vw, var(--space-4xl));
@@ -1704,7 +1804,7 @@ body.is-navigating {
   font-style: italic;
 }
 
-/* Newsletter issues: reuse the showtime-row rhythm on a paper ground. */
+/* Reel posts and archive entries reuse the showtime-row rhythm on a paper ground. */
 .reel-list {
   display: grid;
   gap: 0;
@@ -2145,6 +2245,67 @@ body.is-navigating {
 }
 
 /* Film / company profile pages */
+.cinema-poster {
+  margin-block: var(--space-lg) var(--space-xl);
+  text-align: center;
+}
+
+.cinema-poster img {
+  max-width: 100%;
+  height: auto;
+  max-height: 60vh;
+  object-fit: contain;
+  background: var(--color-paper-2);
+}
+
+.cinema-poster figcaption {
+  margin-block-start: var(--space-xs);
+  color: var(--color-muted);
+  font-size: var(--text-xs);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.cinema-stills {
+  margin-block: var(--space-xl) var(--space-2xl);
+}
+
+.cinema-stills .section-label {
+  margin-block-end: var(--space-md);
+  color: var(--color-muted);
+  font-size: var(--text-xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.cinema-stills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: var(--space-md);
+}
+
+.cinema-still {
+  margin: 0;
+}
+
+.cinema-still img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  background: var(--color-paper-2);
+  border-radius: var(--radius-sm);
+}
+
+.cinema-still figcaption {
+  margin-block-start: var(--space-xs);
+  color: var(--color-muted);
+  font-size: var(--text-xs);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
 .cinema-profile-meta {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -2169,6 +2330,60 @@ body.is-navigating {
 
 .cinema-profile-meta dd:last-child {
   margin-block-end: 0;
+}
+
+.cinema-profile-section {
+  max-width: 48rem;
+  margin-block: var(--space-xl) var(--space-2xl);
+}
+
+.cinema-profile-list {
+  margin-block: var(--space-md) 0;
+  padding-inline-start: 1.25rem;
+}
+
+.cinema-profile-list li + li {
+  margin-block-start: var(--space-sm);
+}
+
+.cinema-link-list {
+  list-style: none;
+  padding-inline-start: 0;
+}
+
+.cinema-link-list a {
+  color: var(--color-ink);
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
+
+.cinema-trailer {
+  margin-block: var(--space-xl) var(--space-2xl);
+}
+
+.cinema-trailer-embed {
+  width: 100%;
+  max-width: 48rem;
+  aspect-ratio: 16 / 9;
+  background: var(--color-ink);
+}
+
+.breakout .cinema-trailer-embed {
+  max-width: 64rem;
+  margin-inline: auto;
+}
+
+.cinema-trailer-embed iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.cinema-trailer-fallback {
+  margin-block: var(--space-sm) 0;
+  color: var(--color-muted);
+  font-size: var(--text-sm);
 }
 
 .cinema-sources {
@@ -2208,6 +2423,215 @@ body.is-navigating {
   .cinema-profile-meta {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+}
+
+/* Netflix/IMDb-style film hero */
+.cinema-hero {
+  position: relative;
+  min-height: 55vh;
+  max-height: 70vh;
+  display: flex;
+  align-items: flex-end;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin-block: calc(var(--nav-height) * -1) var(--space-3xl);
+  padding-block-start: var(--nav-height);
+  border-radius: 0 0 var(--radius-panel) var(--radius-panel);
+  overflow: hidden;
+}
+
+.cinema-hero-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    transparent 30%,
+    color-mix(in oklch, var(--color-room) 60%, transparent) 55%,
+    var(--color-room) 95%
+  );
+  pointer-events: none;
+}
+
+.cinema-hero-inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: var(--content-max);
+  margin-inline: auto;
+  padding: var(--space-xl) var(--frame-side) var(--space-3xl);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-xl);
+  align-items: end;
+}
+
+.cinema-hero-poster {
+  flex: 0 0 auto;
+  margin: 0;
+}
+
+.cinema-hero-poster img {
+  width: clamp(120px, 18vw, 200px);
+  height: auto;
+  aspect-ratio: 2/3;
+  object-fit: cover;
+  border-radius: var(--radius-panel);
+  box-shadow: 0 24px 48px -12px color-mix(in oklch, var(--color-room) 80%, transparent);
+  background: var(--color-paper-2);
+}
+
+.cinema-hero-poster figcaption {
+  margin-block-start: var(--space-xs);
+  color: var(--color-muted);
+  font-size: var(--text-xs);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.cinema-hero-meta {
+  min-width: 0;
+}
+
+.cinema-hero-type {
+  margin: 0 0 var(--space-xs);
+  color: var(--color-screen-soft);
+  font-family: var(--font-display);
+  font-size: var(--text-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.cinema-hero-title {
+  margin: 0 0 var(--space-md);
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--color-on-dark);
+  max-width: 50ch;
+}
+
+.cinema-hero-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-block-end: var(--space-md);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-2xs) var(--space-sm);
+  font-family: var(--font-display);
+  font-size: var(--text-xs);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: color-mix(in oklch, var(--color-room) 85%, transparent);
+  border: var(--rule-thin) solid var(--color-rule);
+  border-radius: var(--radius-control);
+  color: var(--color-on-dark);
+  white-space: nowrap;
+}
+
+.chip--runtime { border-color: var(--color-accent); }
+.chip--country { border-color: var(--color-screen); }
+.chip--platform { border-color: var(--color-muted); }
+
+.cinema-hero-synopsis {
+  margin: 0;
+  max-width: 60ch;
+  color: var(--color-on-dark);
+  font-size: var(--text-base);
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+/* Cast rail — horizontal scroll like Netflix/IMDb */
+.cinema-cast {
+  max-width: var(--content-max);
+  margin-inline: auto;
+  padding-inline: var(--frame-side);
+  margin-block-end: var(--space-2xl);
+}
+
+.cinema-cast .section-label {
+  margin-block-end: var(--space-md);
+  color: var(--color-muted);
+  font-family: var(--font-display);
+  font-size: var(--text-xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.cinema-cast-list {
+  display: flex;
+  gap: var(--space-sm);
+  overflow-x: auto;
+  padding-block-end: var(--space-xs);
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-rule) transparent;
+}
+
+.cinema-cast-list::-webkit-scrollbar {
+  height: 6px;
+}
+
+.cinema-cast-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.cinema-cast-list::-webkit-scrollbar-thumb {
+  background: var(--color-rule);
+  border-radius: 3px;
+}
+
+.cinema-cast-item {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  padding: var(--space-2xs) var(--space-md);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--color-ink);
+  background: var(--color-paper-2);
+  border: var(--rule-thin) solid var(--color-rule);
+  border-radius: var(--radius-panel);
+  white-space: nowrap;
+  transition: border-color var(--dur-short) var(--ease-out), color var(--dur-short) var(--ease-out);
+}
+
+.cinema-cast-item:hover {
+  border-color: var(--color-screen);
+  color: var(--color-screen);
+}
+
+/* Adjustments when hero is present */
+.cinema-profile .cinema-stills,
+.cinema-profile .cinema-profile-meta,
+.cinema-profile .cinema-profile-section,
+.cinema-profile .cinema-trailer {
+  max-width: var(--content-max);
+  margin-inline: auto;
+  padding-inline: var(--frame-side);
+}
+
+.cinema-profile .cinema-stills .section-label,
+.cinema-profile .cinema-profile-section .section-label,
+.cinema-profile .cinema-trailer .section-label {
+  color: var(--color-muted);
+  font-family: var(--font-display);
+  font-size: var(--text-xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* Back link positioning inside hero */
+.cinema-hero + .cinema-back {
+  display: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
