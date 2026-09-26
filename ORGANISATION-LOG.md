@@ -16,6 +16,13 @@ Entry template:
 
 ---
 
+## 2026-09-26 — Cloudflare check failing on PR 5
+
+- Who: Claude (agent), asked by Nomishka.
+- Done: Looked into the red check on https://github.com/Nomishka/bitcoinfilmfest-com-fork/pull/5. The failing check is `Workers Builds` (Cloudflare Workers Git integration). It fails right away, before building anything. The repo's own `Public-safe Pages preview build` check passes. No code change fixes it; the problem is a setting in the Cloudflare dashboard.
+- PR: https://github.com/Nomishka/bitcoinfilmfest-com-fork/pull/5 (explanation posted as a PR comment).
+- Open / next: Nomishka either disconnects the repo in Cloudflare, or sets it up as Cloudflare Pages (root `site`, build `bundle exec jekyll build`, output `_site`). PR 5 can be merged either way.
+
 ## 2026-09-23 — Agent working rules and GitHub guide
 
 - Who: Claude (agent), requested by Nomishka.
