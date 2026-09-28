@@ -40,12 +40,16 @@ Owner wants the site to feel like sitting in a cinema: the screen in the middle,
 - New seat **Colour** (picker + swatches: cinema blue #2b3a55 default, red velvet, BFF orange, charcoal, screen blue). Implemented as `--seat` on :root with color-mix shading (needs Chrome 111+/Safari 16.2+/Firefox 113+).
 - New **Pattern** (upholstery) on `.seat > i`: none, pinstripe, quilted, dots, ₿ logo, orange heart, or the owner's own uploaded image (tiled/centred, FileReader data URL, not saved anywhere). Scale and Strength sliders. Owner has not yet picked colour/pattern.
 
+## Owner feedback, round 6 (2026-09-28) — values LOCKED
+- **Locked** (removed from the Tune panel, hard-coded, shown as a read-only "Locked" line): Size 1.30x, Position +0.30 desktop / 0.00 phone, Arms 0%, Walk 0.75 rows, Look 35%, **seat colour rgb(5, 18, 26) = #05121a**. Do not reintroduce sliders for these unless the owner asks.
+- Pattern work continues: Scale range now 0.05–3 (default 0.25, owner wants very small patterns), new **pattern colour** picker (default #f7931a), and 18 presets in groups: Lines (pinstripe, corduroy, diagonal, grid, crosshatch, quilted), Weaves (checker, houndstooth, herringbone, chevron, waves, dots), Motifs tiled (tiny ₿, hearts, stars, rabbits, film strip), Single emblem (₿ logo, heart), plus the owner's uploaded image. Owner has not picked a pattern yet.
+
 ## Verified
 - Jekyll build passes locally with the lab page (needs `LANG=C.UTF-8` in a bare container, otherwise SCSS fails on UTF-8).
 - Headless Chromium screenshots of all five versions at 0/20/60% scroll: no JS errors, all render.
 - Not verified: Safari/Firefox, real phones, soft navigation interaction (the lab is outside the shared shell).
 
 ## Next steps
-1. Owner picks seat colour + pattern (Size 1.3, Arms 0%, Walk 0.75, Look 35%, Position +0.30 desktop / 0.00 phone already chosen). If they upload their own pattern, save that file to site/assets/images/ for production.
+1. Owner picks pattern, pattern colour, scale and strength (everything else is locked, see round 6). If they upload their own pattern, save that file to site/assets/images/ for production.
 2. Port into `site/_layouts/default.html`: replace the `<img class="cinema-seats">` with the rows container, move the chosen CSS into `cinema-frame.css` (use tokens), move the engine into `main.js`, keep `prefers-reduced-motion` and the soft-navigation contract (seats stay mounted; recompute on `bff:navigated`/route swap).
 3. Tune overlap so the rows never cover text: in A the far rows converge at ~0.8 of viewport height; D/E cover ~130 px at 1280×800.

@@ -10,6 +10,7 @@ Short, human-readable record of public website changes. One dated entry is requi
 - Seat backs lost the centre seam; added Size and Arms sliders, larger seats on phones, and a walk that never reveals new rows.
 - Set the owner's chosen defaults (Look 35%, Walk 0.75 rows, Arms 0%) and added a Position slider for the rows' height.
 - Added seat colour and upholstery pattern controls (presets or an uploaded image) and separate desktop/phone positions.
+- Locked the chosen seat settings (including seat colour rgb(5, 18, 26)); added a pattern colour, a finer pattern scale and many more upholstery patterns.
 - The live site's shared seats are unchanged; the lab exists to pick a version before it replaces `cinema-seats.png`.
 
 ## 2026-09-26 — Add official web-sourced film visual assets batch 1
