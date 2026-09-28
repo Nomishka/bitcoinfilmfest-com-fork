@@ -2,6 +2,27 @@
 
 Short, human-readable record of public website changes. One dated entry is required for every source change that affects the website.
 
+## 2026-09-28 — Replace the seat image with 3D cinema seats on every page
+
+- Every page now has three solid rows of CSS cinema seats in perspective. As you scroll you walk slowly toward the screen; rows you pass slide out under the bottom edge, and the room turns slightly with the mouse.
+- The look matches the Seat Lab choices: large dark navy seats (#05121a) with a fine houndstooth upholstery and orange aisle step lights; phones show about three seats across.
+- Applies to the shared layout and to the standalone BFF'26 press pages and press kit. The old seat image stays only as a fallback when JavaScript is off, and motion stops for visitors who ask for reduced motion.
+- All settings are data attributes on the seat element, so they can be tuned without code changes.
+
+## 2026-09-28 — Add Seat Lab prototype for scroll-driven cinema seats
+
+- Added a hidden, noindexed prototype page at `/lab/seats/` with five switchable seat effects: aisle walk, take your seat, raked floor, parallax stack and image rows.
+- Added three transparent seat-row images for the image-rows version and the script that renders them.
+- Refined the chosen aisle walk: solid rows without audience, at most three rows on screen, eased scroll and pointer motion, and Walk/Look sliders for tuning.
+- Seat backs lost the centre seam; added Size and Arms sliders, larger seats on phones, and a walk that never reveals new rows.
+- Set the owner's chosen defaults (Look 35%, Walk 0.75 rows, Arms 0%) and added a Position slider for the rows' height.
+- Added seat colour and upholstery pattern controls (presets or an uploaded image) and separate desktop/phone positions.
+- Locked the chosen seat settings (including seat colour rgb(5, 18, 26)); added a pattern colour, a finer pattern scale and many more upholstery patterns.
+- Locked the houndstooth upholstery and motion, restored seat and pattern colour pickers, removed versions B–E from the lab, and made the take-your-seat intro the tunable opening of the aisle walk.
+- Dropped the take-your-seat intro and reopened every seat, motion and upholstery setting in the Tune panel, starting from the chosen values.
+- Added Seat light and Aisle lights controls.
+- The live site's shared seats were unchanged by the lab itself; the lab exists to pick a version before it replaces `cinema-seats.png`.
+
 ## 2026-09-26 — Add official web-sourced film visual assets batch 1
 
 - Added Hooroo Jackson's official theatrical poster to Aimy in a Cage.

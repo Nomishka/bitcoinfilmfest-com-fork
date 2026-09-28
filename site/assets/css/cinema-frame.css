@@ -184,7 +184,8 @@ p {
   pointer-events: none;
 }
 
-/* Fixed foreground seats. The source is a wide 11.5:1 strip, so the image
+/* No-JavaScript fallback for the 3D seat rows (cinema-seats.css/.js); hidden
+   once the rows are live. The source is a wide 11.5:1 strip, so the image
    must retain its natural ratio. A constrained height had been shrinking and
    vertically clipping it; width-driven sizing preserves the full silhouette. */
 .cinema-seats {
@@ -196,25 +197,8 @@ p {
   max-width: none;
   height: auto;
   pointer-events: none;
-  --seat-scroll-scale: 1;
-  transform: translateX(-50%) scale(var(--seat-scroll-scale));
+  transform: translateX(-50%);
   transform-origin: center bottom;
-}
-
-/* A visible projector-like seat push tracks page scroll. */
-@supports (animation-timeline: scroll()) {
-  @media (prefers-reduced-motion: no-preference) {
-    .cinema-seats {
-      animation: seats-scroll-zoom linear both;
-      animation-timeline: scroll(root block);
-      animation-range: 0% 100%;
-    }
-  }
-}
-
-@keyframes seats-scroll-zoom {
-  from { transform: translateX(-50%) scale(1); }
-  to { transform: translateX(-50%) scale(1.11); }
 }
 
 /* Shared navigation */
