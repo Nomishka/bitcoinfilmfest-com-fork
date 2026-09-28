@@ -44,12 +44,18 @@ Owner wants the site to feel like sitting in a cinema: the screen in the middle,
 - **Locked** (removed from the Tune panel, hard-coded, shown as a read-only "Locked" line): Size 1.30x, Position +0.30 desktop / 0.00 phone, Arms 0%, Walk 0.75 rows, Look 35%, **seat colour rgb(5, 18, 26) = #05121a**. Do not reintroduce sliders for these unless the owner asks.
 - Pattern work continues: Scale range now 0.05–3 (default 0.25, owner wants very small patterns), new **pattern colour** picker (default #f7931a), and 18 presets in groups: Lines (pinstripe, corduroy, diagonal, grid, crosshatch, quilted), Weaves (checker, houndstooth, herringbone, chevron, waves, dots), Motifs tiled (tiny ₿, hearts, stars, rabbits, film strip), Single emblem (₿ logo, heart), plus the owner's uploaded image. Owner has not picked a pattern yet.
 
+## Owner feedback, round 7 (2026-09-28)
+- **Locked** in addition: pattern **houndstooth, 0.33x, #4f4040, 20% strength**; **motion always on** (toggle removed; the system reduced-motion setting is still respected).
+- Colour pickers are back in the Tune panel: **seat colour** (default #05121a) and **pattern colour** (default #4f4040). Owner may still change these.
+- **Versions B–E turned off**: tabs and number keys removed; the lab only shows A. Their code (floor, stack, image rows) is still in the file, dormant, if ever wanted.
+- **Intro ("take your seat") merged into A** as the opening of the page, with its own Tune section: on/off, Length (0.3–2 screens, 0.90), Start size (30–95%, 56%), Rows passed (0–1.5, 0.50), Room lights (0–100%, 100%), Lights down (0–80%, 50%), Curve (in-out / fast start / slow start / linear), Replay. In production it goes on the homepage only; other pages get A without the intro.
+
 ## Verified
 - Jekyll build passes locally with the lab page (needs `LANG=C.UTF-8` in a bare container, otherwise SCSS fails on UTF-8).
 - Headless Chromium screenshots of all five versions at 0/20/60% scroll: no JS errors, all render.
 - Not verified: Safari/Firefox, real phones, soft navigation interaction (the lab is outside the shared shell).
 
 ## Next steps
-1. Owner picks pattern, pattern colour, scale and strength (everything else is locked, see round 6). If they upload their own pattern, save that file to site/assets/images/ for production.
+1. Owner tunes the intro values and confirms seat/pattern colours (everything else is locked, see rounds 6–7). If they upload their own pattern, save that file to site/assets/images/ for production.
 2. Port into `site/_layouts/default.html`: replace the `<img class="cinema-seats">` with the rows container, move the chosen CSS into `cinema-frame.css` (use tokens), move the engine into `main.js`, keep `prefers-reduced-motion` and the soft-navigation contract (seats stay mounted; recompute on `bff:navigated`/route swap).
 3. Tune overlap so the rows never cover text: in A the far rows converge at ~0.8 of viewport height; D/E cover ~130 px at 1280×800.

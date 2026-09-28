@@ -127,12 +127,16 @@ permalink: /lab/seats/
   .locked { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.5; text-transform: none; letter-spacing: 0.02em; }
   .locked b { color: var(--paper); font-weight: 400; text-transform: uppercase; letter-spacing: 0.08em; margin-right: 4px; }
   .tune input[type="color"] { width: 110px; height: 22px; padding: 0; border: 1px solid var(--rule); background: none; cursor: pointer; }
+  .tune { max-height: calc(100dvh - var(--bar-h) - 20px); overflow-y: auto; }
+  .tune:not([open]) { width: auto; }
+  .tune-h { margin: 6px 0 0; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--paper); }
+  .tune input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--accent); }
   .tune summary { cursor: pointer; color: var(--accent); text-transform: uppercase; }
   .tune summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   .slider { display: grid; grid-template-columns: 6.2em 110px 6.4em; justify-content: start; align-items: center; gap: 8px; color: var(--muted); text-transform: uppercase; white-space: nowrap; }
   .slider input { width: 110px; accent-color: var(--accent); }
   .slider output { min-width: 5.2em; font-variant-numeric: tabular-nums; color: var(--paper); text-transform: none; }
-  .readout { color: var(--muted); min-width: 4.5em; text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .readout { margin-inline-start: auto; color: var(--muted); min-width: 4.5em; text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
 
   /* ---------- room lights (version B) ---------- */
   .room {
@@ -147,7 +151,7 @@ permalink: /lab/seats/
       linear-gradient(oklch(16% 0.012 250), oklch(9% 0.006 245));
     pointer-events: none;
   }
-  body[data-v="b"] .room { display: block; }
+  body[data-v="b"] .room, body.intro-on .room { display: block; }
 
   /* ---------- the screen and its content ---------- */
   .screen {
@@ -316,59 +320,30 @@ permalink: /lab/seats/
 
 <header class="bar">
   <div class="brand"><b>●</b> bff <span>seat lab</span></div>
-  <div class="tabs" role="group" aria-label="Seat versions">
-    <button type="button" id="tab-a" data-v="a" aria-pressed="true">A · Aisle</button>
-    <button type="button" id="tab-b" data-v="b" aria-pressed="false">B · Take seat</button>
-    <button type="button" id="tab-c" data-v="c" aria-pressed="false">C · Floor</button>
-    <button type="button" id="tab-d" data-v="d" aria-pressed="false">D · Stack</button>
-    <button type="button" id="tab-e" data-v="e" aria-pressed="false">E · Image rows</button>
-  </div>
-  <button type="button" class="toggle" id="t-motion" aria-pressed="true">Motion</button>
   <span class="readout" id="readout" aria-live="off">0%</span>
 </header>
 
 <details class="tune" id="tune" open>
   <summary>Tune</summary>
-  <p class="locked"><b>Locked</b> Size 1.30× · Position +0.30 (phone 0.00) · Arms 0% · Walk 0.75 rows · Look 35% · Seat colour rgb(5, 18, 26)</p>
-  <label class="slider" for="s-pattern">Pattern
-    <select id="s-pattern">
-      <option value="none">None</option>
-      <optgroup label="Lines">
-        <option value="pinstripe">Pinstripe</option>
-        <option value="corduroy">Corduroy</option>
-        <option value="diagonal">Diagonal stripes</option>
-        <option value="grid">Grid</option>
-        <option value="crosshatch">Crosshatch</option>
-        <option value="quilted">Quilted</option>
-      </optgroup>
-      <optgroup label="Weaves">
-        <option value="checker">Checker</option>
-        <option value="houndstooth">Houndstooth</option>
-        <option value="herringbone">Herringbone</option>
-        <option value="chevron">Chevron</option>
-        <option value="waves">Waves</option>
-        <option value="dots">Dots</option>
-      </optgroup>
-      <optgroup label="Motifs, tiled">
-        <option value="btc-tile">Tiny ₿</option>
-        <option value="heart-tile">Tiny hearts</option>
-        <option value="star-tile">Stars</option>
-        <option value="rabbit-tile">Rabbits</option>
-        <option value="film-tile">Film strip</option>
-      </optgroup>
-      <optgroup label="Single emblem">
-        <option value="bitcoin">₿ logo</option>
-        <option value="heart">Heart</option>
-      </optgroup>
-      <optgroup label="Your image">
-        <option value="upload-tile" disabled>My image, tiled</option>
-        <option value="upload-center" disabled>My image, centred</option>
-      </optgroup>
+  <p class="locked"><b>Locked</b> Size 1.30× · Position +0.30 (phone 0.00) · Arms 0% · Walk 0.75 rows · Look 35% · Motion on · Houndstooth 0.33× at 20%</p>
+  <h3 class="tune-h">Seats</h3>
+  <label class="slider" for="s-color">Seat <input type="color" id="s-color" value="#05121a"><output id="o-color">#05121a</output></label>
+  <label class="slider" for="s-pcolor">Pattern <input type="color" id="s-pcolor" value="#4f4040"><output id="o-pcolor">#4f4040</output></label>
+  <h3 class="tune-h">Intro · take your seat</h3>
+  <label class="slider" for="i-on">Intro <input type="checkbox" id="i-on" checked><output id="o-on">on</output></label>
+  <label class="slider" for="i-len">Length <input type="range" id="i-len" min="0.3" max="2" step="0.05" value="0.9"><output id="o-len">0.90 screens</output></label>
+  <label class="slider" for="i-start">Start size <input type="range" id="i-start" min="30" max="95" step="1" value="56"><output id="o-start">56%</output></label>
+  <label class="slider" for="i-rows">Rows passed <input type="range" id="i-rows" min="0" max="1.5" step="0.05" value="0.5"><output id="o-rows">0.50 rows</output></label>
+  <label class="slider" for="i-room">Room lights <input type="range" id="i-room" min="0" max="100" step="5" value="100"><output id="o-room">100%</output></label>
+  <label class="slider" for="i-dim">Lights down <input type="range" id="i-dim" min="0" max="80" step="5" value="50"><output id="o-dim">50%</output></label>
+  <label class="slider" for="i-curve">Curve
+    <select id="i-curve">
+      <option value="inout">Smooth in and out</option>
+      <option value="out">Fast start, soft landing</option>
+      <option value="in">Slow start</option>
+      <option value="linear">Linear</option>
     </select><span></span></label>
-  <label class="slider" for="s-pcolor">Colour <input type="color" id="s-pcolor" value="#f7931a"><output id="o-pcolor">#f7931a</output></label>
-  <label class="slider upload" for="s-upload">Upload <input type="file" id="s-upload" accept="image/*"><span></span></label>
-  <label class="slider" for="s-pscale">Scale <input type="range" id="s-pscale" min="0.05" max="3" step="0.01" value="0.25"><output id="o-pscale">0.25×</output></label>
-  <label class="slider" for="s-pop">Strength <input type="range" id="s-pop" min="0" max="100" step="5" value="60"><output id="o-pop">60%</output></label>
+  <button type="button" class="toggle" id="i-replay">Replay intro</button>
 </details>
 
 <div class="room" id="room" aria-hidden="true"></div>
@@ -456,11 +431,11 @@ permalink: /lab/seats/
   var NOTES = {
     a: {
       title: 'A · Aisle walk',
-      desc: 'Three solid rows of empty seats in real perspective. They are the only rows: as you scroll, you walk slowly down the raked floor, the nearest row grows and slides out under the bottom edge, and nothing new appears behind. By the end of the page you are closer to the screen with fewer rows in front of you. Movement is eased, so the room glides after your scroll instead of snapping. Orange step lights mark the aisles. Size, position, armrests, walk, look and the seat colour are locked to the chosen values; the Tune panel now only changes the upholstery pattern, its colour, scale and strength, or your own image.',
+      desc: 'Three solid rows of empty seats in real perspective. They are the only rows: as you scroll, you walk slowly down the raked floor, the nearest row grows and slides out under the bottom edge, and nothing new appears behind. By the end of the page you are closer to the screen with fewer rows in front of you. Movement is eased, so the room glides after your scroll instead of snapping. Orange step lights mark the aisles. The page opens with the take-your-seat intro: you start at the back of a lit room with a small screen, and the first screen of scrolling walks you in, grows the screen and dims the lights. Seat size, position, armrests, walk, look, motion and the houndstooth upholstery are locked; the Tune panel changes the seat and pattern colours and every part of the intro.',
       pros: ['The strongest feeling of moving through the auditorium, now calm enough to read over.', 'Transforms only, so it runs in every browser, including Safari and Firefox.', 'Rows are drawn in CSS: no image to load, sharp at any size, easy to recolour per edition.'],
-      cons: ['Page length changes the walking speed; long pages walk slower at the same setting.', 'Rows cover roughly the bottom fifth of the viewport at 1.3x, so the lowest text of each screen sits behind them until scrolled; Size changes that.', 'With Walk at 2 you pass two of the three rows, so only one row is left at the end of the page.'],
+      cons: ['Page length changes the walking speed; long pages walk slower at the same setting.', 'The intro pins the first screen of scrolling; some visitors read that as scroll hijacking, so it is planned for the homepage only.', 'Rows cover roughly the bottom fifth of the viewport, so the lowest text of each screen sits behind them until scrolled.'],
       effort: 'Medium: one JS module plus CSS, replaces cinema-seats.png.',
-      best: 'Homepage and festival edition pages.'
+      best: 'Every page; the intro only on the homepage.'
     },
     b: {
       title: 'B · Take your seat',
@@ -499,6 +474,13 @@ permalink: /lab/seats/
   var V = 'a';
   var W = 0, H = 0, barH = 52, bottomPx = 100, sw = 100;
   var mx = 0, mxT = 0, ps = 0;
+  var intro = { on: true, len: 0.9, start: 0.56, rows: 0.5, room: 1, dim: 0.5, curve: 'inout' };
+  var CURVES = {
+    inout: function (t) { return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; },
+    out: function (t) { return 1 - Math.pow(1 - t, 3); },
+    'in': function (t) { return t * t * t; },
+    linear: function (t) { return t; }
+  };
   var walkRows = 0.75, lookK = 0.35, sizeK = 1.3, armK = 0, posDesk = 0.3, posMob = 0, posK = 0.3;
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
   var motion = !reduce.matches;
@@ -602,6 +584,7 @@ permalink: /lab/seats/
   }
 
   function resetScreen() {
+    body.classList.remove('intro-on');
     screenEl.style.transform = '';
     screenEl.style.transformOrigin = '';
     screenEl.style.clipPath = '';
@@ -627,7 +610,34 @@ permalink: /lab/seats/
     doc.style.setProperty('--mx', mx.toFixed(4));
 
     if (V === 'a') {
-      walk(p * walkRows, 1);
+      // Intro ("take your seat"): over the first intro.len screens the page is
+      // pinned, the screen grows from intro.start to full size, the lit room
+      // fades out and the seats dim. Then the normal walk continues.
+      var e0 = 1;
+      if (intro.on) {
+        var Il = intro.len * H;
+        var q0 = motion ? clamp(y / Il, 0, 1) : 1;
+        e0 = CURVES[intro.curve](q0);
+        screenEl.style.marginBottom = Il + 'px';
+        body.classList.add('intro-on');
+        if (q0 < 1) {
+          var pin0 = Math.min(y, Il);
+          var visH0 = H - barH - bottomPx;
+          var s0 = intro.start + (1 - intro.start) * e0;
+          screenEl.style.transformOrigin = '50% ' + (visH0 * 0.5).toFixed(1) + 'px';
+          screenEl.style.transform = 'translateY(' + pin0.toFixed(1) + 'px) scale(' + s0.toFixed(4) + ')';
+          screenEl.style.clipPath = 'inset(0 0 ' + Math.max(0, screenEl.offsetHeight - visH0).toFixed(1) + 'px 0)';
+        } else {
+          screenEl.style.transform = 'translateY(' + Il.toFixed(1) + 'px)';
+          screenEl.style.clipPath = '';
+        }
+        doc.style.setProperty('--frame-op', e0.toFixed(3));
+        room.style.opacity = ((1 - e0) * intro.room).toFixed(3);
+        walk(intro.rows * e0 + p * walkRows, 1 - intro.dim * e0);
+      } else {
+        body.classList.remove('intro-on');
+        walk(p * walkRows, 1);
+      }
     } else if (V === 'b') {
       var I = 0.9 * H;
       var q = motion ? clamp(y / I, 0, 1) : 1;
@@ -688,8 +698,6 @@ permalink: /lab/seats/
       ul.textContent = '';
       n[key].forEach(function (t) { var li = document.createElement('li'); li.textContent = t; ul.appendChild(li); });
     });
-    try { localStorage.setItem('bff-seat-lab', v); } catch (e) { /* storage unavailable */ }
-    try { history.replaceState(null, '', '#' + v); } catch (e) { /* sandboxed */ }
     frame();
   }
 
@@ -706,12 +714,7 @@ permalink: /lab/seats/
   document.querySelectorAll('.tabs button').forEach(function (b) {
     b.addEventListener('click', function () { setVersion(b.dataset.v); });
   });
-  toggle('t-motion', function () { return motion; }, function (v) { motion = v; });
 
-  window.addEventListener('keydown', function (e) {
-    var map = { '1': 'a', '2': 'b', '3': 'c', '4': 'd', '5': 'e' };
-    if (map[e.key] && !e.metaKey && !e.ctrlKey && !e.altKey) setVersion(map[e.key]);
-  });
   window.addEventListener('pointermove', function (e) {
     if (e.pointerType !== 'mouse') return;
     mxT = clamp((e.clientX / W) * 2 - 1, -1, 1);
@@ -776,8 +779,9 @@ permalink: /lab/seats/
     'upload-tile': function (k) { return { img: uploadUrl, size: (3 * k).toFixed(3) + 'em auto', repeat: 'repeat' }; },
     'upload-center': function (k) { return { img: uploadUrl, size: (60 * k).toFixed(0) + '% auto', repeat: 'no-repeat', pos: '50% 26%' }; }
   };
-  var patternKey = 'none', patternScale = 0.25, patternColor = '#f7931a', uploadUrl = 'none';
-  var patternSel = document.getElementById('s-pattern');
+  // Locked: houndstooth at 0.33x, 20% strength. Colour stays adjustable.
+  var patternKey = 'houndstooth', patternScale = 0.33, patternColor = '#4f4040', uploadUrl = 'none';
+  doc.style.setProperty('--pattern-op', '0.2');
   function applyPattern() {
     var p = PATTERNS[patternKey](patternScale, patternColor);
     doc.style.setProperty('--pattern', p.img);
@@ -785,40 +789,49 @@ permalink: /lab/seats/
     doc.style.setProperty('--pattern-repeat', p.repeat || 'repeat');
     doc.style.setProperty('--pattern-pos', p.pos || 'center');
   }
-  patternSel.addEventListener('change', function () { patternKey = patternSel.value; applyPattern(); });
-  document.getElementById('s-pscale').addEventListener('input', function (e) {
-    patternScale = parseFloat(e.target.value);
-    document.getElementById('o-pscale').textContent = patternScale.toFixed(2) + '×';
-    applyPattern();
-  });
-  document.getElementById('s-pop').addEventListener('input', function (e) {
-    doc.style.setProperty('--pattern-op', String(parseInt(e.target.value, 10) / 100));
-    document.getElementById('o-pop').textContent = e.target.value + '%';
-  });
-  document.getElementById('s-upload').addEventListener('change', function (e) {
-    var file = e.target.files && e.target.files[0];
-    if (!file) return;
-    var reader = new FileReader();
-    reader.onload = function () {
-      uploadUrl = 'url("' + reader.result + '")';
-      patternSel.querySelectorAll('option[value^="upload"]').forEach(function (o) { o.disabled = false; });
-      patternSel.value = patternKey = 'upload-tile';
-      applyPattern();
-    };
-    reader.readAsDataURL(file);
-  });
   var pColorIn = document.getElementById('s-pcolor');
   pColorIn.addEventListener('input', function () {
     patternColor = pColorIn.value;
     document.getElementById('o-pcolor').textContent = patternColor;
     applyPattern();
   });
+  var colorIn = document.getElementById('s-color');
+  colorIn.addEventListener('input', function () {
+    doc.style.setProperty('--seat', colorIn.value);
+    document.getElementById('o-color').textContent = colorIn.value;
+  });
+  applyPattern();
+
+  // Intro tuning controls.
+  function bindRange(id, out, fmt, set) {
+    var el = document.getElementById(id);
+    el.addEventListener('input', function () {
+      var v = parseFloat(el.value);
+      set(v);
+      document.getElementById(out).textContent = fmt(v);
+      request();
+    });
+  }
+  bindRange('i-len', 'o-len', function (v) { return v.toFixed(2) + ' screens'; }, function (v) { intro.len = v; });
+  bindRange('i-start', 'o-start', function (v) { return v + '%'; }, function (v) { intro.start = v / 100; });
+  bindRange('i-rows', 'o-rows', function (v) { return v.toFixed(2) + ' rows'; }, function (v) { intro.rows = v; });
+  bindRange('i-room', 'o-room', function (v) { return v + '%'; }, function (v) { intro.room = v / 100; });
+  bindRange('i-dim', 'o-dim', function (v) { return v + '%'; }, function (v) { intro.dim = v / 100; });
+  document.getElementById('i-curve').addEventListener('change', function (e) { intro.curve = e.target.value; request(); });
+  document.getElementById('i-on').addEventListener('change', function (e) {
+    intro.on = e.target.checked;
+    document.getElementById('o-on').textContent = intro.on ? 'on' : 'off';
+    if (!intro.on) resetScreen();
+    request();
+  });
+  document.getElementById('i-replay').addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    request();
+  });
 
   if (window.innerWidth < 700) document.getElementById('tune').open = false;
   build();
-  var start = (location.hash || '').replace('#', '');
-  if (!NOTES[start]) { try { start = localStorage.getItem('bff-seat-lab') || 'a'; } catch (e) { start = 'a'; } }
-  setVersion(NOTES[start] ? start : 'a');
+  setVersion('a');
 })();
 </script>
 </body>
