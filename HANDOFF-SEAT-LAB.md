@@ -50,12 +50,18 @@ Owner wants the site to feel like sitting in a cinema: the screen in the middle,
 - **Versions B–E turned off**: tabs and number keys removed; the lab only shows A. Their code (floor, stack, image rows) is still in the file, dormant, if ever wanted.
 - **Intro ("take your seat") merged into A** as the opening of the page, with its own Tune section: on/off, Length (0.3–2 screens, 0.90), Start size (30–95%, 56%), Rows passed (0–1.5, 0.50), Room lights (0–100%, 100%), Lights down (0–80%, 50%), Curve (in-out / fast start / slow start / linear), Replay. In production it goes on the homepage only; other pages get A without the intro.
 
+## Owner feedback, round 8 (2026-09-28) — intro dropped, everything unlocked
+- **Forget the take-your-seat intro**: removed from A (the dormant B code remains in the file only). The earlier "B on the homepage later" plan is cancelled unless the owner revives it.
+- **All seat settings unlocked** and back in the Tune panel: Size, Position (desktop/phone values kept separately), Arms, seat Colour, Walk, Look, Motion toggle, Pattern (18 presets + upload), pattern Colour, Scale (0.05–3), Strength. Rounds 6–7 "locked" notes are superseded.
+- Defaults = the owner's last choices: Size 1.30, Position +0.30 desktop / 0.00 phone, Arms 0%, Walk 0.75, Look 35%, seat #05121a, houndstooth 0.33x #4f4040 at 20%, motion on.
+- Versions B–E remain hidden.
+
 ## Verified
 - Jekyll build passes locally with the lab page (needs `LANG=C.UTF-8` in a bare container, otherwise SCSS fails on UTF-8).
 - Headless Chromium screenshots of all five versions at 0/20/60% scroll: no JS errors, all render.
 - Not verified: Safari/Firefox, real phones, soft navigation interaction (the lab is outside the shared shell).
 
 ## Next steps
-1. Owner tunes the intro values and confirms seat/pattern colours (everything else is locked, see rounds 6–7). If they upload their own pattern, save that file to site/assets/images/ for production.
+1. Owner sends final values from the fully open Tune panel (round 8), then "ship it". If they upload their own pattern, save that file to site/assets/images/ for production.
 2. Port into `site/_layouts/default.html`: replace the `<img class="cinema-seats">` with the rows container, move the chosen CSS into `cinema-frame.css` (use tokens), move the engine into `main.js`, keep `prefers-reduced-motion` and the soft-navigation contract (seats stay mounted; recompute on `bff:navigated`/route swap).
 3. Tune overlap so the rows never cover text: in A the far rows converge at ~0.8 of viewport height; D/E cover ~130 px at 1280×800.

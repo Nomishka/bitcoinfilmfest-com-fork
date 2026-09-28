@@ -12,6 +12,7 @@ Short, human-readable record of public website changes. One dated entry is requi
 - Added seat colour and upholstery pattern controls (presets or an uploaded image) and separate desktop/phone positions.
 - Locked the chosen seat settings (including seat colour rgb(5, 18, 26)); added a pattern colour, a finer pattern scale and many more upholstery patterns.
 - Locked the houndstooth upholstery and motion, restored seat and pattern colour pickers, removed versions B–E from the lab, and made the take-your-seat intro the tunable opening of the aisle walk.
+- Dropped the take-your-seat intro and reopened every seat, motion and upholstery setting in the Tune panel, starting from the chosen values.
 - The live site's shared seats are unchanged; the lab exists to pick a version before it replaces `cinema-seats.png`.
 
 ## 2026-09-26 — Add official web-sourced film visual assets batch 1
