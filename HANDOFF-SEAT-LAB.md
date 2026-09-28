@@ -56,12 +56,18 @@ Owner wants the site to feel like sitting in a cinema: the screen in the middle,
 - Defaults = the owner's last choices: Size 1.30, Position +0.30 desktop / 0.00 phone, Arms 0%, Walk 0.75, Look 35%, seat #05121a, houndstooth 0.33x #4f4040 at 20%, motion on.
 - Versions B–E remain hidden.
 
+## Round 9 (2026-09-28) — DEPLOYED site-wide
+- Lab: added **Seat light** (20–250%) and **Aisle lights** (0–100%) controls (lights had disappeared with the intro).
+- Production: `site/assets/css/cinema-seats.css` + `site/assets/js/cinema-seats.js`. A `<div class="seat-rows" data-…>` holds every setting (size, position, position-phone, arms, walk, look, light, aisle-lights, color, pattern, pattern-color, pattern-scale, pattern-strength). **To retune the live site, edit those data attributes**: in `site/_layouts/default.html` and, for the standalone pages, in `site/26/press/*.html` (34 files) and `site/presskit/index.html` (same attribute block; these use `style="--seat-z: 9996"` and relative asset paths).
+- The old `<img class="cinema-seats">` stays as the no-JS fallback; `html.seat-rows-live` hides it. The old 11% PNG zoom (CSS scroll timeline + main.js fallback) was removed.
+- Live values: Size 1.3, Position 0.3 / phone 0, Arms 0, Walk 0.75, Look 0.35, Light 1, Aisle lights 1, #05121a, houndstooth 0.33 #4f4040 at 0.2.
+
 ## Verified
 - Jekyll build passes locally with the lab page (needs `LANG=C.UTF-8` in a bare container, otherwise SCSS fails on UTF-8).
 - Headless Chromium screenshots of all five versions at 0/20/60% scroll: no JS errors, all render.
 - Not verified: Safari/Firefox, real phones, soft navigation interaction (the lab is outside the shared shell).
 
 ## Next steps
-1. Owner sends final values from the fully open Tune panel (round 8), then "ship it". If they upload their own pattern, save that file to site/assets/images/ for production.
+1. Shipped. Further tuning = change the data attributes listed in round 9 (use the lab to find values). If they upload their own pattern, save that file to site/assets/images/ for production.
 2. Port into `site/_layouts/default.html`: replace the `<img class="cinema-seats">` with the rows container, move the chosen CSS into `cinema-frame.css` (use tokens), move the engine into `main.js`, keep `prefers-reduced-motion` and the soft-navigation contract (seats stay mounted; recompute on `bff:navigated`/route swap).
 3. Tune overlap so the rows never cover text: in A the far rows converge at ~0.8 of viewport height; D/E cover ~130 px at 1280×800.

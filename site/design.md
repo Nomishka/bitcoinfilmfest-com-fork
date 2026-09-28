@@ -51,7 +51,7 @@ A 4-point named scale lives in `tokens.css`. Components use named tokens or flui
 - The viewport has a near-black room frame on all sides.
 - A fixed inner bezel/shadow gives the screen depth without a grey page tail.
 - The screen edge is defined only by a soft bezel shadow. Do not add a perforation pattern.
-- Cinema seats stay fixed to the true bottom edge.
+- Cinema seats stay fixed to the true bottom edge. They are three CSS seat rows in perspective (assets/css/cinema-seats.css, assets/js/cinema-seats.js) tuned by data attributes on `.seat-rows`; the PNG is only the no-JS fallback. Try changes in /lab/seats/ first.
 - The shared footer always closes on the room black and includes enough bottom padding for the seats.
 
 ## Navigation

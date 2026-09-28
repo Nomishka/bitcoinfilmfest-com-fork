@@ -7,6 +7,11 @@ description: Iterate on the Seat Lab prototype (scroll-driven 3D cinema seats) a
 
 Read `HANDOFF-SEAT-LAB.md` first: it holds every owner decision so far (chosen values, rules such as "max 3 rows, never reveal new rows", "no audience", "B only on the homepage").
 
+## Production (live since 2026-09-28)
+- `site/assets/css/cinema-seats.css`, `site/assets/js/cinema-seats.js`; settings are data attributes on `.seat-rows` in `_layouts/default.html` AND in the 35 standalone pages (`26/press/*.html`, `presskit/index.html`). Change all of them together (a python loop over the files replacing the attribute block works).
+- Check production after a change: build, serve the build output with `python3 -m http.server`, and in Playwright assert `html.seat-rows-live` and 3 `.sr-row` on /, /cinema/, /26/press/, /presskit/.
+- Shell gotcha: always quote heredocs (`<<'EOF'`) when the text contains backticks.
+
 ## Files
 - `site/lab/seats/index.html`: the lab. Jekyll front matter + a wrapper, then a self-contained fragment (inline CSS/JS). The same fragment (without the wrapper) is published as the owner's Claude artifact.
 - `site/lab/seats/rows/*.png` + `scripts/seat-rows/`: version E images and their renderer.
