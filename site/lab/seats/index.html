@@ -106,6 +106,9 @@ permalink: /lab/seats/
   .tabs button[aria-pressed="true"] { background: var(--paper); color: var(--ink); border-color: var(--paper); }
   .toggle[aria-pressed="true"] { color: var(--accent); border-color: color-mix(in oklch, var(--accent) 60%, var(--rule)); }
   .tabs button:focus-visible, .toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .slider { display: flex; align-items: center; gap: 8px; color: var(--muted); text-transform: uppercase; white-space: nowrap; }
+  .slider input { width: 88px; accent-color: var(--accent); }
+  .slider output { min-width: 5.2em; font-variant-numeric: tabular-nums; color: var(--paper); text-transform: none; }
   .readout { color: var(--muted); min-width: 4.5em; text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
 
   /* ---------- room lights (version B) ---------- */
@@ -180,10 +183,19 @@ permalink: /lab/seats/
     top: 0;
     display: flex;
     align-items: flex-end;
-    gap: calc(var(--sw) * 0.035);
+    gap: 0;
     font-size: calc(var(--sw) / 10);
     transform-origin: 50% 100%;
-    will-change: transform, opacity;
+    will-change: transform;
+  }
+  /* Solid backing under the seat bases and aisles, so the screen never shows
+     through a row. */
+  .row::before {
+    content: "";
+    position: absolute;
+    inset: 42% 0 0 0;
+    z-index: -1;
+    background: linear-gradient(180deg, oklch(12% 0.012 258), oklch(6% 0.005 250));
   }
   .seat { position: relative; display: block; flex: none; width: var(--sw); height: calc(var(--sw) * 0.92); isolation: isolate; }
   .seat::before {
@@ -209,33 +221,6 @@ permalink: /lab/seats/
       linear-gradient(180deg, oklch(38% 0.035 258), oklch(14% 0.01 258)) left bottom / 11% 100% no-repeat,
       linear-gradient(180deg, oklch(38% 0.035 258), oklch(14% 0.01 258)) right bottom / 11% 100% no-repeat;
   }
-  .head {
-    position: absolute;
-    z-index: 0;
-    left: 31%;
-    top: -34%;
-    width: 38%;
-    height: 52%;
-    border-radius: 48% 48% 42% 42% / 55% 55% 45% 45%;
-    background: radial-gradient(ellipse at 50% 28%, oklch(22% 0.02 250), oklch(8% 0.005 250) 72%);
-    box-shadow: inset 0 0.18em 0.25em oklch(70% 0.1 240 / 0.3);
-  }
-  .seat:nth-child(3n) .head { top: -27%; height: 46%; left: 33%; width: 35%; }
-  .seat:nth-child(4n+1) .head { border-radius: 50% 50% 38% 38% / 62% 62% 38% 38%; width: 42%; left: 29%; }
-  /* Mr. Rabbit has a ticket too. */
-  .head.rabbit::before, .head.rabbit::after {
-    content: "";
-    position: absolute;
-    bottom: 70%;
-    width: 28%;
-    height: 120%;
-    border-radius: 50%;
-    background: inherit;
-    box-shadow: inherit;
-  }
-  .head.rabbit::before { left: 12%; transform: rotate(-12deg); }
-  .head.rabbit::after { right: 12%; transform: rotate(10deg); }
-  .no-heads .head { display: none; }
   .aisle { position: relative; flex: none; width: calc(var(--sw) * 0.6); height: calc(var(--sw) * 0.92); }
   .aisle i {
     position: absolute;
@@ -300,8 +285,8 @@ permalink: /lab/seats/
     <button type="button" id="tab-d" data-v="d" aria-pressed="false">D · Stack</button>
     <button type="button" id="tab-e" data-v="e" aria-pressed="false">E · Image rows</button>
   </div>
-  <button type="button" class="toggle" id="t-heads" aria-pressed="true">Audience</button>
-  <button type="button" class="toggle" id="t-look" aria-pressed="true">Look around</button>
+  <label class="slider" for="s-walk">Walk <input type="range" id="s-walk" min="0.5" max="3" step="0.25" value="1.5"><output id="o-walk">1.5 rows</output></label>
+  <label class="slider" for="s-look">Look <input type="range" id="s-look" min="0" max="100" step="5" value="20"><output id="o-look">20%</output></label>
   <button type="button" class="toggle" id="t-motion" aria-pressed="true">Motion</button>
   <span class="readout" id="readout" aria-live="off">0%</span>
 </header>
@@ -391,9 +376,9 @@ permalink: /lab/seats/
   var NOTES = {
     a: {
       title: 'A · Aisle walk',
-      desc: 'Eleven rows of CSS seats placed in real perspective. The whole page is one walk: as you scroll, the camera moves forward and down the raked floor. Rows you pass grow, slide under the bottom edge and fade out, and new rows keep appearing in front. Orange step lights mark the aisles.',
-      pros: ['The strongest feeling of moving through the auditorium.', 'Plain transforms and opacity, so it runs in every browser, including Safari and Firefox.', 'Rows are drawn in CSS: no image to load, sharp at any size, easy to recolour per edition.'],
-      cons: ['Distant rows always cover a strip at the bottom of the screen; needs tuning so no text sits there.', 'About 400 small elements; fine on laptops, worth a check on old phones.', 'Page length changes the walking speed.'],
+      desc: 'Solid rows of empty seats in real perspective, never more than three at a time. As you scroll, you walk slowly down the raked floor: the nearest row grows and slides out under the bottom edge, and the next row rises into place from behind. Movement is eased, so the room glides after your scroll instead of snapping. Orange step lights mark the aisles. Tune it with Walk (rows travelled over the whole page) and Look (how much the room follows the pointer).',
+      pros: ['The strongest feeling of moving through the auditorium, now calm enough to read over.', 'Transforms only, so it runs in every browser, including Safari and Firefox.', 'Rows are drawn in CSS: no image to load, sharp at any size, easy to recolour per edition.'],
+      cons: ['Page length changes the walking speed; long pages walk slower at the same setting.', 'Rows cover roughly the bottom fifth of the viewport, so the lowest text of each screen sits behind them until scrolled.', 'About 200 small elements; fine on laptops, worth a check on old phones.'],
       effort: 'Medium: one JS module plus CSS, replaces cinema-seats.png.',
       best: 'Homepage and festival edition pages.'
     },
@@ -433,8 +418,8 @@ permalink: /lab/seats/
 
   var V = 'a';
   var W = 0, H = 0, barH = 52, bottomPx = 100, sw = 100;
-  var mx = 0;
-  var look = true, heads = true;
+  var mx = 0, mxT = 0, ps = 0;
+  var walkRows = 1.5, lookK = 0.2;
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
   var motion = !reduce.matches;
   var rows = [], stack = [], imgs = [];
@@ -442,16 +427,13 @@ permalink: /lab/seats/
 
   function clamp(v, a, b) { return Math.min(b, Math.max(a, v)); }
   function ease(t) { return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; }
-  function occupied(i, j) { return ((i * 131 + j * 71) ^ (i * j * 17)) % 11 < 3; }
-
-  function buildRow(n, aisles, i, rabbitAt) {
+  function buildRow(n, aisles) {
     var el = document.createElement('div');
     el.className = 'row';
     var html = '';
     for (var j = 0; j < n; j++) {
       if (aisles.indexOf(j) !== -1) html += '<span class="aisle"><i></i></span>';
-      var occ = occupied(i, j) || j === rabbitAt;
-      html += '<span class="seat">' + (occ ? '<i class="head' + (j === rabbitAt ? ' rabbit' : '') + '"></i>' : '') + '</span>';
+      html += '<span class="seat"></span>';
     }
     el.innerHTML = html;
     return el;
@@ -477,8 +459,8 @@ permalink: /lab/seats/
 
     rowsWrap.textContent = '';
     rows = [];
-    for (var i = 0; i < 11; i++) {
-      var el = buildRow(34, [10, 24], i, i === 2 ? 15 : -1);
+    for (var i = 0; i < 8; i++) {
+      var el = buildRow(34, [10, 24]);
       rowsWrap.appendChild(el);
       rows.push({ el: el });
     }
@@ -486,8 +468,8 @@ permalink: /lab/seats/
 
     stackWrap.textContent = '';
     stack = [];
-    [[18, 9], [13, -1], [9, 4]].forEach(function (cfg, k) {
-      var el = buildRow(cfg[0], [], k + 20, cfg[1]);
+    [18, 13, 9].forEach(function (n) {
+      var el = buildRow(n, []);
       stackWrap.appendChild(el);
       stack.push({ el: el });
     });
@@ -516,17 +498,19 @@ permalink: /lab/seats/
 
   // Rows sit on a raked floor. d is the distance (in rows) ahead of the viewer;
   // a simple pinhole projection turns it into scale and screen position.
+  // At most three rows are on screen. A passing row slides fully below the
+  // bottom edge (no fading), and the third row rises out from behind the
+  // second one instead of popping in.
   function walk(k, lit) {
     var P = 1.2 * H, D = 0.8 * H, drop = 0.133 * H, eye = 0.5 * H, hz = 0.6 * H;
     rows.forEach(function (r, i) {
       var d = i - k;
-      if (d < -0.6 || d > 5.5) { place(r, 0, 0, 1, 0, 1, 0); return; }
+      if (d <= -0.95 || d >= 3) { place(r, 0, 0, 1, 0, 1, 0); return; }
       var s = P / (P + D * d);
-      var y = hz + (eye + drop * d) * s;
-      var op = d < 0 ? (d + 0.6) / 0.6 : (d > 4.5 ? 5.5 - d : 1);
-      var br = (0.48 + 0.11 * Math.min(d, 5)) * lit;
-      var cx = W / 2 - mx * 0.07 * W * s;
-      place(r, cx, y, s, op, br, 1000 - Math.round(d * 100));
+      var y = hz + (eye + drop * d) * s + clamp(d - 2, 0, 1) * r.h * s;
+      var br = (0.5 + 0.1 * Math.max(0, d)) * lit;
+      var cx = W / 2 - mx * 0.07 * lookK * W * s;
+      place(r, cx, y, s, 1, br, 1000 - Math.round(d * 100));
     });
   }
 
@@ -542,11 +526,21 @@ permalink: /lab/seats/
     ticking = false;
     var y = window.scrollY;
     var max = Math.max(1, doc.scrollHeight - H);
-    var p = motion ? clamp(y / max, 0, 1) : 0;
+    var target = motion ? clamp(y / max, 0, 1) : 0;
     readout.textContent = Math.round(clamp(y / max, 0, 1) * 100) + '%';
 
+    // Ease toward the scroll and pointer targets so the room glides.
+    var targetMx = motion ? mxT * lookK : 0;
+    ps += (target - ps) * 0.09;
+    mx += (targetMx - mx) * 0.06;
+    if (Math.abs(target - ps) < 0.0004) ps = target;
+    if (Math.abs(targetMx - mx) < 0.0005) mx = targetMx;
+    if (ps !== target || mx !== targetMx) request();
+    var p = ps;
+    doc.style.setProperty('--mx', mx.toFixed(4));
+
     if (V === 'a') {
-      walk(p * 4, 1);
+      walk(p * walkRows, 1);
     } else if (V === 'b') {
       var I = 0.9 * H;
       var q = motion ? clamp(y / I, 0, 1) : 1;
@@ -565,21 +559,21 @@ permalink: /lab/seats/
       }
       doc.style.setProperty('--frame-op', e.toFixed(3));
       room.style.opacity = (1 - e).toFixed(3);
-      walk(e * 3, 1 - 0.5 * e);
+      walk(e * 2, 1 - 0.5 * e);
     } else if (V === 'c') {
       doc.style.setProperty('--fy', (motion ? y * 0.5 : 0).toFixed(1) + 'px');
     } else if (V === 'd') {
       var f = stack[2], m = stack[1], b = stack[0];
       var h = f.h;
-      place(b, W / 2 - mx * 0.015 * W, H - 0.62 * h + p * 0.1 * h, 0.5 + 0.08 * p, 1, 0.85, 1);
-      place(m, W / 2 + sw * 0.3 - mx * 0.03 * W, H - 0.34 * h + p * 0.28 * h, 0.7 + 0.16 * p, 1, 0.62, 2);
-      place(f, W / 2 - mx * 0.055 * W, H + 0.38 * h + p * 0.45 * h, 1 + 0.3 * p, 1, 0.45, 3);
+      place(b, W / 2 - mx * 0.02 * W, H - 0.62 * h + p * 0.1 * h, 0.5 + 0.08 * p, 1, 0.85, 1);
+      place(m, W / 2 + sw * 0.3 - mx * 0.045 * W, H - 0.34 * h + p * 0.28 * h, 0.7 + 0.16 * p, 1, 0.62, 2);
+      place(f, W / 2 - mx * 0.08 * W, H + 0.38 * h + p * 0.45 * h, 1 + 0.3 * p, 1, 0.45, 3);
     } else if (V === 'e') {
       var ib = imgs[0], im = imgs[1], fr = imgs[2];
       var hh = fr.h, t = ease(p);
-      place(ib, W / 2 - mx * 0.015 * W, H - 0.45 * hh + t * 0.25 * hh, 0.52 + 0.2 * t, 1, 1, 1);
+      place(ib, W / 2 - mx * 0.02 * W, H - 0.45 * hh + t * 0.25 * hh, 0.52 + 0.2 * t, 1, 1, 1);
       place(im, W / 2 + sw * 0.3 * (1 - t) - mx * (0.03 + 0.025 * t) * W, H - 0.2 * hh + t * 0.5 * hh, 0.72 + 0.28 * t, 1, 1, 2);
-      place(fr, W / 2 - mx * 0.055 * W, H + 0.3 * hh + t * 0.8 * hh, 1 + 0.5 * t, 1 - clamp((t - 0.75) / 0.25, 0, 1), 1, 3);
+      place(fr, W / 2 - mx * 0.08 * W, H + 0.3 * hh + t * 0.8 * hh, 1 + 0.5 * t, 1 - clamp((t - 0.75) / 0.25, 0, 1), 1, 3);
     }
   }
 
@@ -625,8 +619,17 @@ permalink: /lab/seats/
   document.querySelectorAll('.tabs button').forEach(function (b) {
     b.addEventListener('click', function () { setVersion(b.dataset.v); });
   });
-  toggle('t-heads', function () { return heads; }, function (v) { heads = v; body.classList.toggle('no-heads', !v); });
-  toggle('t-look', function () { return look; }, function (v) { look = v; if (!v) { mx = 0; doc.style.setProperty('--mx', '0'); } });
+  var walkIn = document.getElementById('s-walk'), lookIn = document.getElementById('s-look');
+  walkIn.addEventListener('input', function () {
+    walkRows = parseFloat(walkIn.value);
+    document.getElementById('o-walk').textContent = walkRows + (walkRows === 1 ? ' row' : ' rows');
+    request();
+  });
+  lookIn.addEventListener('input', function () {
+    lookK = parseInt(lookIn.value, 10) / 100;
+    document.getElementById('o-look').textContent = lookIn.value + '%';
+    request();
+  });
   toggle('t-motion', function () { return motion; }, function (v) { motion = v; });
 
   window.addEventListener('keydown', function (e) {
@@ -634,9 +637,8 @@ permalink: /lab/seats/
     if (map[e.key] && !e.metaKey && !e.ctrlKey && !e.altKey) setVersion(map[e.key]);
   });
   window.addEventListener('pointermove', function (e) {
-    if (!look || e.pointerType !== 'mouse' || !motion) return;
-    mx = clamp((e.clientX / W) * 2 - 1, -1, 1);
-    doc.style.setProperty('--mx', mx.toFixed(3));
+    if (e.pointerType !== 'mouse') return;
+    mxT = clamp((e.clientX / W) * 2 - 1, -1, 1);
     request();
   }, { passive: true });
   window.addEventListener('scroll', request, { passive: true });

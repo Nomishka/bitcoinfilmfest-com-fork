@@ -16,12 +16,16 @@ Owner wants the site to feel like sitting in a cinema: the screen in the middle,
 - `scripts/seat-rows/` — renderer for the E images (Playwright; see header of `render.js`).
 - Published preview (owner's private artifact): https://claude.ai/artifact/Sptff4DHa3bEcM5sBWaZNV
 
+## Owner feedback, round 2 (2026-09-28): A chosen, refined
+- Likes **A Aisle walk**. Requirements applied: no audience (heads removed everywhere, E images re-rendered empty), seats fully solid (no gaps between seats, dark backing under bases/aisles, passing rows slide off the bottom instead of fading), **max 3 rows on screen** (third row rises from behind the second), gentler motion.
+- Motion is now eased (scroll progress lerp 0.09/frame, pointer lerp 0.06/frame). Defaults: Walk = 1.5 rows across the whole page, Look = 20% of the original pointer strength. Both are sliders in the lab bar so the owner can tune; carry the chosen values into production.
+
 ## Verified
 - Jekyll build passes locally with the lab page (needs `LANG=C.UTF-8` in a bare container, otherwise SCSS fails on UTF-8).
 - Headless Chromium screenshots of all five versions at 0/20/60% scroll: no JS errors, all render.
 - Not verified: Safari/Firefox, real phones, soft navigation interaction (the lab is outside the shared shell).
 
 ## Next steps
-1. Owner picks a version (suggested: D or E site-wide, B only on the homepage).
+1. Owner confirms final Walk / Look values for A (defaults 1.5 rows / 20%).
 2. Port into `site/_layouts/default.html`: replace the `<img class="cinema-seats">` with the rows container, move the chosen CSS into `cinema-frame.css` (use tokens), move the engine into `main.js`, keep `prefers-reduced-motion` and the soft-navigation contract (seats stay mounted; recompute on `bff:navigated`/route swap).
 3. Tune overlap so the rows never cover text: in A the far rows converge at ~0.8 of viewport height; D/E cover ~130 px at 1280×800.

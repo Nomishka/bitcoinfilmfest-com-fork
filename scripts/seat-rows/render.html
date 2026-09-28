@@ -51,10 +51,19 @@
     top: 0;
     display: flex;
     align-items: flex-end;
-    gap: calc(var(--sw) * 0.035);
+    gap: 0;
     font-size: calc(var(--sw) / 10);
     transform-origin: 50% 100%;
-    will-change: transform, opacity;
+    will-change: transform;
+  }
+  /* Solid backing under the seat bases and aisles, so the screen never shows
+     through a row. */
+  .row::before {
+    content: "";
+    position: absolute;
+    inset: 42% 0 0 0;
+    z-index: -1;
+    background: linear-gradient(180deg, oklch(12% 0.012 258), oklch(6% 0.005 250));
   }
   .seat { position: relative; display: block; flex: none; width: var(--sw); height: calc(var(--sw) * 0.92); isolation: isolate; }
   .seat::before {
@@ -80,33 +89,6 @@
       linear-gradient(180deg, oklch(38% 0.035 258), oklch(14% 0.01 258)) left bottom / 11% 100% no-repeat,
       linear-gradient(180deg, oklch(38% 0.035 258), oklch(14% 0.01 258)) right bottom / 11% 100% no-repeat;
   }
-  .head {
-    position: absolute;
-    z-index: 0;
-    left: 31%;
-    top: -34%;
-    width: 38%;
-    height: 52%;
-    border-radius: 48% 48% 42% 42% / 55% 55% 45% 45%;
-    background: radial-gradient(ellipse at 50% 28%, oklch(22% 0.02 250), oklch(8% 0.005 250) 72%);
-    box-shadow: inset 0 0.18em 0.25em oklch(70% 0.1 240 / 0.3);
-  }
-  .seat:nth-child(3n) .head { top: -27%; height: 46%; left: 33%; width: 35%; }
-  .seat:nth-child(4n+1) .head { border-radius: 50% 50% 38% 38% / 62% 62% 38% 38%; width: 42%; left: 29%; }
-  /* Mr. Rabbit has a ticket too. */
-  .head.rabbit::before, .head.rabbit::after {
-    content: "";
-    position: absolute;
-    bottom: 70%;
-    width: 28%;
-    height: 120%;
-    border-radius: 50%;
-    background: inherit;
-    box-shadow: inherit;
-  }
-  .head.rabbit::before { left: 12%; transform: rotate(-12deg); }
-  .head.rabbit::after { right: 12%; transform: rotate(10deg); }
-  .no-heads .head { display: none; }
   .aisle { position: relative; flex: none; width: calc(var(--sw) * 0.6); height: calc(var(--sw) * 0.92); }
   .aisle i {
     position: absolute;
@@ -125,7 +107,7 @@ html,body{background:transparent!important;margin:0}
 .row{position:relative;display:inline-flex;width:max-content;transform:none;will-change:auto;padding-top:calc(var(--sw)*0.75)}
 body::before{display:none}
 </style></head><body><div id=w></div><script>
-function occ(i,j){return ((i*131+j*71)^(i*j*17))%11<3}
+function occ(i,j){return false}
 window.make=function(n,i,rab,sw){var h='';for(var j=0;j<n;j++){var o=occ(i,j)||j===rab;h+='<span class="seat">'+(o?'<i class="head'+(j===rab?' rabbit':'')+'"></i>':'')+'</span>'}
 var w=document.getElementById('w');w.innerHTML='<div class=row id=r style="--sw:'+sw+'px">'+h+'</div>';}
 </script></body></html>
