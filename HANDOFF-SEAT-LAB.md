@@ -28,7 +28,11 @@ Owner wants the site to feel like sitting in a cinema: the screen in the middle,
 - **No row is ever revealed**: exactly 3 rows exist; walking only removes rows off the bottom. Walk slider max is 2 (then one row remains).
 - Walk geometry is now in seat-height units (eye 1.83h, drop 0.49h, front row bottom at H + 0.37h), so phone and desktop compose the same.
 - Tuning controls moved to a collapsible "Tune" panel (collapsed on phones).
-- Current defaults to carry into production: Size 1.3, Arms 18%, Walk 1.5 rows, Look 20%.
+- (Superseded by round 4 defaults below.)
+
+## Owner feedback, round 4 (2026-09-28)
+- Owner's chosen values: **Look 35%, Walk 0.75 rows, Arms 0%**, Size stays at the bigger 1.3x. Now the lab defaults.
+- Added **Position** slider (-0.5 to +1 seat heights; positive = lower). Owner felt rows sat too high; default +0.20 while they test. Carry their final value into production.
 
 ## Verified
 - Jekyll build passes locally with the lab page (needs `LANG=C.UTF-8` in a bare container, otherwise SCSS fails on UTF-8).
@@ -36,6 +40,6 @@ Owner wants the site to feel like sitting in a cinema: the screen in the middle,
 - Not verified: Safari/Firefox, real phones, soft navigation interaction (the lab is outside the shared shell).
 
 ## Next steps
-1. Owner confirms final Walk / Look values for A (defaults 1.5 rows / 20%).
+1. Owner confirms final Position value (Size 1.3, Arms 0%, Walk 0.75, Look 35% already chosen).
 2. Port into `site/_layouts/default.html`: replace the `<img class="cinema-seats">` with the rows container, move the chosen CSS into `cinema-frame.css` (use tokens), move the engine into `main.js`, keep `prefers-reduced-motion` and the soft-navigation contract (seats stay mounted; recompute on `bff:navigated`/route swap).
 3. Tune overlap so the rows never cover text: in A the far rows converge at ~0.8 of viewport height; D/E cover ~130 px at 1280×800.

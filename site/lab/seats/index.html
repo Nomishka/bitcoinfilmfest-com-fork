@@ -122,7 +122,7 @@ permalink: /lab/seats/
   }
   .tune summary { cursor: pointer; color: var(--accent); text-transform: uppercase; }
   .tune summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-  .slider { display: flex; justify-content: space-between; align-items: center; gap: 8px; color: var(--muted); text-transform: uppercase; white-space: nowrap; }
+  .slider { display: grid; grid-template-columns: 6.2em 110px 6.4em; justify-content: start; align-items: center; gap: 8px; color: var(--muted); text-transform: uppercase; white-space: nowrap; }
   .slider input { width: 110px; accent-color: var(--accent); }
   .slider output { min-width: 5.2em; font-variant-numeric: tabular-nums; color: var(--paper); text-transform: none; }
   .readout { color: var(--muted); min-width: 4.5em; text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
@@ -308,9 +308,10 @@ permalink: /lab/seats/
 <details class="tune" id="tune" open>
   <summary>Tune</summary>
   <label class="slider" for="s-size">Size <input type="range" id="s-size" min="0.8" max="2" step="0.05" value="1.3"><output id="o-size">1.30×</output></label>
-  <label class="slider" for="s-arm">Arms <input type="range" id="s-arm" min="0" max="40" step="1" value="18"><output id="o-arm">18%</output></label>
-  <label class="slider" for="s-walk">Walk <input type="range" id="s-walk" min="0" max="2" step="0.25" value="1.5"><output id="o-walk">1.5 rows</output></label>
-  <label class="slider" for="s-look">Look <input type="range" id="s-look" min="0" max="100" step="5" value="20"><output id="o-look">20%</output></label>
+  <label class="slider" for="s-pos">Position <input type="range" id="s-pos" min="-0.5" max="1" step="0.05" value="0.2"><output id="o-pos">+0.20 seat</output></label>
+  <label class="slider" for="s-arm">Arms <input type="range" id="s-arm" min="0" max="40" step="1" value="0"><output id="o-arm">0%</output></label>
+  <label class="slider" for="s-walk">Walk <input type="range" id="s-walk" min="0" max="2" step="0.05" value="0.75"><output id="o-walk">0.75 rows</output></label>
+  <label class="slider" for="s-look">Look <input type="range" id="s-look" min="0" max="100" step="5" value="35"><output id="o-look">35%</output></label>
 </details>
 
 <div class="room" id="room" aria-hidden="true"></div>
@@ -398,7 +399,7 @@ permalink: /lab/seats/
   var NOTES = {
     a: {
       title: 'A · Aisle walk',
-      desc: 'Three solid rows of empty seats in real perspective. They are the only rows: as you scroll, you walk slowly down the raked floor, the nearest row grows and slides out under the bottom edge, and nothing new appears behind. By the end of the page you are closer to the screen with fewer rows in front of you. Movement is eased, so the room glides after your scroll instead of snapping. Orange step lights mark the aisles. Tune it in the panel: Size (seat size), Arms (armrest width between seats), Walk (rows passed over the whole page) and Look (how much the room follows the pointer).',
+      desc: 'Three solid rows of empty seats in real perspective. They are the only rows: as you scroll, you walk slowly down the raked floor, the nearest row grows and slides out under the bottom edge, and nothing new appears behind. By the end of the page you are closer to the screen with fewer rows in front of you. Movement is eased, so the room glides after your scroll instead of snapping. Orange step lights mark the aisles. Tune it in the panel: Size (seat size), Position (moves the rows down, in seat heights), Arms (armrest width between seats), Walk (rows passed over the whole page) and Look (how much the room follows the pointer).',
       pros: ['The strongest feeling of moving through the auditorium, now calm enough to read over.', 'Transforms only, so it runs in every browser, including Safari and Firefox.', 'Rows are drawn in CSS: no image to load, sharp at any size, easy to recolour per edition.'],
       cons: ['Page length changes the walking speed; long pages walk slower at the same setting.', 'Rows cover roughly the bottom fifth of the viewport at 1.3x, so the lowest text of each screen sits behind them until scrolled; Size changes that.', 'With Walk at 2 you pass two of the three rows, so only one row is left at the end of the page.'],
       effort: 'Medium: one JS module plus CSS, replaces cinema-seats.png.',
@@ -441,7 +442,7 @@ permalink: /lab/seats/
   var V = 'a';
   var W = 0, H = 0, barH = 52, bottomPx = 100, sw = 100;
   var mx = 0, mxT = 0, ps = 0;
-  var walkRows = 1.5, lookK = 0.2, sizeK = 1.3, armK = 0.18;
+  var walkRows = 0.75, lookK = 0.35, sizeK = 1.3, armK = 0, posK = 0.2;
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
   var motion = !reduce.matches;
   var rows = [], stack = [], imgs = [];
@@ -530,7 +531,7 @@ permalink: /lab/seats/
     // Geometry is measured in seat heights, so a phone and a laptop show the
     // same composition: the front row's top third sits inside the viewport.
     var h = rows[0].h;
-    var P = 1.2 * H, D = 0.8 * H, drop = 0.49 * h, eye = 1.83 * h, hz = H + 0.37 * h - eye;
+    var P = 1.2 * H, D = 0.8 * H, drop = 0.49 * h, eye = 1.83 * h, hz = H + (0.37 + posK) * h - eye;
     rows.forEach(function (r, i) {
       var d = i - k;
       if (d <= -0.95 || d >= 3) { place(r, 0, 0, 1, 0, 1, 0); return; }
@@ -650,7 +651,7 @@ permalink: /lab/seats/
   var walkIn = document.getElementById('s-walk'), lookIn = document.getElementById('s-look');
   walkIn.addEventListener('input', function () {
     walkRows = parseFloat(walkIn.value);
-    document.getElementById('o-walk').textContent = walkRows + (walkRows === 1 ? ' row' : ' rows');
+    document.getElementById('o-walk').textContent = walkRows.toFixed(2) + (walkRows === 1 ? ' row' : ' rows');
     request();
   });
   var sizeIn = document.getElementById('s-size'), armIn = document.getElementById('s-arm');
@@ -658,6 +659,12 @@ permalink: /lab/seats/
     sizeK = parseFloat(sizeIn.value);
     document.getElementById('o-size').textContent = sizeK.toFixed(2) + '×';
     build();
+    request();
+  });
+  var posIn = document.getElementById('s-pos');
+  posIn.addEventListener('input', function () {
+    posK = parseFloat(posIn.value);
+    document.getElementById('o-pos').textContent = (posK >= 0 ? '+' : '') + posK.toFixed(2) + ' seat';
     request();
   });
   armIn.addEventListener('input', function () {
