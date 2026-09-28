@@ -2,6 +2,12 @@
 
 Short, human-readable record of public website changes. One dated entry is required for every source change that affects the website.
 
+## 2026-09-28 — Add Seat Lab prototype for scroll-driven cinema seats
+
+- Added a hidden, noindexed prototype page at `/lab/seats/` with five switchable seat effects: aisle walk, take your seat, raked floor, parallax stack and image rows.
+- Added three transparent seat-row images for the image-rows version and the script that renders them.
+- The live site's shared seats are unchanged; the lab exists to pick a version before it replaces `cinema-seats.png`.
+
 ## 2026-09-26 — Add official web-sourced film visual assets batch 1
 
 - Added Hooroo Jackson's official theatrical poster to Aimy in a Cage.

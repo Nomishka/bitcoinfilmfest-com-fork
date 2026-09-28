@@ -1,0 +1,656 @@
+---
+layout: null
+sitemap: false
+permalink: /lab/seats/
+---
+<!DOCTYPE html>
+<!--
+  Seat Lab: prototype of five scroll-driven cinema seat effects. Not linked from
+  navigation and noindexed. Same file is published as a Claude artifact. See
+  HANDOFF-SEAT-LAB.md for how to ship a chosen version into _layouts/default.html.
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<title>BFF Seat Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne+Mono&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  /* Single dark look on purpose: this is the inside of a cinema. Colours follow
+     the bitcoinfilmfest.com tokens (tokens.css). */
+  :root {
+    color-scheme: dark;
+    --room: oklch(7% 0.005 245);
+    --room-raised: oklch(11% 0.007 245);
+    --rule: oklch(27% 0.012 245);
+    --paper: oklch(95.5% 0.022 92.5);
+    --ink: oklch(20.4% 0.003 248);
+    --screen: oklch(62.8% 0.152 243);
+    --screen-deep: oklch(48% 0.14 250);
+    --accent: oklch(77.5% 0.169 65.8);
+    --on-screen: oklch(98% 0.01 92);
+    --muted: oklch(72% 0.02 240);
+    --font-display: "Syne Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+    --font-body: "Courier Prime", "Courier New", ui-monospace, monospace;
+    --bar-h: 52px;
+    --side: clamp(12px, 4vw, 72px);
+    --bottom: clamp(88px, 12vh, 136px);
+    --frame-op: 1;
+    --fy: 0px;
+    --mx: 0;
+  }
+  html { background: var(--room); }
+  body {
+    margin: 0;
+    background: var(--room);
+    color: var(--on-screen);
+    font-family: var(--font-body);
+    font-size: 17px;
+    line-height: 1.6;
+    overflow-x: clip;
+  }
+  * { box-sizing: border-box; }
+
+  /* Room frame: the dark auditorium around the screen, as on the live site. */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 2;
+    border-top: var(--bar-h) solid var(--room);
+    border-left: var(--side) solid var(--room);
+    border-right: var(--side) solid var(--room);
+    border-bottom: var(--bottom) solid var(--room);
+    opacity: var(--frame-op);
+    pointer-events: none;
+  }
+
+  /* ---------- lab bar ---------- */
+  .bar {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 10;
+    height: var(--bar-h);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding-inline: var(--side);
+    background: var(--room);
+    font-family: var(--font-display);
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .bar::-webkit-scrollbar { display: none; }
+  .brand { white-space: nowrap; color: var(--paper); }
+  .brand b { color: var(--accent); font-weight: 400; }
+  .tabs { display: flex; gap: 4px; margin-inline-start: auto; }
+  .tabs button, .toggle {
+    appearance: none;
+    border: 1px solid var(--rule);
+    background: transparent;
+    color: var(--muted);
+    font: inherit;
+    text-transform: uppercase;
+    padding: 6px 10px;
+    border-radius: 2px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .tabs button[aria-pressed="true"] { background: var(--paper); color: var(--ink); border-color: var(--paper); }
+  .toggle[aria-pressed="true"] { color: var(--accent); border-color: color-mix(in oklch, var(--accent) 60%, var(--rule)); }
+  .tabs button:focus-visible, .toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .readout { color: var(--muted); min-width: 4.5em; text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+  /* ---------- room lights (version B) ---------- */
+  .room {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    display: none;
+    background:
+      radial-gradient(ellipse 9% 18% at 12% 40%, oklch(80% 0.12 70 / 0.35), transparent 70%),
+      radial-gradient(ellipse 9% 18% at 88% 40%, oklch(80% 0.12 70 / 0.35), transparent 70%),
+      radial-gradient(ellipse 60% 50% at 50% 100%, oklch(30% 0.03 250), transparent 70%),
+      linear-gradient(oklch(16% 0.012 250), oklch(9% 0.006 245));
+    pointer-events: none;
+  }
+  body[data-v="b"] .room { display: block; }
+
+  /* ---------- the screen and its content ---------- */
+  .screen {
+    position: relative;
+    z-index: 1;
+    margin: var(--bar-h) var(--side) 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 70% 10%, oklch(72% 0.13 236 / 0.8), transparent 70%),
+      linear-gradient(170deg, var(--screen) 0%, var(--screen-deep) 100%);
+    will-change: transform;
+  }
+  .inner { width: min(100% - 32px, 62rem); margin-inline: auto; }
+  .sec { padding-block: 14vh; }
+  .eyebrow { font-family: var(--font-display); letter-spacing: 0.18em; text-transform: uppercase; font-size: 13px; opacity: 0.85; margin: 0 0 18px; }
+  h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.05; letter-spacing: -0.02em; text-wrap: balance; margin: 0 0 18px; }
+  h1 { font-size: clamp(44px, 9vw, 104px); }
+  h2 { font-size: clamp(30px, 5vw, 56px); }
+  h3 { font-size: 22px; }
+  p { margin: 0 0 16px; max-width: 62ch; text-wrap: pretty; }
+  .tagline { font-size: clamp(18px, 2.2vw, 26px); font-family: var(--font-display); }
+  .editions { list-style: none; padding: 0; margin: 48px 0 0; max-width: 40rem; }
+  .editions li { display: grid; grid-template-columns: 6.5rem 1fr auto; gap: 12px; align-items: baseline; padding-block: 16px; border-top: 1px solid oklch(98% 0.01 92 / 0.45); }
+  .editions li:last-child { border-bottom: 1px solid oklch(98% 0.01 92 / 0.45); }
+  .editions b { font-family: var(--font-display); font-weight: 400; font-size: 22px; }
+  .editions span { font-size: 14px; opacity: 0.85; }
+  .editions a { color: inherit; }
+
+  .notes {
+    background: var(--paper);
+    color: var(--ink);
+    padding: clamp(20px, 4vw, 44px);
+    border-left: 6px solid var(--accent);
+  }
+  .notes .eyebrow { color: oklch(45% 0.1 60); opacity: 1; }
+  .notes h2 { font-size: clamp(28px, 4vw, 44px); }
+  .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 12px 32px; margin-top: 12px; }
+  .grid2 h3 { font-size: 15px; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; }
+  .grid2 ul { margin: 0; padding-left: 1.1em; }
+  .grid2 li { margin-bottom: 6px; }
+  .meta { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-top: 22px; padding-top: 16px; border-top: 1px solid oklch(82% 0.012 92); font-size: 14px; }
+  .meta b { font-family: var(--font-display); font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; }
+
+  .programme { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 28px; margin-top: 32px; }
+  .programme div { border-top: 3px solid var(--accent); padding-top: 14px; }
+  .dark { background: oklch(14% 0.008 245); color: var(--paper); }
+  .dark h2 { font-size: clamp(34px, 6vw, 72px); }
+  .dark .hl { color: var(--accent); }
+
+  /* ---------- CSS cinema seats (versions A, B, D) ---------- */
+  .hall { position: fixed; inset: 0; z-index: 3; pointer-events: none; overflow: hidden; display: none; }
+  body[data-v="a"] #rows, body[data-v="b"] #rows, body[data-v="d"] #stack, body[data-v="e"] #images { display: block; }
+  #images img { position: absolute; left: 0; top: 0; max-width: none; transform-origin: 50% 100%; will-change: transform, opacity; }
+  .row {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: flex;
+    align-items: flex-end;
+    gap: calc(var(--sw) * 0.035);
+    font-size: calc(var(--sw) / 10);
+    transform-origin: 50% 100%;
+    will-change: transform, opacity;
+  }
+  .seat { position: relative; display: block; flex: none; width: var(--sw); height: calc(var(--sw) * 0.92); isolation: isolate; }
+  .seat::before {
+    content: "";
+    position: absolute;
+    inset: 0 7% 16% 7%;
+    z-index: 1;
+    border-radius: 42% 42% 10% 10% / 30% 30% 8% 8%;
+    background:
+      linear-gradient(90deg, transparent 49%, oklch(5% 0 0 / 0.4) 50%, transparent 51%),
+      linear-gradient(180deg, oklch(47% 0.05 258) 0%, oklch(33% 0.045 258) 20%, oklch(22% 0.03 258) 60%, oklch(13% 0.015 258) 100%);
+    box-shadow: inset 0 0.14em 0 oklch(100% 0 0 / 0.14), inset 0 -1.2em 1.4em oklch(0% 0 0 / 0.55);
+  }
+  .seat::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 40%;
+    z-index: 2;
+    background:
+      linear-gradient(180deg, oklch(38% 0.035 258), oklch(14% 0.01 258)) left bottom / 11% 100% no-repeat,
+      linear-gradient(180deg, oklch(38% 0.035 258), oklch(14% 0.01 258)) right bottom / 11% 100% no-repeat;
+  }
+  .head {
+    position: absolute;
+    z-index: 0;
+    left: 31%;
+    top: -34%;
+    width: 38%;
+    height: 52%;
+    border-radius: 48% 48% 42% 42% / 55% 55% 45% 45%;
+    background: radial-gradient(ellipse at 50% 28%, oklch(22% 0.02 250), oklch(8% 0.005 250) 72%);
+    box-shadow: inset 0 0.18em 0.25em oklch(70% 0.1 240 / 0.3);
+  }
+  .seat:nth-child(3n) .head { top: -27%; height: 46%; left: 33%; width: 35%; }
+  .seat:nth-child(4n+1) .head { border-radius: 50% 50% 38% 38% / 62% 62% 38% 38%; width: 42%; left: 29%; }
+  /* Mr. Rabbit has a ticket too. */
+  .head.rabbit::before, .head.rabbit::after {
+    content: "";
+    position: absolute;
+    bottom: 70%;
+    width: 28%;
+    height: 120%;
+    border-radius: 50%;
+    background: inherit;
+    box-shadow: inherit;
+  }
+  .head.rabbit::before { left: 12%; transform: rotate(-12deg); }
+  .head.rabbit::after { right: 12%; transform: rotate(10deg); }
+  .no-heads .head { display: none; }
+  .aisle { position: relative; flex: none; width: calc(var(--sw) * 0.6); height: calc(var(--sw) * 0.92); }
+  .aisle i {
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    width: 1em;
+    height: 0.35em;
+    margin-left: -0.5em;
+    border-radius: 0.2em;
+    background: var(--accent);
+    box-shadow: 0 0 1.4em 0.35em oklch(77.5% 0.169 65.8 / 0.55);
+  }
+
+  /* ---------- raked floor (version C): one element, gradients only ---------- */
+  #floor {
+    --t: 17vh;
+    --w: 13vh;
+    position: fixed;
+    z-index: 3;
+    left: -60vw;
+    width: 220vw;
+    top: calc(100vh - var(--bottom) - 9vh);
+    height: 70vh;
+    display: none;
+    pointer-events: none;
+    transform-origin: 50% 0;
+    transform: perspective(100vh) rotateX(50deg) translateX(calc(var(--mx) * -5vw));
+    background-color: oklch(9% 0.008 250);
+    background-image:
+      radial-gradient(circle, var(--accent) 0 22%, transparent 34%),
+      radial-gradient(circle, var(--accent) 0 22%, transparent 34%),
+      linear-gradient(90deg, transparent calc(50% - 6vh), oklch(12% 0.01 250) calc(50% - 6vh) calc(50% + 6vh), transparent calc(50% + 6vh)),
+      linear-gradient(180deg, transparent 72%, oklch(4% 0.004 250) 72%),
+      radial-gradient(ellipse 45% 40% at 50% 44%, oklch(50% 0.055 258) 0%, oklch(31% 0.045 258) 55%, oklch(17% 0.02 258) 86%, transparent 89%);
+    background-size: 2vh var(--t), 2vh var(--t), 100% 100%, 100% var(--t), var(--w) var(--t);
+    background-repeat: repeat-y, repeat-y, no-repeat, repeat, repeat;
+    background-position:
+      calc(50% - 5vh) calc(var(--fy) + var(--t) * 0.8),
+      calc(50% + 5vh) calc(var(--fy) + var(--t) * 0.8),
+      0 0,
+      0 var(--fy),
+      calc(50% + var(--w) / 2) var(--fy);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 28%);
+    mask-image: linear-gradient(to bottom, transparent 0, #000 28%);
+  }
+  body[data-v="c"] #floor { display: block; }
+
+  @media (max-width: 40rem) {
+    body { font-size: 16px; }
+    .editions li { grid-template-columns: 1fr auto; }
+    .editions span { grid-column: 1 / -1; grid-row: 2; }
+    .brand span { display: none; }
+  }
+</style>
+
+<header class="bar">
+  <div class="brand"><b>●</b> bff <span>seat lab</span></div>
+  <div class="tabs" role="group" aria-label="Seat versions">
+    <button type="button" id="tab-a" data-v="a" aria-pressed="true">A · Aisle</button>
+    <button type="button" id="tab-b" data-v="b" aria-pressed="false">B · Take seat</button>
+    <button type="button" id="tab-c" data-v="c" aria-pressed="false">C · Floor</button>
+    <button type="button" id="tab-d" data-v="d" aria-pressed="false">D · Stack</button>
+    <button type="button" id="tab-e" data-v="e" aria-pressed="false">E · Image rows</button>
+  </div>
+  <button type="button" class="toggle" id="t-heads" aria-pressed="true">Audience</button>
+  <button type="button" class="toggle" id="t-look" aria-pressed="true">Look around</button>
+  <button type="button" class="toggle" id="t-motion" aria-pressed="true">Motion</button>
+  <span class="readout" id="readout" aria-live="off">0%</span>
+</header>
+
+<div class="room" id="room" aria-hidden="true"></div>
+
+<main class="screen" id="screen">
+  <section class="sec">
+    <div class="inner">
+      <p class="eyebrow">Warsaw · since 2022</p>
+      <h1>the 🧡 of<br>bitcoin cinema</h1>
+      <p class="tagline">orange-pill cinema<br>unfiat the culture</p>
+      <ul class="editions">
+        <li><b>BFF’27</b><span>24–27 June 2027 · Warsaw</span><a href="#notes">Enter</a></li>
+        <li><b>BFF’26</b><span>Festival archive · 4–7 June 2026</span><a href="#notes">Rewind</a></li>
+        <li><b>BFF’25</b><span>Festival archive · Warsaw</span><a href="#notes">Rewind</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" id="notes">
+    <div class="inner">
+      <article class="notes" aria-live="polite">
+        <p class="eyebrow">Projectionist’s notes · now showing</p>
+        <h2 id="n-title">A · Aisle walk</h2>
+        <p id="n-desc"></p>
+        <div class="grid2">
+          <div><h3>Works well</h3><ul id="n-pros"></ul></div>
+          <div><h3>Watch out</h3><ul id="n-cons"></ul></div>
+        </div>
+        <div class="meta"><span><b>Effort</b> <span id="n-effort"></span></span><span><b>Best for</b> <span id="n-best"></span></span></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="inner">
+      <p class="eyebrow">Now screening</p>
+      <h2>Stories no one else is telling, projected in the heart of Warsaw.</h2>
+      <p>Keep scrolling to feel the room move. The seats react to how far down the page you are, so a longer page means a slower walk. Switch versions in the bar at the top, or press keys 1 to 5.</p>
+      <div class="programme">
+        <div><h3>Golden Rabbits</h3><p>The festival awards for Bitcoin films, shorts and documentaries.</p></div>
+        <div><h3>Pitching Rabbits</h3><p>Film projects in development pitch to the room and to funders.</p></div>
+        <div><h3>PoWies</h3><p>Proof-of-work movie nights between editions.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="inner">
+      <p class="eyebrow">BFF’27 · 24–27 June 2027</p>
+      <h2>Four days, one screen, a room full of plebs.</h2>
+      <p>Premieres, retrospectives, panels with filmmakers, and the after-parties Warsaw is known for. Tickets and programme open closer to the date.</p>
+      <p>Tip for the lab: scroll slowly through this section and watch how far rows sit over the lower part of the screen. That overlap is the main thing to tune before shipping.</p>
+    </div>
+  </section>
+
+  <section class="sec dark">
+    <div class="inner">
+      <h2>FIX THE MONEY.<br>FIX THE CULTURE.</h2>
+      <p class="hl">at the 🧡 of Bitcoin Cinema</p>
+      <p>© 2026 Bitcoin FilmFest · seat lab prototype, not linked from the site navigation.</p>
+    </div>
+  </section>
+</main>
+
+<div class="hall" id="rows" aria-hidden="true"></div>
+<div class="hall" id="stack" aria-hidden="true"></div>
+<div id="floor" aria-hidden="true"></div>
+<div class="hall" id="images" aria-hidden="true">
+  <img id="img-back" src="rows/seats-back.png" width="3348" height="301" alt="">
+  <img id="img-mid" src="rows/seats-mid.png" width="2416" height="301" alt="">
+  <img id="img-front" src="rows/seats-front.png" width="1671" height="301" alt="">
+</div>
+
+<script>
+(function () {
+  'use strict';
+  var doc = document.documentElement;
+  var body = document.body;
+  var screenEl = document.getElementById('screen');
+  var rowsWrap = document.getElementById('rows');
+  var stackWrap = document.getElementById('stack');
+  var readout = document.getElementById('readout');
+  var room = document.getElementById('room');
+
+  var NOTES = {
+    a: {
+      title: 'A · Aisle walk',
+      desc: 'Eleven rows of CSS seats placed in real perspective. The whole page is one walk: as you scroll, the camera moves forward and down the raked floor. Rows you pass grow, slide under the bottom edge and fade out, and new rows keep appearing in front. Orange step lights mark the aisles.',
+      pros: ['The strongest feeling of moving through the auditorium.', 'Plain transforms and opacity, so it runs in every browser, including Safari and Firefox.', 'Rows are drawn in CSS: no image to load, sharp at any size, easy to recolour per edition.'],
+      cons: ['Distant rows always cover a strip at the bottom of the screen; needs tuning so no text sits there.', 'About 400 small elements; fine on laptops, worth a check on old phones.', 'Page length changes the walking speed.'],
+      effort: 'Medium: one JS module plus CSS, replaces cinema-seats.png.',
+      best: 'Homepage and festival edition pages.'
+    },
+    b: {
+      title: 'B · Take your seat',
+      desc: 'A one-time intro over the first screen of scrolling. You start at the back of a lit auditorium looking at a small, distant screen. As you walk down, the screen grows to full size, rows pass beneath you and the house lights dim. After that the room holds still and the page reads like a normal page.',
+      pros: ['The most cinematic option: one clear moment instead of constant motion.', 'Nothing moves while people read the rest of the page.', 'The house-lights-down beat tells the festival story without words.'],
+      cons: ['The hero is pinned for one screen of scrolling, which some visitors read as scroll hijacking.', 'Most code of the four; soft navigation between pages has to skip or replay it.', 'Needs a skip for keyboard and reduced-motion users (the Motion toggle shows the end state).'],
+      effort: 'Medium to high.',
+      best: 'Homepage only, combined with D on every other page.'
+    },
+    c: {
+      title: 'C · Raked floor',
+      desc: 'One element tilted in 3D, painted with CSS gradients: seat backs, a centre aisle and step lights. It slides toward you at half your scroll speed, so rows keep coming forever. Move the pointer and the floor shifts like you are turning your head.',
+      pros: ['Almost free: one element, no images, a single CSS variable updated on scroll.', 'Could run with pure CSS scroll timelines in Chrome, with the tiny JS fallback elsewhere.', 'Endless, so it never runs out on long pages.'],
+      cons: ['Gradient seats read more graphic than physical, and there is no audience.', 'Strong perspective can feel like a treadmill; keep the speed low.', 'Less sense of arriving somewhere.'],
+      effort: 'Low.',
+      best: 'Long archive pages such as Reel and Cinema.'
+    },
+    d: {
+      title: 'D · Parallax stack',
+      desc: 'Three rows drawn in CSS, each zooming and sinking at its own speed as you scroll, with the pointer moving them like a turn of the head. It is the current design done properly: the same seats at the bottom, now with real depth.',
+      pros: ['Lowest risk: a direct swap for the current seat strip in the shared layout.', 'Light enough for every page and every phone.', 'The front row never covers more than today’s strip.'],
+      cons: ['Subtle: you lean forward rather than walk, and never pass a row.', 'Depth comes from only three layers.'],
+      effort: 'Low.',
+      best: 'Site-wide default.'
+    },
+    e: {
+      title: 'E · Image rows',
+      desc: 'Three separate row images (PNG with transparent background), animated independently. Over the whole page you move forward by exactly one row: the front row grows and drops out of view, the middle row takes its place, and the back row comes closer. The back row is pre-blurred to fake depth of field.',
+      pros: ['Any artwork works: AI-generated, photographed or illustrated rows drop in by replacing three files.', 'Only three elements move, so it is the cheapest of all on phones.', 'Lighting, blur and detail are baked into the images, so they can look far richer than CSS.'],
+      cons: ['Three images to design and keep consistent in perspective and light (about 200 KB total here).', 'Fixed resolution: very wide screens need wide source art or rows scaled up.', 'Moving by one row only; a longer walk needs more images.'],
+      effort: 'Low for the code; the time goes into the artwork.',
+      best: 'Site-wide, once final row artwork exists.'
+    }
+  };
+
+  var V = 'a';
+  var W = 0, H = 0, barH = 52, bottomPx = 100, sw = 100;
+  var mx = 0;
+  var look = true, heads = true;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var motion = !reduce.matches;
+  var rows = [], stack = [], imgs = [];
+  var ticking = false;
+
+  function clamp(v, a, b) { return Math.min(b, Math.max(a, v)); }
+  function ease(t) { return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; }
+  function occupied(i, j) { return ((i * 131 + j * 71) ^ (i * j * 17)) % 11 < 3; }
+
+  function buildRow(n, aisles, i, rabbitAt) {
+    var el = document.createElement('div');
+    el.className = 'row';
+    var html = '';
+    for (var j = 0; j < n; j++) {
+      if (aisles.indexOf(j) !== -1) html += '<span class="aisle"><i></i></span>';
+      var occ = occupied(i, j) || j === rabbitAt;
+      html += '<span class="seat">' + (occ ? '<i class="head' + (j === rabbitAt ? ' rabbit' : '') + '"></i>' : '') + '</span>';
+    }
+    el.innerHTML = html;
+    return el;
+  }
+
+  // Layers are display:none unless their version is active, so show them
+  // (invisibly) for a moment while reading the unscaled row sizes.
+  function measure(list) {
+    var wrap = list.length ? list[0].el.parentNode : null;
+    if (wrap) { wrap.style.visibility = 'hidden'; wrap.style.display = 'block'; }
+    list.forEach(function (r) { r.w = r.el.offsetWidth; r.h = r.el.offsetHeight; });
+    if (wrap) { wrap.style.display = ''; wrap.style.visibility = ''; }
+  }
+
+  function build() {
+    W = window.innerWidth;
+    H = window.innerHeight;
+    var cs = getComputedStyle(doc);
+    bottomPx = clamp(0.12 * H, 88, 136);
+    sw = Math.round(Math.max(W / 7, H * 0.11));
+    rowsWrap.style.setProperty('--sw', sw + 'px');
+    stackWrap.style.setProperty('--sw', sw + 'px');
+
+    rowsWrap.textContent = '';
+    rows = [];
+    for (var i = 0; i < 11; i++) {
+      var el = buildRow(34, [10, 24], i, i === 2 ? 15 : -1);
+      rowsWrap.appendChild(el);
+      rows.push({ el: el });
+    }
+    measure(rows);
+
+    stackWrap.textContent = '';
+    stack = [];
+    [[18, 9], [13, -1], [9, 4]].forEach(function (cfg, k) {
+      var el = buildRow(cfg[0], [], k + 20, cfg[1]);
+      stackWrap.appendChild(el);
+      stack.push({ el: el });
+    });
+    measure(stack);
+
+    imgs = ['img-back', 'img-mid', 'img-front'].map(function (id) {
+      var el = document.getElementById(id);
+      var k = sw / 180;
+      var w = el.getAttribute('width') * k, h = el.getAttribute('height') * k;
+      el.style.width = w + 'px';
+      el.style.height = h + 'px';
+      return { el: el, w: w, h: h };
+    });
+    void cs;
+  }
+
+  function place(r, cx, bottom, s, op, br, z) {
+    var st = r.el.style;
+    if (op <= 0.01) { st.visibility = 'hidden'; return; }
+    st.visibility = 'visible';
+    st.transform = 'translate(' + (cx - r.w / 2).toFixed(1) + 'px,' + (bottom - r.h).toFixed(1) + 'px) scale(' + s.toFixed(4) + ')';
+    st.opacity = op.toFixed(3);
+    st.filter = 'brightness(' + br.toFixed(2) + ')';
+    st.zIndex = z;
+  }
+
+  // Rows sit on a raked floor. d is the distance (in rows) ahead of the viewer;
+  // a simple pinhole projection turns it into scale and screen position.
+  function walk(k, lit) {
+    var P = 1.2 * H, D = 0.8 * H, drop = 0.133 * H, eye = 0.5 * H, hz = 0.6 * H;
+    rows.forEach(function (r, i) {
+      var d = i - k;
+      if (d < -0.6 || d > 5.5) { place(r, 0, 0, 1, 0, 1, 0); return; }
+      var s = P / (P + D * d);
+      var y = hz + (eye + drop * d) * s;
+      var op = d < 0 ? (d + 0.6) / 0.6 : (d > 4.5 ? 5.5 - d : 1);
+      var br = (0.48 + 0.11 * Math.min(d, 5)) * lit;
+      var cx = W / 2 - mx * 0.07 * W * s;
+      place(r, cx, y, s, op, br, 1000 - Math.round(d * 100));
+    });
+  }
+
+  function resetScreen() {
+    screenEl.style.transform = '';
+    screenEl.style.transformOrigin = '';
+    screenEl.style.clipPath = '';
+    screenEl.style.marginBottom = '';
+    doc.style.setProperty('--frame-op', '1');
+  }
+
+  function frame() {
+    ticking = false;
+    var y = window.scrollY;
+    var max = Math.max(1, doc.scrollHeight - H);
+    var p = motion ? clamp(y / max, 0, 1) : 0;
+    readout.textContent = Math.round(clamp(y / max, 0, 1) * 100) + '%';
+
+    if (V === 'a') {
+      walk(p * 4, 1);
+    } else if (V === 'b') {
+      var I = 0.9 * H;
+      var q = motion ? clamp(y / I, 0, 1) : 1;
+      var e = ease(q);
+      screenEl.style.marginBottom = I + 'px';
+      if (q < 1) {
+        var pin = Math.min(y, I);
+        var visH = H - barH - bottomPx;
+        var s = 0.56 + 0.44 * e;
+        screenEl.style.transformOrigin = '50% ' + (visH * 0.5).toFixed(1) + 'px';
+        screenEl.style.transform = 'translateY(' + pin.toFixed(1) + 'px) scale(' + s.toFixed(4) + ')';
+        screenEl.style.clipPath = 'inset(0 0 ' + Math.max(0, screenEl.offsetHeight - visH).toFixed(1) + 'px 0)';
+      } else {
+        screenEl.style.transform = 'translateY(' + I.toFixed(1) + 'px)';
+        screenEl.style.clipPath = '';
+      }
+      doc.style.setProperty('--frame-op', e.toFixed(3));
+      room.style.opacity = (1 - e).toFixed(3);
+      walk(e * 3, 1 - 0.5 * e);
+    } else if (V === 'c') {
+      doc.style.setProperty('--fy', (motion ? y * 0.5 : 0).toFixed(1) + 'px');
+    } else if (V === 'd') {
+      var f = stack[2], m = stack[1], b = stack[0];
+      var h = f.h;
+      place(b, W / 2 - mx * 0.015 * W, H - 0.62 * h + p * 0.1 * h, 0.5 + 0.08 * p, 1, 0.85, 1);
+      place(m, W / 2 + sw * 0.3 - mx * 0.03 * W, H - 0.34 * h + p * 0.28 * h, 0.7 + 0.16 * p, 1, 0.62, 2);
+      place(f, W / 2 - mx * 0.055 * W, H + 0.38 * h + p * 0.45 * h, 1 + 0.3 * p, 1, 0.45, 3);
+    } else if (V === 'e') {
+      var ib = imgs[0], im = imgs[1], fr = imgs[2];
+      var hh = fr.h, t = ease(p);
+      place(ib, W / 2 - mx * 0.015 * W, H - 0.45 * hh + t * 0.25 * hh, 0.52 + 0.2 * t, 1, 1, 1);
+      place(im, W / 2 + sw * 0.3 * (1 - t) - mx * (0.03 + 0.025 * t) * W, H - 0.2 * hh + t * 0.5 * hh, 0.72 + 0.28 * t, 1, 1, 2);
+      place(fr, W / 2 - mx * 0.055 * W, H + 0.3 * hh + t * 0.8 * hh, 1 + 0.5 * t, 1 - clamp((t - 0.75) / 0.25, 0, 1), 1, 3);
+    }
+  }
+
+  function request() {
+    if (ticking) return;
+    ticking = true;
+    window.requestAnimationFrame(frame);
+  }
+
+  function setVersion(v) {
+    if (!NOTES[v]) return;
+    V = v;
+    body.dataset.v = v;
+    resetScreen();
+    document.querySelectorAll('.tabs button').forEach(function (b) {
+      b.setAttribute('aria-pressed', String(b.dataset.v === v));
+    });
+    var n = NOTES[v];
+    document.getElementById('n-title').textContent = n.title;
+    document.getElementById('n-desc').textContent = n.desc;
+    document.getElementById('n-effort').textContent = n.effort;
+    document.getElementById('n-best').textContent = n.best;
+    ['pros', 'cons'].forEach(function (key) {
+      var ul = document.getElementById('n-' + key);
+      ul.textContent = '';
+      n[key].forEach(function (t) { var li = document.createElement('li'); li.textContent = t; ul.appendChild(li); });
+    });
+    try { localStorage.setItem('bff-seat-lab', v); } catch (e) { /* storage unavailable */ }
+    try { history.replaceState(null, '', '#' + v); } catch (e) { /* sandboxed */ }
+    frame();
+  }
+
+  function toggle(id, get, set) {
+    var btn = document.getElementById(id);
+    btn.setAttribute('aria-pressed', String(get()));
+    btn.addEventListener('click', function () {
+      set(!get());
+      btn.setAttribute('aria-pressed', String(get()));
+      request();
+    });
+  }
+
+  document.querySelectorAll('.tabs button').forEach(function (b) {
+    b.addEventListener('click', function () { setVersion(b.dataset.v); });
+  });
+  toggle('t-heads', function () { return heads; }, function (v) { heads = v; body.classList.toggle('no-heads', !v); });
+  toggle('t-look', function () { return look; }, function (v) { look = v; if (!v) { mx = 0; doc.style.setProperty('--mx', '0'); } });
+  toggle('t-motion', function () { return motion; }, function (v) { motion = v; });
+
+  window.addEventListener('keydown', function (e) {
+    var map = { '1': 'a', '2': 'b', '3': 'c', '4': 'd', '5': 'e' };
+    if (map[e.key] && !e.metaKey && !e.ctrlKey && !e.altKey) setVersion(map[e.key]);
+  });
+  window.addEventListener('pointermove', function (e) {
+    if (!look || e.pointerType !== 'mouse' || !motion) return;
+    mx = clamp((e.clientX / W) * 2 - 1, -1, 1);
+    doc.style.setProperty('--mx', mx.toFixed(3));
+    request();
+  }, { passive: true });
+  window.addEventListener('scroll', request, { passive: true });
+  var resizeTimer;
+  window.addEventListener('resize', function () {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function () { build(); frame(); }, 120);
+  });
+
+  build();
+  var start = (location.hash || '').replace('#', '');
+  if (!NOTES[start]) { try { start = localStorage.getItem('bff-seat-lab') || 'a'; } catch (e) { start = 'a'; } }
+  setVersion(NOTES[start] ? start : 'a');
+})();
+</script>
+</body>
+</html>
