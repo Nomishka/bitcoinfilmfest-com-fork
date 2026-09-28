@@ -7,6 +7,7 @@ Short, human-readable record of public website changes. One dated entry is requi
 - Added a hidden, noindexed prototype page at `/lab/seats/` with five switchable seat effects: aisle walk, take your seat, raked floor, parallax stack and image rows.
 - Added three transparent seat-row images for the image-rows version and the script that renders them.
 - Refined the chosen aisle walk: solid rows without audience, at most three rows on screen, eased scroll and pointer motion, and Walk/Look sliders for tuning.
+- Seat backs lost the centre seam; added Size and Arms sliders, larger seats on phones, and a walk that never reveals new rows.
 - The live site's shared seats are unchanged; the lab exists to pick a version before it replaces `cinema-seats.png`.
 
 ## 2026-09-26 — Add official web-sourced film visual assets batch 1

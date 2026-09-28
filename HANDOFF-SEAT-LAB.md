@@ -20,6 +20,16 @@ Owner wants the site to feel like sitting in a cinema: the screen in the middle,
 - Likes **A Aisle walk**. Requirements applied: no audience (heads removed everywhere, E images re-rendered empty), seats fully solid (no gaps between seats, dark backing under bases/aisles, passing rows slide off the bottom instead of fading), **max 3 rows on screen** (third row rises from behind the second), gentler motion.
 - Motion is now eased (scroll progress lerp 0.09/frame, pointer lerp 0.06/frame). Defaults: Walk = 1.5 rows across the whole page, Look = 20% of the original pointer strength. Both are sliders in the lab bar so the owner can tune; carry the chosen values into production.
 
+## Owner feedback, round 3 (2026-09-28)
+- No vertical seam on seat backs (removed).
+- Seats 1.3x bigger by default; **Size** slider (0.8–2x).
+- **Arms** slider = armrest width = gap between seats (0–40% of seat width, default 18%). Armrest is drawn as `.seat::after` in the gap to the left of each seat; row `gap: var(--arm)`.
+- Phones keep physically large seats: base seat width is W/4.2 below 700px (about 3 across at 1.3x), else max(W/7, 0.11H).
+- **No row is ever revealed**: exactly 3 rows exist; walking only removes rows off the bottom. Walk slider max is 2 (then one row remains).
+- Walk geometry is now in seat-height units (eye 1.83h, drop 0.49h, front row bottom at H + 0.37h), so phone and desktop compose the same.
+- Tuning controls moved to a collapsible "Tune" panel (collapsed on phones).
+- Current defaults to carry into production: Size 1.3, Arms 18%, Walk 1.5 rows, Look 20%.
+
 ## Verified
 - Jekyll build passes locally with the lab page (needs `LANG=C.UTF-8` in a bare container, otherwise SCSS fails on UTF-8).
 - Headless Chromium screenshots of all five versions at 0/20/60% scroll: no JS errors, all render.

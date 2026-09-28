@@ -106,8 +106,24 @@ permalink: /lab/seats/
   .tabs button[aria-pressed="true"] { background: var(--paper); color: var(--ink); border-color: var(--paper); }
   .toggle[aria-pressed="true"] { color: var(--accent); border-color: color-mix(in oklch, var(--accent) 60%, var(--rule)); }
   .tabs button:focus-visible, .toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-  .slider { display: flex; align-items: center; gap: 8px; color: var(--muted); text-transform: uppercase; white-space: nowrap; }
-  .slider input { width: 88px; accent-color: var(--accent); }
+  .tune {
+    position: fixed;
+    z-index: 10;
+    top: calc(var(--bar-h) + 10px);
+    right: calc(var(--side) + 10px);
+    display: grid;
+    gap: 10px;
+    padding: 10px 14px;
+    background: oklch(7% 0.005 245 / 0.92);
+    border: 1px solid var(--rule);
+    font-family: var(--font-display);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+  }
+  .tune summary { cursor: pointer; color: var(--accent); text-transform: uppercase; }
+  .tune summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .slider { display: flex; justify-content: space-between; align-items: center; gap: 8px; color: var(--muted); text-transform: uppercase; white-space: nowrap; }
+  .slider input { width: 110px; accent-color: var(--accent); }
   .slider output { min-width: 5.2em; font-variant-numeric: tabular-nums; color: var(--paper); text-transform: none; }
   .readout { color: var(--muted); min-width: 4.5em; text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
 
@@ -183,7 +199,7 @@ permalink: /lab/seats/
     top: 0;
     display: flex;
     align-items: flex-end;
-    gap: 0;
+    gap: var(--arm);
     font-size: calc(var(--sw) / 10);
     transform-origin: 50% 100%;
     will-change: transform;
@@ -201,25 +217,25 @@ permalink: /lab/seats/
   .seat::before {
     content: "";
     position: absolute;
-    inset: 0 7% 16% 7%;
+    inset: 0 2% 16% 2%;
     z-index: 1;
     border-radius: 42% 42% 10% 10% / 30% 30% 8% 8%;
     background:
-      linear-gradient(90deg, transparent 49%, oklch(5% 0 0 / 0.4) 50%, transparent 51%),
       linear-gradient(180deg, oklch(47% 0.05 258) 0%, oklch(33% 0.045 258) 20%, oklch(22% 0.03 258) 60%, oklch(13% 0.015 258) 100%);
     box-shadow: inset 0 0.14em 0 oklch(100% 0 0 / 0.14), inset 0 -1.2em 1.4em oklch(0% 0 0 / 0.55);
   }
+  /* The armrest lives in the gap to the left of each seat; the gap width is
+     the Arms setting (--arm). */
   .seat::after {
     content: "";
     position: absolute;
-    left: 0;
-    right: 0;
+    left: calc(var(--arm) * -1);
     bottom: 0;
+    width: var(--arm);
     height: 40%;
     z-index: 2;
-    background:
-      linear-gradient(180deg, oklch(38% 0.035 258), oklch(14% 0.01 258)) left bottom / 11% 100% no-repeat,
-      linear-gradient(180deg, oklch(38% 0.035 258), oklch(14% 0.01 258)) right bottom / 11% 100% no-repeat;
+    border-radius: 0.35em 0.35em 0 0;
+    background: linear-gradient(180deg, oklch(38% 0.035 258), oklch(14% 0.01 258));
   }
   .aisle { position: relative; flex: none; width: calc(var(--sw) * 0.6); height: calc(var(--sw) * 0.92); }
   .aisle i {
@@ -285,11 +301,17 @@ permalink: /lab/seats/
     <button type="button" id="tab-d" data-v="d" aria-pressed="false">D · Stack</button>
     <button type="button" id="tab-e" data-v="e" aria-pressed="false">E · Image rows</button>
   </div>
-  <label class="slider" for="s-walk">Walk <input type="range" id="s-walk" min="0.5" max="3" step="0.25" value="1.5"><output id="o-walk">1.5 rows</output></label>
-  <label class="slider" for="s-look">Look <input type="range" id="s-look" min="0" max="100" step="5" value="20"><output id="o-look">20%</output></label>
   <button type="button" class="toggle" id="t-motion" aria-pressed="true">Motion</button>
   <span class="readout" id="readout" aria-live="off">0%</span>
 </header>
+
+<details class="tune" id="tune" open>
+  <summary>Tune</summary>
+  <label class="slider" for="s-size">Size <input type="range" id="s-size" min="0.8" max="2" step="0.05" value="1.3"><output id="o-size">1.30×</output></label>
+  <label class="slider" for="s-arm">Arms <input type="range" id="s-arm" min="0" max="40" step="1" value="18"><output id="o-arm">18%</output></label>
+  <label class="slider" for="s-walk">Walk <input type="range" id="s-walk" min="0" max="2" step="0.25" value="1.5"><output id="o-walk">1.5 rows</output></label>
+  <label class="slider" for="s-look">Look <input type="range" id="s-look" min="0" max="100" step="5" value="20"><output id="o-look">20%</output></label>
+</details>
 
 <div class="room" id="room" aria-hidden="true"></div>
 
@@ -357,9 +379,9 @@ permalink: /lab/seats/
 <div class="hall" id="stack" aria-hidden="true"></div>
 <div id="floor" aria-hidden="true"></div>
 <div class="hall" id="images" aria-hidden="true">
-  <img id="img-back" src="rows/seats-back.png" width="3348" height="301" alt="">
-  <img id="img-mid" src="rows/seats-mid.png" width="2416" height="301" alt="">
-  <img id="img-front" src="rows/seats-front.png" width="1671" height="301" alt="">
+  <img id="img-back" src="rows/seats-back.png" width="3784" height="301" alt="">
+  <img id="img-mid" src="rows/seats-mid.png" width="2724" height="301" alt="">
+  <img id="img-front" src="rows/seats-front.png" width="1876" height="301" alt="">
 </div>
 
 <script>
@@ -376,9 +398,9 @@ permalink: /lab/seats/
   var NOTES = {
     a: {
       title: 'A · Aisle walk',
-      desc: 'Solid rows of empty seats in real perspective, never more than three at a time. As you scroll, you walk slowly down the raked floor: the nearest row grows and slides out under the bottom edge, and the next row rises into place from behind. Movement is eased, so the room glides after your scroll instead of snapping. Orange step lights mark the aisles. Tune it with Walk (rows travelled over the whole page) and Look (how much the room follows the pointer).',
+      desc: 'Three solid rows of empty seats in real perspective. They are the only rows: as you scroll, you walk slowly down the raked floor, the nearest row grows and slides out under the bottom edge, and nothing new appears behind. By the end of the page you are closer to the screen with fewer rows in front of you. Movement is eased, so the room glides after your scroll instead of snapping. Orange step lights mark the aisles. Tune it in the panel: Size (seat size), Arms (armrest width between seats), Walk (rows passed over the whole page) and Look (how much the room follows the pointer).',
       pros: ['The strongest feeling of moving through the auditorium, now calm enough to read over.', 'Transforms only, so it runs in every browser, including Safari and Firefox.', 'Rows are drawn in CSS: no image to load, sharp at any size, easy to recolour per edition.'],
-      cons: ['Page length changes the walking speed; long pages walk slower at the same setting.', 'Rows cover roughly the bottom fifth of the viewport, so the lowest text of each screen sits behind them until scrolled.', 'About 200 small elements; fine on laptops, worth a check on old phones.'],
+      cons: ['Page length changes the walking speed; long pages walk slower at the same setting.', 'Rows cover roughly the bottom fifth of the viewport at 1.3x, so the lowest text of each screen sits behind them until scrolled; Size changes that.', 'With Walk at 2 you pass two of the three rows, so only one row is left at the end of the page.'],
       effort: 'Medium: one JS module plus CSS, replaces cinema-seats.png.',
       best: 'Homepage and festival edition pages.'
     },
@@ -419,7 +441,7 @@ permalink: /lab/seats/
   var V = 'a';
   var W = 0, H = 0, barH = 52, bottomPx = 100, sw = 100;
   var mx = 0, mxT = 0, ps = 0;
-  var walkRows = 1.5, lookK = 0.2;
+  var walkRows = 1.5, lookK = 0.2, sizeK = 1.3, armK = 0.18;
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
   var motion = !reduce.matches;
   var rows = [], stack = [], imgs = [];
@@ -453,13 +475,17 @@ permalink: /lab/seats/
     H = window.innerHeight;
     var cs = getComputedStyle(doc);
     bottomPx = clamp(0.12 * H, 88, 136);
-    sw = Math.round(Math.max(W / 7, H * 0.11));
-    rowsWrap.style.setProperty('--sw', sw + 'px');
-    stackWrap.style.setProperty('--sw', sw + 'px');
+    // Phones keep a physically large seat: about three across at 1.3x.
+    sw = Math.round((W < 700 ? W / 4.2 : Math.max(W / 7, H * 0.11)) * sizeK);
+    var arm = Math.round(sw * armK);
+    [rowsWrap, stackWrap].forEach(function (w) {
+      w.style.setProperty('--sw', sw + 'px');
+      w.style.setProperty('--arm', arm + 'px');
+    });
 
     rowsWrap.textContent = '';
     rows = [];
-    for (var i = 0; i < 8; i++) {
+    for (var i = 0; i < 3; i++) {
       var el = buildRow(34, [10, 24]);
       rowsWrap.appendChild(el);
       rows.push({ el: el });
@@ -498,16 +524,18 @@ permalink: /lab/seats/
 
   // Rows sit on a raked floor. d is the distance (in rows) ahead of the viewer;
   // a simple pinhole projection turns it into scale and screen position.
-  // At most three rows are on screen. A passing row slides fully below the
-  // bottom edge (no fading), and the third row rises out from behind the
-  // second one instead of popping in.
+  // Exactly three rows exist. A passing row slides fully below the bottom
+  // edge (no fading) and no new row is ever revealed behind them.
   function walk(k, lit) {
-    var P = 1.2 * H, D = 0.8 * H, drop = 0.133 * H, eye = 0.5 * H, hz = 0.6 * H;
+    // Geometry is measured in seat heights, so a phone and a laptop show the
+    // same composition: the front row's top third sits inside the viewport.
+    var h = rows[0].h;
+    var P = 1.2 * H, D = 0.8 * H, drop = 0.49 * h, eye = 1.83 * h, hz = H + 0.37 * h - eye;
     rows.forEach(function (r, i) {
       var d = i - k;
       if (d <= -0.95 || d >= 3) { place(r, 0, 0, 1, 0, 1, 0); return; }
       var s = P / (P + D * d);
-      var y = hz + (eye + drop * d) * s + clamp(d - 2, 0, 1) * r.h * s;
+      var y = hz + (eye + drop * d) * s;
       var br = (0.5 + 0.1 * Math.max(0, d)) * lit;
       var cx = W / 2 - mx * 0.07 * lookK * W * s;
       place(r, cx, y, s, 1, br, 1000 - Math.round(d * 100));
@@ -625,6 +653,19 @@ permalink: /lab/seats/
     document.getElementById('o-walk').textContent = walkRows + (walkRows === 1 ? ' row' : ' rows');
     request();
   });
+  var sizeIn = document.getElementById('s-size'), armIn = document.getElementById('s-arm');
+  sizeIn.addEventListener('input', function () {
+    sizeK = parseFloat(sizeIn.value);
+    document.getElementById('o-size').textContent = sizeK.toFixed(2) + '×';
+    build();
+    request();
+  });
+  armIn.addEventListener('input', function () {
+    armK = parseInt(armIn.value, 10) / 100;
+    document.getElementById('o-arm').textContent = armIn.value + '%';
+    build();
+    request();
+  });
   lookIn.addEventListener('input', function () {
     lookK = parseInt(lookIn.value, 10) / 100;
     document.getElementById('o-look').textContent = lookIn.value + '%';
@@ -648,6 +689,7 @@ permalink: /lab/seats/
     resizeTimer = setTimeout(function () { build(); frame(); }, 120);
   });
 
+  if (window.innerWidth < 700) document.getElementById('tune').open = false;
   build();
   var start = (location.hash || '').replace('#', '');
   if (!NOTES[start]) { try { start = localStorage.getItem('bff-seat-lab') || 'a'; } catch (e) { start = 'a'; } }
