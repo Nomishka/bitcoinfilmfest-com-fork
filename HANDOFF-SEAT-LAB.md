@@ -34,12 +34,18 @@ Owner wants the site to feel like sitting in a cinema: the screen in the middle,
 - Owner's chosen values: **Look 35%, Walk 0.75 rows, Arms 0%**, Size stays at the bigger 1.3x. Now the lab defaults.
 - Added **Position** slider (-0.5 to +1 seat heights; positive = lower). Owner felt rows sat too high; default +0.20 while they test. Carry their final value into production.
 
+## Owner feedback, round 5 (2026-09-28)
+- **B "Take your seat" is wanted ONLY at the top of the homepage** (first screen of scroll). Parked: "we will come back to that later". Do not add it to other pages.
+- Position chosen: **+0.30 seat on desktop, 0.00 on phones** (<700px). Stored separately (posDesk / posMob); the slider edits the current device's value.
+- New seat **Colour** (picker + swatches: cinema blue #2b3a55 default, red velvet, BFF orange, charcoal, screen blue). Implemented as `--seat` on :root with color-mix shading (needs Chrome 111+/Safari 16.2+/Firefox 113+).
+- New **Pattern** (upholstery) on `.seat > i`: none, pinstripe, quilted, dots, ₿ logo, orange heart, or the owner's own uploaded image (tiled/centred, FileReader data URL, not saved anywhere). Scale and Strength sliders. Owner has not yet picked colour/pattern.
+
 ## Verified
 - Jekyll build passes locally with the lab page (needs `LANG=C.UTF-8` in a bare container, otherwise SCSS fails on UTF-8).
 - Headless Chromium screenshots of all five versions at 0/20/60% scroll: no JS errors, all render.
 - Not verified: Safari/Firefox, real phones, soft navigation interaction (the lab is outside the shared shell).
 
 ## Next steps
-1. Owner confirms final Position value (Size 1.3, Arms 0%, Walk 0.75, Look 35% already chosen).
+1. Owner picks seat colour + pattern (Size 1.3, Arms 0%, Walk 0.75, Look 35%, Position +0.30 desktop / 0.00 phone already chosen). If they upload their own pattern, save that file to site/assets/images/ for production.
 2. Port into `site/_layouts/default.html`: replace the `<img class="cinema-seats">` with the rows container, move the chosen CSS into `cinema-frame.css` (use tokens), move the engine into `main.js`, keep `prefers-reduced-motion` and the soft-navigation contract (seats stay mounted; recompute on `bff:navigated`/route swap).
 3. Tune overlap so the rows never cover text: in A the far rows converge at ~0.8 of viewport height; D/E cover ~130 px at 1280×800.

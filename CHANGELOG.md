@@ -9,6 +9,7 @@ Short, human-readable record of public website changes. One dated entry is requi
 - Refined the chosen aisle walk: solid rows without audience, at most three rows on screen, eased scroll and pointer motion, and Walk/Look sliders for tuning.
 - Seat backs lost the centre seam; added Size and Arms sliders, larger seats on phones, and a walk that never reveals new rows.
 - Set the owner's chosen defaults (Look 35%, Walk 0.75 rows, Arms 0%) and added a Position slider for the rows' height.
+- Added seat colour and upholstery pattern controls (presets or an uploaded image) and separate desktop/phone positions.
 - The live site's shared seats are unchanged; the lab exists to pick a version before it replaces `cinema-seats.png`.
 
 ## 2026-09-26 — Add official web-sourced film visual assets batch 1

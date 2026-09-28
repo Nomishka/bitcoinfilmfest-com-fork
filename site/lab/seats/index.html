@@ -43,6 +43,7 @@ permalink: /lab/seats/
     --frame-op: 1;
     --fy: 0px;
     --mx: 0;
+    --seat: #2b3a55;
   }
   html { background: var(--room); }
   body {
@@ -120,6 +121,13 @@ permalink: /lab/seats/
     font-size: 12px;
     letter-spacing: 0.06em;
   }
+  .swatches { display: flex; align-items: center; gap: 6px; }
+  .swatches .lbl { width: 6.2em; color: var(--muted); text-transform: uppercase; }
+  .swatches button { width: 20px; height: 20px; padding: 0; border: 1px solid var(--rule); border-radius: 50%; background: var(--c); cursor: pointer; }
+  .swatches button[aria-pressed="true"] { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .swatches input { width: 30px; height: 22px; padding: 0; border: 1px solid var(--rule); background: none; cursor: pointer; }
+  .tune select { font: inherit; font-size: 12px; background: var(--room-raised); color: var(--paper); border: 1px solid var(--rule); padding: 2px 4px; width: 110px; }
+  .upload input { width: 110px; font-size: 11px; color: var(--muted); }
   .tune summary { cursor: pointer; color: var(--accent); text-transform: uppercase; }
   .tune summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   .slider { display: grid; grid-template-columns: 6.2em 110px 6.4em; justify-content: start; align-items: center; gap: 8px; color: var(--muted); text-transform: uppercase; white-space: nowrap; }
@@ -220,8 +228,11 @@ permalink: /lab/seats/
     inset: 0 2% 16% 2%;
     z-index: 1;
     border-radius: 42% 42% 10% 10% / 30% 30% 8% 8%;
-    background:
-      linear-gradient(180deg, oklch(47% 0.05 258) 0%, oklch(33% 0.045 258) 20%, oklch(22% 0.03 258) 60%, oklch(13% 0.015 258) 100%);
+    background: linear-gradient(180deg,
+      color-mix(in oklch, var(--seat), white 22%) 0%,
+      var(--seat) 20%,
+      color-mix(in oklch, var(--seat), black 38%) 60%,
+      color-mix(in oklch, var(--seat), black 62%) 100%);
     box-shadow: inset 0 0.14em 0 oklch(100% 0 0 / 0.14), inset 0 -1.2em 1.4em oklch(0% 0 0 / 0.55);
   }
   /* The armrest lives in the gap to the left of each seat; the gap width is
@@ -235,7 +246,19 @@ permalink: /lab/seats/
     height: 40%;
     z-index: 2;
     border-radius: 0.35em 0.35em 0 0;
-    background: linear-gradient(180deg, oklch(38% 0.035 258), oklch(14% 0.01 258));
+    background: linear-gradient(180deg, color-mix(in oklch, var(--seat), white 10%), color-mix(in oklch, var(--seat), black 62%));
+  }
+  /* Upholstery pattern sits on the seat back, above its shading. */
+  .seat > i {
+    position: absolute;
+    inset: 0 2% 16% 2%;
+    z-index: 1;
+    border-radius: 42% 42% 10% 10% / 30% 30% 8% 8%;
+    background-image: var(--pattern, none);
+    background-size: var(--pattern-size, auto);
+    background-repeat: var(--pattern-repeat, repeat);
+    background-position: var(--pattern-pos, center);
+    opacity: var(--pattern-op, 0.6);
   }
   .aisle { position: relative; flex: none; width: calc(var(--sw) * 0.6); height: calc(var(--sw) * 0.92); }
   .aisle i {
@@ -308,9 +331,32 @@ permalink: /lab/seats/
 <details class="tune" id="tune" open>
   <summary>Tune</summary>
   <label class="slider" for="s-size">Size <input type="range" id="s-size" min="0.8" max="2" step="0.05" value="1.3"><output id="o-size">1.30×</output></label>
-  <label class="slider" for="s-pos">Position <input type="range" id="s-pos" min="-0.5" max="1" step="0.05" value="0.2"><output id="o-pos">+0.20 seat</output></label>
+  <label class="slider" for="s-pos">Position <input type="range" id="s-pos" min="-0.5" max="1" step="0.05" value="0.3"><output id="o-pos">+0.30 seat</output></label>
   <label class="slider" for="s-arm">Arms <input type="range" id="s-arm" min="0" max="40" step="1" value="0"><output id="o-arm">0%</output></label>
   <label class="slider" for="s-walk">Walk <input type="range" id="s-walk" min="0" max="2" step="0.05" value="0.75"><output id="o-walk">0.75 rows</output></label>
+  <div class="swatches" role="group" aria-label="Seat colour">
+    <span class="lbl">Colour</span>
+    <button type="button" data-color="#2b3a55" style="--c:#2b3a55" aria-label="Cinema blue"></button>
+    <button type="button" data-color="#7a1f27" style="--c:#7a1f27" aria-label="Red velvet"></button>
+    <button type="button" data-color="#c0660f" style="--c:#c0660f" aria-label="BFF orange"></button>
+    <button type="button" data-color="#2c2c31" style="--c:#2c2c31" aria-label="Charcoal"></button>
+    <button type="button" data-color="#1d62a3" style="--c:#1d62a3" aria-label="Screen blue"></button>
+    <input type="color" id="s-color" value="#2b3a55" aria-label="Custom seat colour">
+  </div>
+  <label class="slider" for="s-pattern">Pattern
+    <select id="s-pattern">
+      <option value="none">None</option>
+      <option value="pinstripe">Pinstripe</option>
+      <option value="quilted">Quilted</option>
+      <option value="dots">Dots</option>
+      <option value="bitcoin">₿ logo</option>
+      <option value="heart">Orange heart</option>
+      <option value="upload-tile" disabled>My image, tiled</option>
+      <option value="upload-center" disabled>My image, centred</option>
+    </select><span></span></label>
+  <label class="slider upload" for="s-upload">Upload <input type="file" id="s-upload" accept="image/*"><span></span></label>
+  <label class="slider" for="s-pscale">Scale <input type="range" id="s-pscale" min="0.3" max="3" step="0.05" value="1"><output id="o-pscale">1.00×</output></label>
+  <label class="slider" for="s-pop">Strength <input type="range" id="s-pop" min="0" max="100" step="5" value="60"><output id="o-pop">60%</output></label>
   <label class="slider" for="s-look">Look <input type="range" id="s-look" min="0" max="100" step="5" value="35"><output id="o-look">35%</output></label>
 </details>
 
@@ -399,7 +445,7 @@ permalink: /lab/seats/
   var NOTES = {
     a: {
       title: 'A · Aisle walk',
-      desc: 'Three solid rows of empty seats in real perspective. They are the only rows: as you scroll, you walk slowly down the raked floor, the nearest row grows and slides out under the bottom edge, and nothing new appears behind. By the end of the page you are closer to the screen with fewer rows in front of you. Movement is eased, so the room glides after your scroll instead of snapping. Orange step lights mark the aisles. Tune it in the panel: Size (seat size), Position (moves the rows down, in seat heights), Arms (armrest width between seats), Walk (rows passed over the whole page) and Look (how much the room follows the pointer).',
+      desc: 'Three solid rows of empty seats in real perspective. They are the only rows: as you scroll, you walk slowly down the raked floor, the nearest row grows and slides out under the bottom edge, and nothing new appears behind. By the end of the page you are closer to the screen with fewer rows in front of you. Movement is eased, so the room glides after your scroll instead of snapping. Orange step lights mark the aisles. Tune it in the panel: Size (seat size), Position (moves the rows down, in seat heights; phones keep their own value), Colour and Pattern (upholstery, including your own image), Arms (armrest width between seats), Walk (rows passed over the whole page) and Look (how much the room follows the pointer).',
       pros: ['The strongest feeling of moving through the auditorium, now calm enough to read over.', 'Transforms only, so it runs in every browser, including Safari and Firefox.', 'Rows are drawn in CSS: no image to load, sharp at any size, easy to recolour per edition.'],
       cons: ['Page length changes the walking speed; long pages walk slower at the same setting.', 'Rows cover roughly the bottom fifth of the viewport at 1.3x, so the lowest text of each screen sits behind them until scrolled; Size changes that.', 'With Walk at 2 you pass two of the three rows, so only one row is left at the end of the page.'],
       effort: 'Medium: one JS module plus CSS, replaces cinema-seats.png.',
@@ -442,7 +488,7 @@ permalink: /lab/seats/
   var V = 'a';
   var W = 0, H = 0, barH = 52, bottomPx = 100, sw = 100;
   var mx = 0, mxT = 0, ps = 0;
-  var walkRows = 0.75, lookK = 0.35, sizeK = 1.3, armK = 0, posK = 0.2;
+  var walkRows = 0.75, lookK = 0.35, sizeK = 1.3, armK = 0, posDesk = 0.3, posMob = 0, posK = 0.3;
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
   var motion = !reduce.matches;
   var rows = [], stack = [], imgs = [];
@@ -456,7 +502,7 @@ permalink: /lab/seats/
     var html = '';
     for (var j = 0; j < n; j++) {
       if (aisles.indexOf(j) !== -1) html += '<span class="aisle"><i></i></span>';
-      html += '<span class="seat"></span>';
+      html += '<span class="seat"><i></i></span>';
     }
     el.innerHTML = html;
     return el;
@@ -476,6 +522,12 @@ permalink: /lab/seats/
     H = window.innerHeight;
     var cs = getComputedStyle(doc);
     bottomPx = clamp(0.12 * H, 88, 136);
+    posK = W < 700 ? posMob : posDesk;
+    var posOut = document.getElementById('o-pos');
+    if (posOut) {
+      document.getElementById('s-pos').value = posK;
+      posOut.textContent = (posK >= 0 ? '+' : '') + posK.toFixed(2) + (W < 700 ? ' phone' : ' seat');
+    }
     // Phones keep a physically large seat: about three across at 1.3x.
     sw = Math.round((W < 700 ? W / 4.2 : Math.max(W / 7, H * 0.11)) * sizeK);
     var arm = Math.round(sw * armK);
@@ -664,7 +716,8 @@ permalink: /lab/seats/
   var posIn = document.getElementById('s-pos');
   posIn.addEventListener('input', function () {
     posK = parseFloat(posIn.value);
-    document.getElementById('o-pos').textContent = (posK >= 0 ? '+' : '') + posK.toFixed(2) + ' seat';
+    if (W < 700) posMob = posK; else posDesk = posK;
+    document.getElementById('o-pos').textContent = (posK >= 0 ? '+' : '') + posK.toFixed(2) + (W < 700 ? ' phone' : ' seat');
     request();
   });
   armIn.addEventListener('input', function () {
@@ -695,6 +748,68 @@ permalink: /lab/seats/
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(function () { build(); frame(); }, 120);
   });
+
+  // Seat colour and upholstery pattern (CSS variables on the root, so every
+  // CSS seat in versions A, B and D follows them).
+  function svg(markup) { return 'url("data:image/svg+xml,' + encodeURIComponent(markup) + '")'; }
+  var PATTERNS = {
+    none: function () { return { img: 'none' }; },
+    pinstripe: function (k) { return { img: 'linear-gradient(90deg, rgba(255,255,255,0.55) 0 10%, transparent 10%)', size: (1.4 * k).toFixed(2) + 'em 100%', repeat: 'repeat-x' }; },
+    quilted: function (k) {
+      var t = (2.2 * k).toFixed(2) + 'em';
+      return { img: 'linear-gradient(45deg, transparent 46%, rgba(255,255,255,0.45) 46% 54%, transparent 54%), linear-gradient(-45deg, transparent 46%, rgba(255,255,255,0.45) 46% 54%, transparent 54%)', size: t + ' ' + t + ', ' + t + ' ' + t, repeat: 'repeat' };
+    },
+    dots: function (k) { var t = (1.5 * k).toFixed(2) + 'em'; return { img: 'radial-gradient(circle, rgba(255,255,255,0.6) 0 16%, transparent 19%)', size: t + ' ' + t, repeat: 'repeat' }; },
+    bitcoin: function (k) {
+      return { img: svg('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><circle cx="32" cy="32" r="30" fill="#f7931a"/><path fill="#fff" d="M43.6 27.3c.6-4-2.4-6.1-6.6-7.5l1.4-5.5-3.3-.8-1.3 5.4-2.7-.6 1.3-5.4-3.3-.8-1.4 5.5-2.1-.5-4.6-1.1-.9 3.5s2.4.6 2.4.6c1.3.3 1.6 1.2 1.5 1.9l-3.7 15c-.2.4-.6 1-1.5.8 0 0-2.4-.6-2.4-.6l-1.6 3.8 4.3 1.1 2.4.6-1.4 5.5 3.3.8 1.4-5.5 2.7.7-1.4 5.5 3.3.8 1.4-5.5c5.6 1.1 9.8.6 11.6-4.4 1.4-4-.1-6.4-3-7.9 2.1-.5 3.7-1.9 4.1-4.8zm-7.5 10.5c-1 4-7.8 1.8-10 1.3l1.8-7.1c2.2.6 9.3 1.7 8.2 5.8zm1-10.6c-.9 3.7-6.6 1.8-8.4 1.3l1.6-6.4c1.9.5 7.8 1.3 6.8 5.1z"/></svg>'), size: (34 * k).toFixed(0) + '% auto', repeat: 'no-repeat', pos: '50% 26%' };
+    },
+    heart: function (k) {
+      return { img: svg('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 58"><path fill="#f7931a" d="M32 56S2 38 2 18C2 8 10 2 18 2c6 0 11 3 14 8 3-5 8-8 14-8 8 0 16 6 16 16 0 20-30 38-30 38z"/></svg>'), size: (34 * k).toFixed(0) + '% auto', repeat: 'no-repeat', pos: '50% 26%' };
+    },
+    'upload-tile': function (k) { return { img: uploadUrl, size: (3 * k).toFixed(2) + 'em auto', repeat: 'repeat' }; },
+    'upload-center': function (k) { return { img: uploadUrl, size: (60 * k).toFixed(0) + '% auto', repeat: 'no-repeat', pos: '50% 26%' }; }
+  };
+  var patternKey = 'none', patternScale = 1, uploadUrl = 'none';
+  var patternSel = document.getElementById('s-pattern');
+  function applyPattern() {
+    var p = PATTERNS[patternKey](patternScale);
+    doc.style.setProperty('--pattern', p.img);
+    doc.style.setProperty('--pattern-size', p.size || 'auto');
+    doc.style.setProperty('--pattern-repeat', p.repeat || 'repeat');
+    doc.style.setProperty('--pattern-pos', p.pos || 'center');
+  }
+  patternSel.addEventListener('change', function () { patternKey = patternSel.value; applyPattern(); });
+  document.getElementById('s-pscale').addEventListener('input', function (e) {
+    patternScale = parseFloat(e.target.value);
+    document.getElementById('o-pscale').textContent = patternScale.toFixed(2) + '×';
+    applyPattern();
+  });
+  document.getElementById('s-pop').addEventListener('input', function (e) {
+    doc.style.setProperty('--pattern-op', String(parseInt(e.target.value, 10) / 100));
+    document.getElementById('o-pop').textContent = e.target.value + '%';
+  });
+  document.getElementById('s-upload').addEventListener('change', function (e) {
+    var file = e.target.files && e.target.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function () {
+      uploadUrl = 'url("' + reader.result + '")';
+      patternSel.querySelectorAll('option[value^="upload"]').forEach(function (o) { o.disabled = false; });
+      patternSel.value = patternKey = 'upload-tile';
+      applyPattern();
+    };
+    reader.readAsDataURL(file);
+  });
+  var colorIn = document.getElementById('s-color');
+  var swatches = document.querySelectorAll('.swatches button');
+  function setColor(c) {
+    doc.style.setProperty('--seat', c);
+    colorIn.value = c;
+    swatches.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.color === c)); });
+  }
+  swatches.forEach(function (b) { b.addEventListener('click', function () { setColor(b.dataset.color); }); });
+  colorIn.addEventListener('input', function () { setColor(colorIn.value); });
+  setColor('#2b3a55');
 
   if (window.innerWidth < 700) document.getElementById('tune').open = false;
   build();
