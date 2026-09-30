@@ -2,6 +2,12 @@
 
 Short, human-readable record of public website changes. One dated entry is required for every source change that affects the website.
 
+## 2026-09-30 — Restore the /bff26/ compatibility redirect
+
+- Added the missing `/bff26/` compatibility route, so the old BFF'26 URL now redirects to the canonical `/26/` recap instead of a 404. `/bff25/` already did this.
+- The route is `robots: noindex, follow` and `sitemap: false`, matching `/bff25/` and the other legacy routes.
+- Verified with a local Jekyll build that the generated `/bff26/index.html` carries `<link rel="canonical" href="https://bitcoinfilmfest.com/26/">` and the `meta http-equiv="refresh"` to `/26/`.
+
 ## 2026-09-28 — Replace the seat image with 3D cinema seats on every page
 
 - Every page now has three solid rows of CSS cinema seats in perspective. As you scroll you walk slowly toward the screen; rows you pass slide out under the bottom edge, and the room turns slightly with the mouse.
