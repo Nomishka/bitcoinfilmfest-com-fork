@@ -1,0 +1,120 @@
+/*
+  Bitcoin FilmFest — 3D cinema seats (the "aisle walk").
+  Three solid rows of CSS seats in perspective, fixed over the bottom of the
+  room. cinema-seats.js builds and moves them; every tuning value lives in
+  data attributes on the .seat-rows element (see HANDOFF-SEAT-LAB.md and the
+  prototype at /lab/seats/). Classes are prefixed sr- so they never collide
+  with page styles. The old seat PNG stays in the markup as a no-JS fallback
+  and is hidden once the rows are live.
+*/
+
+.seat-rows {
+  position: fixed;
+  inset: 0;
+  z-index: var(--seat-z, var(--z-seats, 450));
+  overflow: hidden;
+  pointer-events: none;
+  --sr-seat: #05121a;
+  --sr-arm: 0px;
+  --sr-aisle-op: 1;
+  --sr-pattern: none;
+  --sr-pattern-size: auto;
+  --sr-pattern-repeat: repeat;
+  --sr-pattern-pos: center;
+  --sr-pattern-op: 0.2;
+}
+
+.seat-rows-live .cinema-seats {
+  display: none !important;
+}
+
+.sr-row {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  align-items: flex-end;
+  gap: var(--sr-arm);
+  font-size: calc(var(--sr-w) / 10);
+  transform-origin: 50% 100%;
+  will-change: transform;
+}
+
+/* Solid backing under the seat bases and aisles, so the screen never shows
+   through a row. */
+.sr-row::before {
+  content: "";
+  position: absolute;
+  inset: 42% 0 0 0;
+  z-index: -1;
+  background: linear-gradient(180deg, #0b1016, #040507);
+}
+
+.sr-seat {
+  position: relative;
+  display: block;
+  flex: none;
+  width: var(--sr-w);
+  height: calc(var(--sr-w) * 0.92);
+  isolation: isolate;
+}
+
+.sr-seat::before {
+  content: "";
+  position: absolute;
+  inset: 0 2% 16% 2%;
+  z-index: 1;
+  border-radius: 42% 42% 10% 10% / 30% 30% 8% 8%;
+  background: linear-gradient(180deg,
+    color-mix(in oklch, var(--sr-seat), white 22%) 0%,
+    var(--sr-seat) 20%,
+    color-mix(in oklch, var(--sr-seat), black 38%) 60%,
+    color-mix(in oklch, var(--sr-seat), black 62%) 100%);
+  box-shadow: inset 0 0.14em 0 rgb(255 255 255 / 0.14), inset 0 -1.2em 1.4em rgb(0 0 0 / 0.55);
+}
+
+/* The armrest sits in the gap to the left of each seat (gap = --sr-arm). */
+.sr-seat::after {
+  content: "";
+  position: absolute;
+  left: calc(var(--sr-arm) * -1);
+  bottom: 0;
+  width: var(--sr-arm);
+  height: 40%;
+  z-index: 2;
+  border-radius: 0.35em 0.35em 0 0;
+  background: linear-gradient(180deg, color-mix(in oklch, var(--sr-seat), white 10%), color-mix(in oklch, var(--sr-seat), black 62%));
+}
+
+/* Upholstery pattern on the seat back, above its shading. */
+.sr-seat > i {
+  position: absolute;
+  inset: 0 2% 16% 2%;
+  z-index: 1;
+  border-radius: 42% 42% 10% 10% / 30% 30% 8% 8%;
+  background-image: var(--sr-pattern);
+  background-size: var(--sr-pattern-size);
+  background-repeat: var(--sr-pattern-repeat);
+  background-position: var(--sr-pattern-pos);
+  opacity: var(--sr-pattern-op);
+}
+
+.sr-aisle {
+  position: relative;
+  flex: none;
+  width: calc(var(--sr-w) * 0.6);
+  height: calc(var(--sr-w) * 0.92);
+}
+
+.sr-aisle i {
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  width: 1em;
+  height: 0.35em;
+  margin-left: -0.5em;
+  border-radius: 0.2em;
+  background: var(--color-accent, #f5a524);
+  box-shadow: 0 0 1.4em 0.35em rgb(245 165 36 / 0.55);
+  opacity: var(--sr-aisle-op);
+}

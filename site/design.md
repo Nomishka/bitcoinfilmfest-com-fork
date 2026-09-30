@@ -19,7 +19,7 @@ The primary action on the homepage is to enter an edition; the secondary action 
 
 - Marketing/home pages: **Marquee Hero / cinema poster** — blue screen, rabbit-led asymmetric composition, edition listings as showtimes rather than cards.
 - Edition pages: **Programme board** — date/place masthead, films/events in typographic rows, restrained imagery.
-- Content/newsletter pages: **Long Document** — warm paper screen, readable measure, no decorative section cards.
+- Content/newsletter pages: **Long Document** — warm paper screen, readable measure, no decorative section cards. The center column stays at reading width (`--prose-max`); the side space is not bare padding. Media, tables, and quotes meant as section breaks use `.breakout` to span the full screen width; a table of contents, pull quote, or short callout uses `.rail-note` (or `.rail-note--left`) to sit in the freed-up margin instead. Both collapse to a single stacked column below 64rem.
 - Utility/index pages: **Index-first** — categorized route or credit lists, visible status, minimal containment.
 
 ## Theme
@@ -51,7 +51,7 @@ A 4-point named scale lives in `tokens.css`. Components use named tokens or flui
 - The viewport has a near-black room frame on all sides.
 - A fixed inner bezel/shadow gives the screen depth without a grey page tail.
 - The screen edge is defined only by a soft bezel shadow. Do not add a perforation pattern.
-- Cinema seats stay fixed to the true bottom edge.
+- Cinema seats stay fixed to the true bottom edge. They are three CSS seat rows in perspective (assets/css/cinema-seats.css, assets/js/cinema-seats.js) tuned by data attributes on `.seat-rows`; the PNG is only the no-JS fallback. Try changes in /lab/seats/ first.
 - The shared footer always closes on the room black and includes enough bottom padding for the seats.
 
 ## Navigation

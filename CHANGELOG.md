@@ -2,11 +2,259 @@
 
 Short, human-readable record of public website changes. One dated entry is required for every source change that affects the website.
 
+## 2026-09-28 — Replace the seat image with 3D cinema seats on every page
+
+- Every page now has three solid rows of CSS cinema seats in perspective. As you scroll you walk slowly toward the screen; rows you pass slide out under the bottom edge, and the room turns slightly with the mouse.
+- The look matches the Seat Lab choices: large dark navy seats (#05121a) with a fine houndstooth upholstery and orange aisle step lights; phones show about three seats across.
+- Applies to the shared layout and to the standalone BFF'26 press pages and press kit. The old seat image stays only as a fallback when JavaScript is off, and motion stops for visitors who ask for reduced motion.
+- All settings are data attributes on the seat element, so they can be tuned without code changes.
+
+## 2026-09-28 — Add Seat Lab prototype for scroll-driven cinema seats
+
+- Added a hidden, noindexed prototype page at `/lab/seats/` with five switchable seat effects: aisle walk, take your seat, raked floor, parallax stack and image rows.
+- Added three transparent seat-row images for the image-rows version and the script that renders them.
+- Refined the chosen aisle walk: solid rows without audience, at most three rows on screen, eased scroll and pointer motion, and Walk/Look sliders for tuning.
+- Seat backs lost the centre seam; added Size and Arms sliders, larger seats on phones, and a walk that never reveals new rows.
+- Set the owner's chosen defaults (Look 35%, Walk 0.75 rows, Arms 0%) and added a Position slider for the rows' height.
+- Added seat colour and upholstery pattern controls (presets or an uploaded image) and separate desktop/phone positions.
+- Locked the chosen seat settings (including seat colour rgb(5, 18, 26)); added a pattern colour, a finer pattern scale and many more upholstery patterns.
+- Locked the houndstooth upholstery and motion, restored seat and pattern colour pickers, removed versions B–E from the lab, and made the take-your-seat intro the tunable opening of the aisle walk.
+- Dropped the take-your-seat intro and reopened every seat, motion and upholstery setting in the Tune panel, starting from the chosen values.
+- Added Seat light and Aisle lights controls.
+- The live site's shared seats were unchanged by the lab itself; the lab exists to pick a version before it replaces `cinema-seats.png`.
+
+## 2026-09-26 — Add official web-sourced film visual assets batch 1
+
+- Added Hooroo Jackson's official theatrical poster to Aimy in a Cage.
+- Added KEO Films' official landscape promotional key art to Seeking Satoshi: The Mystery Bitcoin Creator.
+- Recorded source attribution, source URLs, asset type, and accurate alt text in both film profiles.
+
+## 2026-09-24 — Add locally archived official film visuals
+
+- Added Bitcoin FilmFest-archived official poster/key art to Bitcoin and Friends, Dare to Dream: A Story From El Salvador, Revolución Bitcoin, and The Great Reset and the Rise of Bitcoin.
+- Recorded source attribution, source URLs, asset type, and accurate alt text in each film profile.
+
+## 2026-09-24 — Add official Banking on Bitcoin and The New Radical posters
+
+- Added Banking on Bitcoin poster artwork from director Christopher Cannucciari's official portfolio.
+- Added The New Radical festival poster directly embedded on Istic Illic Pictures' official film page.
+- Recorded source URLs, credits, asset types, and descriptive alt text for both assets.
+
+## 2026-09-23 — Add Seeding Bitcoin official documentary poster
+
+- Added standalone poster art published in Bitcoin FilmFest's official Seeding Bitcoin announcement.
+- Confirmed the documentary's Trezor Academy production credit and recorded source URL, asset type, and descriptive alt text.
+
+## 2026-09-23 — Add Immutable Democracy official key art
+
+- Added title-card key art directly mapped to Immutable Democracy on Simple Proof's official film page.
+- Recorded the source URL, credit, asset type, and descriptive alt text.
+
+## 2026-09-23 — Add official assets for Cryptopia, The End of Money and Life on Bitcoin
+
+- Added the official Cryptopia theatrical poster from Cryptopia Film.
+- Added the official Bitcoin: The End of Money as We Know It title plate from the film's official site.
+- Added official Life on Bitcoin landscape promotional key art from SNS FiReFilms.
+- Recorded source URLs, credits, asset types, and descriptive alt text for each asset.
+
+## 2026-09-23 — Add Everyone Is Lying to You for Money official poster
+
+- Added the official theatrical poster from the film's website.
+- Recorded the source URL, credit, asset type, and descriptive alt text.
+
+## 2026-09-23 — Add Hummingbird official landscape key art
+
+- Added the official landscape key art for Hummingbird: The Bitcoin Jungle Story from the filmmaker's website.
+- Recorded the source URL, credit, asset type, and descriptive alt text.
+
+## 2026-09-23 — Add Crypto Castle artwork from the Bitcoin FilmFest 2026 archive
+
+- Added the supplied Crypto Castle Ep. 02 official-selection artwork to The Crypto Castle profile.
+- Recorded descriptive alt text, credit, and archive source information.
+
+## 2026-09-23 — Add three posters from the Bitcoin FilmFest 2024 archive
+
+- Added rights-cleared, standalone posters for Menger. Notes on the Margin, Gods of Their Own Religion and Searching for Satoshi: The Mysterious Disappearance of the Bitcoin Creator.
+- Recorded poster credits from the supplied BFF24 archive material.
+- Corrected the film-image front-matter schema for four previously added records so posters and stills render through the existing film layout.
+
+## 2026-09-23 — Add official film assets batch 1 (web research + archive)
+
+- Added official poster and 4 scene stills to The Rise and Rise of Bitcoin (from official bitcoindoc.com gallery).
+- Added official HBO documentary poster to Money Electric: The Bitcoin Mystery (official press materials).
+- Added official marketing poster to Finding Satoshi (Range Media Partners / Complex official source).
+- All source credits, attribution, and detailed alt text recorded in each film profile.
+- Assets sourced exclusively from official distributors, filmmaker websites, and verified press materials (no IMDb artwork, fan sites, or stock images).
+
+## 2026-09-23 — Add Unbankable film poster from BFF25 archive
+
+- Added official Unbankable poster (3x4 aspect ratio) from Bitcoin FilmFest 2025 media archive (Notion, Google Drive).
+- Source credit and alt text recorded in the Unbankable film profile.
+
+## 2026-09-23 — Add rights-cleared film visuals
+
+- Added the clean Encode Productions poster to Death Athletic.
+- Added official-trailer stills to Silk Road, Sovereign, The Gimp and the Hitman, and Money Electric: The Bitcoin Mystery.
+- Added two additional Simple Proof stills to Immutable Democracy.
+- Credits and source URLs are recorded in each film profile; all image files were validated as readable JPEGs before use.
+
+## 2026-09-23 — Published film audit follow-up
+
+- Added verified IMDb reference links to LifeHack, Money Electric: The Bitcoin Mystery, New Money, One Attempt Remaining, and The Great Reset and the Rise of Bitcoin.
+- Added Daphne Qin Wu's cinematography credit to Aimy in a Cage and rendered the optional credit on film profiles.
+- Rechecked the reported Death Athletic trailer mismatch against Encode Productions' YouTube oEmbed metadata; the existing trailer is the official Death Athletic trailer and was left unchanged.
+- Verified: YAML parse across all 30 film files, default and GitHub Pages Jekyll builds, generated profile output, `git diff --check`, and the public-repository safety scan.
+
+## 2026-09-23 — Restore the `/webmail/` compatibility route
+
+- Added `/webmail/` as a redirect to the SmartHost webmail service at `https://webmail.bitcoinfilmfest.com/`, so the GitHub Pages website can keep the main domain while mail stays on SmartHost.
+- Updated redirect metadata to support external destinations as well as internal legacy routes.
+- Added a visible fallback link for browsers that do not follow the redirect automatically.
+
+## 2026-09-22 — Netflix/IMDb-style film profile redesign
+
+- Replaced the bare masthead + definition-list layout on film profiles with a dark cinema-lobby hero:
+  - Full-bleed backdrop from the film's poster or first still (CSS `background-image`)
+  - Poster inset (ticket stub style) when a poster exists
+  - Title + type/year/status line + "ticket chips" for runtime, country, platform
+  - Synopsis sits inside the hero for immediate context
+- Added a horizontal cast rail (Netflix/IMDb pattern) with scroll-snap, hover states, and custom scrollbar when `cast` data exists
+- All hero sections use the locked design system tokens (room/screen/ink/accent colors, Syne Mono/Courier Prime, spacing scale, easing)
+- Backward-compatible fallback: films without poster or stills render the original `page-masthead` layout unchanged
+- Section labels restyled with display font, uppercase, tracking — consistent with edition pages
+- Content sections (stills, meta, awards, screenings, trailer, links, sources) now centered at `--content-max` with `--frame-side` padding for consistent measure
+- Verified: Jekyll build (default + GitHub Pages configs), YAML parse across all 30 film files, public-repo safety scan, `git diff --check`
+
+## 2026-09-22 — Widen Long Document content area to 90vw
+
+- Increased `--content-max` from `74rem` to `90vw` in `tokens.css`. The inner content area (`.inner` inside `.screen-canvas`) now spans ~80% of the viewport instead of capping at ~1184px.
+- Reading column still respects `--prose-max: 68ch` for legibility; the extra width flows into the side columns used by `.breakout` (full-width media/tables) and `.rail-note` (TOC, pull quotes, callouts).
+- Verified local build (100 pages, no errors).
+
+## 2026-09-22 — Long Document layout: breakout media + side-rail notes
+
+- Extended `.reel-entry`, `.newsletter`, and `.page-content` (the "Long Document" page family per `design.md`) into a three-column grid: a centered reading column at `--prose-max`, with real side columns instead of bare padding.
+- Added `.breakout` — lets embeds, images, tables, or quotes span the full screen width as a section break.
+- Added `.rail-note` (and `.rail-note--left`) — puts a table of contents, pull quote, or short callout in the freed-up side margin. `.rail-note.toc` is sticky.
+- Collapses to a single stacked column below 64rem; unaffected page families (cinema hub, edition pages, homepage) are untouched.
+- Retrofitted the podcast/interview Reel article to use a sticky `.rail-note.toc` table of contents and `.breakout` on all six video embeds; also corrected its publish date, which had been set a year ahead.
+- Verified with a local Jekyll build (100 pages, no errors) and manual inspection of generated output for the reel article, `_layouts/reel.html`, and an unrelated `page-content` page (`thanks.md`) to confirm no regression.
+
+## 2026-09-22 — Add podcast/interview roundup to Reel
+
+- Added `site/_reel/bitcoin-cinema-podcast-conversations.md`, a Reel article rounding up podcast and interview appearances by Bitcoin cinema filmmakers.
+- Six embedded via the site's existing YouTube-nocookie iframe pattern (Dare to Dream, Stranded/Dirty Coin, Cryptopia, A Sly Roundabout Way, Bitcoin and Friends, Death Athletic); the rest linked out to the original episode.
+- Sourced from the private Notion research table "Episodes with creators, filmmakers, producers" (21 rows, 20 unique episode URLs); only public episode links and public guest/show names were used, no private notes.
+
+## 2026-09-22 — Enrich all 30 cinema catalogue profiles
+
+- Expanded every film profile in `site/_films/` (all 30 records, including Dirty Coin) with fresh public research: complete writer/producer/executive-producer credits, verified cast and interview participants, production company/country/runtime, distribution and watch availability, awards, and festival/screening history.
+- Added new optional front-matter fields — `writer`, `producer`, `executive_producer`, `awards`, `screenings`, `official_links`, and `stills[].alt` — and rendered them on the film layout (`site/_layouts/film.html`) with matching styling in `cinema-frame.css`. All fields are optional and backward-compatible with existing records.
+- Corrected the Dirty Coin runtime from 70 to 69 minutes against the official film site and IMDb, and added an official poster and promotional still with source credit.
+- Added one new official poster for God Bless Bitcoin with source credit.
+- Preserved The Bitcoin Executor's director-authoritative corrections (Amari Cheatom as lead, exact logline/synopsis, no BFF'26 reference, no implied premiere) and every film's existing `trailer`/`bff_screening` values.
+- Verified with a local Jekyll build (both default and GitHub Pages configs), a front-matter YAML parse across all 30 files, and the public-repository safety scan.
+
+## 2026-09-22 — Correct The Bitcoin Executor profile
+
+- Replaced the cinema profile poster with the director-supplied artwork and corrected the lead actor to Amari Cheatom.
+- Added the director-supplied logline and short synopsis.
+- Removed the BFF'26 field from the individual film page so the public profile does not imply that the film has already premiered.
+
+## 2026-09-22 — Embed film trailers on cinema profiles
+
+- Replaced the plain YouTube trailer link on film profiles with a responsive, lazy-loaded privacy-enhanced YouTube embed.
+- Supports both `youtube.com/watch?v=` and `youtu.be/` trailer URLs, with an accessible iframe title and a fallback link for visitors who cannot load the embed.
+- Keeps trailer playback user-initiated and uses YouTube's privacy-enhanced embed domain.
+
+## 2026-09-19 — Restore two public-safe old-export Reel articles
+
+- Added the archived Bitcoin News / Mr. Rabbit interview announcement at `/reel/bitcoin-news-chatting-with-mr-rabbit/`.
+- Added the archived `Unique Bitcoin Ads` editorial at `/reel/unique-bitcoin-video-ads/`, removing the expired submission CTA.
+- Held the BFF24/BFF25 official-selection pieces because they duplicate the edition pages and their poster imagery needs per-title rights review.
+
+## 2026-09-19 — Integrated the 30-film cinema catalogue
+
+- Added verified poster/still metadata and 30 local cinema image assets across all 30 film records, with poster/stills rendering in the cinema row and film detail layout.
+- Kept uncleared IMDb/TMDB/broadcaster imagery in owner-review notes rather than publishing it as cleared media; no private research data was added.
+- Merged PR #19 after resolving the current-main conflict in the Bitcoiners BFF'24 source link.
+
+## 2026-09-18 — Fixed 6 small dead internal links
+
+- Corrected stale BFF edition links to `/24/` and `/26/`, removed two source links with no real target, and redirected the cinema-digest and laurels references to existing routes.
+- Kept the fixes scoped to existing content; no new navigation or homepage links added.
+
+## 2026-09-18 — Real `/gallery/` page fixes the BFF’26 dead link
+
+- Added `site/gallery.md` (`/gallery/`), a photo grid grouped by BFF’23/’24/’25 using the existing `.photo-row` component and specific alt descriptions for all 51 photos.
+- Reuses the existing `26/26-assets/photos/` files directly; the pre-existing `/gallery/` links on `26.md` now resolve. No homepage or primary-navigation link added.
+
+## 2026-09-18 — Fixed the dead `/press-and-media/` link
+
+- Added `site/press-and-media.md` (`/press-and-media/`) as a press contact and coverage hub linking to the BFF'26 press room, `/presskit/`, and verified past media coverage.
+- No homepage or primary-navigation link added; the existing references now resolve instead of returning 404.
+
+## 2026-09-18 — Fixed dead /sponsor/ link with a Friends-of-BFF stub page
+
+- Added `site/sponsor.md` (`/sponsor/`, `screen: paper`, `join.md`-style layout) explaining the Friends-of-BFF tiers and contact path; added the route to `_data/sitemap.json`'s builder-only inventory.
+- No nav or homepage links added; the existing `/sponsor/` CTAs on `/26/` now resolve instead of returning 404.
+
+## 2026-09-19 — Correct BFF23 dates, attendance, and contact email
+
+- Corrected the BFF23 retrospective to 24–25 March 2023, eight screenings, and approximately 120 BFF23 viewers; the roughly 300-person figure is now explicitly scoped to BFF23 together with Weekend Kapitalizmu.
+- Updated the public contact email from `hello@bitcoinfilmfest.com` to `info@bitcoinfilmfest.com`.
+
+## 2026-09-18 — Two new Reel posts: 2023 history and BFF25 cinema retrospective
+
+- Published "Our History Begins in 2023" at `/reel/our-history-begins-2023/`, a fact-checked retrospective on BFF23 Warsaw and the BFF Mini Lisboa activation, rewritten from a private source with owner-authorized reuse and no unsupported attendance/programme claims.
+- Published "Bitcoin FilmFest 2025: Kino Poza Schematami" (Polish) at `/reel/bff25-kino-poza-schematami/`, a retrospective on the BFF25 cinema programme (generative-cinema block, upcoming-productions block, The PoWies, the pitching contest, and the Revolución Bitcoin / Unbankable / Hotel Bitcoin screenings), reframed in past tense with the canonical `/25/` link and current social URLs.
+- Both entries carry `category: articles` with no `archived` flag, so they render under the Reel page's Posts section as the first new writing since the archive migration.
+
+## 2026-09-18 — Reel Chronicle, Posts, and Archive structure
+
+- Reordered `/reel/` into Chronicle, Posts, and Archive sections, with in-page navigation matching the new anchors.
+- Split fresh Reel entries from archived entries and added a clean empty state for Posts until new writing is published.
+- Combined interviews, articles, and newsletters into one newest-first Archive list with visible category labels; newsletters no longer have a separate section.
+
+## 2026-09-18 — Reel/newsletter migration finalized
+
+- Completed the unified Reel migration: 10 prior interviews/articles and 13 Bitcoin Cinema Digest issues now live in `site/_reel/`, for 23 archived entries and 23 detail routes.
+- Removed the separate `_newsletters` collection. Editorial type is carried by the shared `category` taxonomy, and the former Summer 2024 issue is included with the 12 remaining migrated newsletters.
+- Verified the Windows Jekyll build, real body content on representative newsletter and interview/article routes, and the Chronicle → Posts → Archive order on `/reel/`.
+- Removed a stale WordPress CDN migration note from the About source so the clean generated output contains no old upload-path markers.
+
+## 2026-09-18 — Press kit and BFF'26 press room restored
+
+- Added `/presskit/`, preserving the verified local branding book with BFF logos, rabbit mark, posters, laurels, SVG/PDF vector assets, colour palette, and Syne Mono/Courier Prime specimens.
+- Linked the press kit from Storyboard, the BFF'26 Press Kit section, and the restored press-room pages.
+- Reconstructed `/26/press/` from the local BFF26 guest-page source: 34 static EN/PL hub, info-base and article pages, with local project-relative asset links and the current presskit destination.
+- Replaced the old BFF'26 press/gallery/laurels links with local routes or the existing BFF'25 photo archive; no private source notes or FTP tooling were copied.
+- Updated the route map and sitemap inventory to 101 generated / 89 public-indexable routes.
+
+## 2026-09-18 — README rewritten as marketing-first project intro
+
+- Rewrote the root `README.md`: opens with the "heart of the Bitcoin Cinema industry" / unfiat-the-culture mission instead of a plain code description, then keeps the practical content-editing table and technical/build documentation below it.
+- No website source, layout, or data changes — documentation only.
+
+## 2026-09-18 — SEO and AI-discovery audit fixes
+
+- Excluded the 11 legacy redirect stub pages (old interview/newsletter URLs, `/bff25/`) from `sitemap.xml` via `sitemap: false`, matching their existing `robots: noindex`. They no longer appear in the public sitemap.
+- Added a unique `description` front-matter field to all 30 film pages and 7 company pages (derived from each entry's `synopsis`/`bitcoin_angle`), so search results and social previews no longer show the same site-wide description on every film/company page.
+- Added `site/llms.txt`, a plain-language site summary and key-page index for AI agents and LLM crawlers, alongside the existing `robots.txt` and `sitemap.xml`.
+- Verified via a local Jekyll build: sitemap entry count dropped as expected, film/company meta descriptions are now unique, `/llms.txt` renders correctly.
+
+## 2026-09-18 — Custom domain cutover to bitcoinfilmfest.com
+
+- Set `bitcoinfilmfest.com` as the GitHub Pages custom domain and added the repository `CNAME` file.
+- Switched DNS: apex `A`/`AAAA` records now point at GitHub Pages; the previous website IP moved to `mail.bitcoinfilmfest.com`, and `MX`/`ftp` were repointed accordingly so mail and FTP keep working. Full pre-change zone backed up locally before any edit.
+- Switched the deploy workflow to build with only `_config.yml`, so canonical/OG/sitemap URLs now render as `https://bitcoinfilmfest.com` instead of the temporary Pages preview.
+- Next: wait for DNS propagation and GitHub's certificate, then enable Enforce HTTPS and verify the live domain per `DOMAIN-SEO-CUTOVER.md`.
+
 ## 2026-09-16 — Reel archive migration and public-media boundary
 
 - Added exactly 10 public-safe legacy interviews, guest posts, and an event report to the unified `/reel/` archive, with the original routes retained as noindex compatibility redirects.
 - Removed unreconciled WordPress and `/media/` image hotlinks from every Reel entry instead of publishing unverified image assets; the text remains available while local rights-cleared derivatives are absent.
-- Kept `/25/` as the canonical BFF’25 route and changed the migrated Luke Willms links to point there rather than to the redirect-only `/bff25/` route.
+- Kept `/25/` as the canonical BFF'25 route and changed the migrated Luke Willms links to point there rather than to the redirect-only `/bff25/` route.
 
 ## 2026-09-16 — Next ten public cinema profiles
 
@@ -15,9 +263,9 @@ Short, human-readable record of public website changes. One dated entry is requi
 
 ## 2026-09-16 — Archive visual and photo-loading pass
 
-- Rebalanced archive/current edition composition with a stronger BFF’27 hero mark treatment and a deliberately asymmetric BFF’24 selection lead.
-- Kept the complete BFF’23 (554 frames) and BFF’25 (152 frames) public albums, but moved them behind native disclosure controls so the first view stays focused while every image remains lazy-loaded.
-- Fixed BFF’27 archive-accent color resolution and preserved the shared cinema shell, fixed seats, responsive grids, focus styles, and reduced-motion behavior.
+- Rebalanced archive/current edition composition with a stronger BFF'27 hero mark treatment and a deliberately asymmetric BFF'24 selection lead.
+- Kept the complete BFF'23 (554 frames) and BFF'25 (152 frames) public albums, but moved them behind native disclosure controls so the first view stays focused while every image remains lazy-loaded.
+- Fixed BFF'27 archive-accent color resolution and preserved the shared cinema shell, fixed seats, responsive grids, focus styles, and reduced-motion behavior.
 - Verified the Jekyll build, edition validators, local asset loading, keyboard focus, mobile widths, and album toggles.
 
 ## 2026-09-15 — Public documentation and repository cleanup
@@ -43,12 +291,12 @@ Short, human-readable record of public website changes. One dated entry is requi
 
 Add the newest date at the top, using plain language:
 
-```markdown
+\`\`\`markdown
 ## YYYY-MM-DD — Short change title
 
 - What visitors or collaborators can now do.
 - What route, component, or workflow changed.
 - What was verified, if the change involved a build or deployment.
-```
+\`\`\`
 
 For detailed test output, blockers, and implementation history, use `BUILD-LOG.md` and the Git commit or pull request.

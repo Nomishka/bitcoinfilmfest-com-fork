@@ -1,34 +1,59 @@
 ---
 title: "Aimy in a Cage"
+description: "A teenage orphan rebels against her family during a global virus outbreak in Hooroo Jackson's surreal fantasy debut."
 year: 2015
 type: Feature
 status: released
 director: "Hooroo Jackson"
+writer: "Hooroo Jackson"
+producer: "Hooroo Jackson"
+cinematographer: "Daphne Qin Wu"
 cast:
   - "Allisyn Ashley Arm"
   - "Crispin Glover"
   - "Paz de la Huerta"
   - "Terry Moore"
-studio: null
+studio: "Ankaboot Productions"
 company: null
 country: "USA"
 runtime: 79
+poster: "/assets/images/cinema/films/aimy-in-a-cage-poster.png"
+poster_alt: "Portrait sepia film poster for Aimy in a Cage, showing a solemn young woman with tear-like black makeup within a circular textured frame, with cast credits above and the title below."
+poster_credit: "Courtesy of Hooroo Jackson"
+poster_source: "Official Aimy in a Cage poster embedded on Hooroo Jackson's filmmaker page"
+poster_source_url: "https://hooroojackson.com/wp-content/uploads/2015/09/Screenshot-2025-03-28-at-10.12.54%E2%80%AFPM-688x1024.png"
+poster_asset_type: "Official theatrical poster"
 synopsis: >
-  Aimy is an eccentric young artist trapped inside a surreal family compound
-  while an apocalyptic illness and an authoritarian home close in around her.
-  Hooroo Jackson adapts his graphic novel into a loud, dark fantasy about
-  conformity, family and the cost of being different.
+  During a global virus outbreak, teenage orphan Aimy Micry is locked inside
+  her family's apartment and threatened with a mind-altering procedure meant to
+  make her obedient. Her rebellion turns the enclosed family home into a surreal,
+  increasingly violent fantasy world.
 bitcoin_angle: >
-  The film is a landmark in Bitcoin cinema because Jackson financed the feature
-  with Bitcoin profits and retained an unusually independent production model.
-  Bitcoin sits behind the film's making rather than inside its plot.
+  Jackson financed the film with profits from Bitcoin, making Bitcoin part of
+  the film's production story rather than its plot. That self-financed model is
+  central to the film's place in Bitcoin cinema.
 platform: "Blu-ray"
 trailer: "https://www.youtube.com/watch?v=HEOC_tSLlL0"
+awards:
+  - "Director's Prize — Portland Film Festival (2015)"
+screenings:
+  - "Portland Film Festival — September 8, 2015"
+official_links:
+  - label: "Hooroo Jackson — official film page"
+    url: "https://hooroojackson.com/portfolio-item/aimy-in-a-cage/"
+  - label: "Official Blu-ray"
+    url: "https://www.amazon.com/Aimy-Cage-Blu-ray-Allisyn-Snyder/dp/B0DFFZDQ5Z"
+  - label: "Daphne Qin Wu — cinematographer resume"
+    url: "https://www.daphnewu.com/resume"
 sources:
   - label: "Hooroo Jackson — official film page"
     url: "https://hooroojackson.com/portfolio-item/aimy-in-a-cage/"
-  - label: "Collider"
+  - label: "Collider — Bitcoin financing and film background"
     url: "https://collider.com/bitcoin-movie-aimy-in-a-cage-horror/"
-  - label: "IMDb"
-    url: "https://www.imdb.com/title/tt3550078/"
+  - label: "Rotten Tomatoes — credits and release information"
+    url: "https://www.rottentomatoes.com/m/aimy_in_a_cage"
+  - label: "Wikipedia — festival premiere and award history"
+    url: "https://en.wikipedia.org/wiki/Aimy_in_a_Cage"
+  - label: "Daphne Qin Wu — cinematographer resume"
+    url: "https://www.daphnewu.com/resume"
 ---

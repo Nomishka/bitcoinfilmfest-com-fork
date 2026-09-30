@@ -2,6 +2,77 @@
 
 This is a short operational record for builders. It records verified facts and active blockers. For implementation details, use `BUILDER-GUIDE.md` and `site/README.md`.
 
+## 2026-09-26 — Official web-sourced cinema visual assets, batch 1
+
+### Implemented
+
+- Prepared Hooroo Jackson's official theatrical poster for *Aimy in a Cage* and KEO Films' official landscape key art for *Seeking Satoshi: The Mystery Bitcoin Creator*.
+- Confirmed that the catalogue holds publication rights for the posters and stills included in this visual audit; no private permission records or correspondence are published in the repository.
+- Recorded first-party source URLs, credits, asset type, and descriptive alt text. Removed nonessential embedded metadata from the Seeking Satoshi JPEG before staging it for public distribution.
+
+### Verification
+
+- First-party source mapping: PASS. The Aimy local PNG is byte-identical to an image embedded on Hooroo Jackson's official film page; KEO Films declares the exact Seeking Satoshi JPEG as the page's Open Graph image.
+- Windows Jekyll production build: PASS (`C:/Ruby33-x64/bin/bundle.bat exec jekyll build --trace`).
+- Generated pages reference both staged visual assets: PASS.
+- `python scripts/check-public-repo.py`: PASS (1,267 tracked files; no forbidden paths or common credentials).
+- `git diff --cached --check`: PASS.
+
+## 2026-09-19 — 30-film cinema catalogue merged
+
+### Implemented
+
+- Merged PR #19 (`16690f3d8f22bf81296b443b5ebf98b2d7d1451c`) after incorporating current `main` and preserving the verified BFF'24 source URL for Bitcoiners.
+- Integrated 30 film front-matter records, 30 local cinema image assets, and the poster/stills rendering changes in `cinema-row.html`, `film.html`, and `cinema-frame.css`.
+- Kept rights-uncertain IMDb/TMDB/broadcaster media documented as owner-review rather than embedding it as cleared public media.
+
+### Verification
+
+- Windows Jekyll production build: PASS (`C:/Ruby33-x64/bin/bundle.bat exec jekyll build --trace`, 8.1 seconds).
+- Source film records: 30; generated film routes: 30; source and generated cinema assets: 30 each.
+- `git diff --check`: PASS.
+- Public-boundary GitHub Actions check: PASS before the changelog requirement stopped the first post-conflict run; the required dated changelog entry is included in this commit.
+
+## 2026-09-19 — Dead-route repairs merged and deployed
+
+### Implemented
+
+- Merged `fix/sponsor-page-stub`, `fix/press-and-media-page`, `fix/gallery-page`, and `fix/small-dead-links` into `main`; the resulting remote head is `e35e159`.
+- Added `/sponsor/`, `/press-and-media/`, and `/gallery/` without adding any homepage or primary-navigation links. The gallery uses 51 existing photo assets directly and gives each content image a non-empty alt description.
+- Repaired six smaller dead internal links, preserving real targets and removing only source references with no verified destination.
+
+### Verification
+
+- `python scripts/check-public-repo.py`: PASS (1,157 tracked files, no forbidden paths or common credentials).
+- Windows Jekyll production build: PASS; all six representative generated routes exist.
+- Gallery audit: PASS (51 unique source assets exist; 51 content images render; 0 empty content alts).
+- `git diff --check`: PASS; primary navigation unchanged.
+- GitHub Actions run `35417053924`: PASS — build and deploy jobs completed successfully.
+- Deployed content checks: `/sponsor/`, `/press-and-media/`, and `/gallery/` return the expected page content after deployment.
+
+### Remaining
+
+- GitHub Pages currently reports `https_enforced: false`, and normal TLS verification for `bitcoinfilmfest.com` fails with a hostname mismatch. Content is reachable diagnostically, but custom-domain HTTPS is not yet verified safe; correct the certificate/provisioning and enable HTTPS enforcement before treating the domain cutover as fully complete.
+
+## 2026-09-18 — Press kit and BFF’26 press room
+
+### Implemented
+
+- Preserved the existing local `logos-page` branding book at the Jekyll route `/presskit/` with 14 public download assets: logos, rabbit, posters, laurels, SVG/PDF vectors and the documented colour/type specimens.
+- Added the `/presskit/` link to Storyboard and the BFF’26 Press Kit section.
+- Restored 34 local static pages under `/26/press/` from `BFF26-guest-page/press/`: EN/PL hub pages, info-base, post-festival recaps, previews, interviews, evergreen articles and the shared article stylesheet.
+- Rewrote legacy `/26/laurels/`, `/logos`, and `/gallery/` references inside the restored room to the local presskit or existing BFF’25 photo archive; no FTP scripts, archives, private KB exports or source-only files were copied.
+- Updated `SITEMAP-PLAN.md` and `site/_data/sitemap.json` to 101 generated / 89 public-indexable routes.
+
+### Verification
+
+- Windows Jekyll build: PASS.
+- `python -m json.tool site/_data/sitemap.json`: PASS.
+- `scripts/check-public-repo.py`: PASS.
+- `git diff --check`: PASS.
+- Local HTTP smoke: `/presskit/`, selected presskit assets, `/26/press/`, EN/PL press pages, article CSS and `/26/` all returned 200.
+- Relative-link scan across all 34 press pages plus presskit: 35 files checked, 0 missing local targets.
+
 ## 2026-09-16 — Reel migration integration and media safety
 
 ### Implemented
