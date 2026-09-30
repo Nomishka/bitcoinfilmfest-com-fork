@@ -2,6 +2,22 @@
 
 Short, human-readable record of public website changes. One dated entry is required for every source change that affects the website.
 
+## 2026-09-30 — Fix the newsletter redirect, 12 dead links and the unclickable "All films" link, add Movie structured data
+
+- The newsletter form no longer sends new subscribers to the temporary GitHub Pages preview. Its `_next` value now uses the site URL helper, so it resolves to `/thanks/` on whichever domain the build targets.
+- Fixed eleven dead `Read more →` links on `/reel/`. `_chronicle` entries carry their destination in front matter, but the Reel template read `entry.url` — a field Jekyll reserves for the document's own route, which shadows front matter and is never written because the collection has `output: false`. The key is now `link:` and the template reads it.
+- Fixed the dead "second annual edition" link on `/about/`, which pointed at `/festival-flashbacks/`, a legacy route that was never built.
+- Fixed the `← All films` back link, which was unclickable on the 38 film profiles that show a poster hero. The hero pulls itself up under the fixed navigation with a negative top margin, which assumes it is the first thing in the content flow — true on `/cinema/`, but on a film profile the back link sits above it, so the pull-up covered the link's descenders and swallowed every click aimed at it. The pull-up is now scoped to exclude film profiles; `/cinema/` renders pixel-identically.
+- Every film profile now publishes `Movie` structured data — name, description, poster, year, runtime, director, cast, studio, country and (for documentaries) genre. The fields were already in the film records.
+- Film profiles now use `og:type: video.movie` instead of `website`, share their own poster instead of the generic festival card, and no longer claim a 1200x630 image size for a portrait poster.
+- Reel entries now use `og:type: article`.
+
+### Housekeeping in the same pass
+
+- Added `AGENTS.md` at the repo root: where things live, the build and gate commands, the four traps that have already caused shipped bugs (the `entry.url` shadow, the `.cinema-hero` pull-up, the duplicated `.cinema-hero` block, `_films/` not declaring `layout:`), the pixel-diff verification method, and a map of which unused-looking CSS is deliberately reserved rather than dead.
+- Commented the non-obvious decisions in place: why the newsletter `_next` must be `absolute_url`, why the Reel template reads `entry.link`, which of the two `.cinema-hero` blocks actually wins, which film records get the poster hero, and that the `/sitemap/` styling is reserved for a planned page.
+- Audited all 1061 CSS rules against every markup, template and JS file. Found 62 rules referencing classes that appear nowhere. Most are reserved for planned or documented pages and were left alone and labelled; the genuine dead-code candidates are listed in `AGENTS.md` rather than deleted, because the automated pass that removed them also dropped all 10 `@keyframes` blocks and would have killed the animations.
+
 ## 2026-09-30 — Restore the /bff23/, /bff24/ and /bff2024/ compatibility redirects
 
 - Added compatibility routes for the remaining old edition URLs: `/bff23/` and `/bff24/`, plus the older `/bff2024/` address documented in `docs/context/LEGACY-CONTENT-MIGRATION-QUEUE.md`.
