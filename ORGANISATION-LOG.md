@@ -16,6 +16,13 @@ Entry template:
 
 ---
 
+## 2026-09-30 — Fork work redone on top of current upstream
+
+- Who: Claude (agent), asked by Nomishka.
+- Done: Nomishka reset the fork's `main` to match upstream because the earlier fork commits (PRs 5 and 6) conflicted with it. The same changes were reapplied on a fresh branch from current upstream `main`: Pages base-path fix, Cloudflare preview config (`wrangler.jsonc`, `scripts/cloudflare-build.sh`, `.ruby-version`), `CLAUDE.md`, this log, the GitHub guide, and handoff/build-log notes. `CHANGELOG.md` got a new top entry; upstream entries are untouched.
+- PR: new PR into the fork's `main` (see the fork's pull requests).
+- Open / next: Nomishka reviews and merges. After merge, the Cloudflare `main` build and branch previews should work again with the existing dashboard settings.
+
 ## 2026-09-26 — PR 5 merged; GitHub Pages and Cloudflare both live
 
 - Who: Claude (agent) merged PR 5 at Nomishka's request; Nomishka fixed the Cloudflare dashboard settings.
