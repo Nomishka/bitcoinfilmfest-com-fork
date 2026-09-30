@@ -2,6 +2,10 @@
 
 Short, human-readable record of public website changes. One dated entry is required for every source change that affects the website.
 
+## 2026-09-30 — Credits page without heading
+
+- Removed the visible "Credits" heading from the top of the `/credits/` page, so the credits roll starts straight away. The browser tab title and the "Credits" menu link stay the same.
+
 ## 2026-09-28 — Replace the seat image with 3D cinema seats on every page
 
 - Every page now has three solid rows of CSS cinema seats in perspective. As you scroll you walk slowly toward the screen; rows you pass slide out under the bottom edge, and the room turns slightly with the mouse.
