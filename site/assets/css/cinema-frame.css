@@ -2403,6 +2403,19 @@ body.is-navigating {
   text-decoration: underline;
 }
 
+/*
+  The hero pulls itself up under the fixed nav with a negative top margin and
+  pays it back as top padding. That assumes the hero is the first thing in the
+  content flow, which is true on /cinema/ but not on film profiles: there the
+  "All films" back link sits above it, so the pull-up landed on top of the link,
+  hid its descenders behind the photo, and swallowed every click aimed at it.
+  Scoped to .cinema-profile so the /cinema/ hero keeps tucking under the nav.
+*/
+.cinema-profile .cinema-hero {
+  margin-block-start: 0;
+  padding-block-start: 0;
+}
+
 @media (min-width: 36rem) {
   .cinema-profile-meta {
     grid-template-columns: repeat(2, minmax(0, 1fr));

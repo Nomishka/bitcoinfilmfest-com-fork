@@ -2,11 +2,12 @@
 
 Short, human-readable record of public website changes. One dated entry is required for every source change that affects the website.
 
-## 2026-09-30 — Fix the newsletter redirect and 12 dead links, add Movie structured data
+## 2026-09-30 — Fix the newsletter redirect, 12 dead links and the unclickable "All films" link, add Movie structured data
 
 - The newsletter form no longer sends new subscribers to the temporary GitHub Pages preview. Its `_next` value now uses the site URL helper, so it resolves to `/thanks/` on whichever domain the build targets.
 - Fixed eleven dead `Read more →` links on `/reel/`. `_chronicle` entries carry their destination in front matter, but the Reel template read `entry.url` — a field Jekyll reserves for the document's own route, which shadows front matter and is never written because the collection has `output: false`. The key is now `link:` and the template reads it.
 - Fixed the dead "second annual edition" link on `/about/`, which pointed at `/festival-flashbacks/`, a legacy route that was never built.
+- Fixed the `← All films` back link, which was unclickable on the 38 film profiles that show a poster hero. The hero pulls itself up under the fixed navigation with a negative top margin, which assumes it is the first thing in the content flow — true on `/cinema/`, but on a film profile the back link sits above it, so the pull-up covered the link's descenders and swallowed every click aimed at it. The pull-up is now scoped to exclude film profiles; `/cinema/` renders pixel-identically.
 - Every film profile now publishes `Movie` structured data — name, description, poster, year, runtime, director, cast, studio, country and (for documentaries) genre. The fields were already in the film records.
 - Film profiles now use `og:type: video.movie` instead of `website`, share their own poster instead of the generic festival card, and no longer claim a 1200x630 image size for a portrait poster.
 - Reel entries now use `og:type: article`.
