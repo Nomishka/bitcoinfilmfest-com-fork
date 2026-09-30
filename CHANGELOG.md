@@ -14,8 +14,9 @@ Short, human-readable record of public website changes. One dated entry is requi
 
 ### Housekeeping in the same pass
 
+- Added a generated `/sitemap/` route linked from the footer, not primary navigation. Current routes come from Jekyll pages and collections; redirect aliases and legacy migrations are listed separately. Updated route inventory counts against the production-config build (176 HTML outputs, 157 indexable public routes).
 - Added `AGENTS.md` at the repo root: where things live, the build and gate commands, the four traps that have already caused shipped bugs (the `entry.url` shadow, the `.cinema-hero` pull-up, the duplicated `.cinema-hero` block, `_films/` not declaring `layout:`), the pixel-diff verification method, and a map of which unused-looking CSS is deliberately reserved rather than dead.
-- Commented the non-obvious decisions in place: why the newsletter `_next` must be `absolute_url`, why the Reel template reads `entry.link`, which of the two `.cinema-hero` blocks actually wins, which film records get the poster hero, and that the `/sitemap/` styling is reserved for a planned page.
+- Commented the non-obvious decisions in place: why the newsletter `_next` must be `absolute_url`, why the Reel template reads `entry.link`, which of the two `.cinema-hero` blocks actually wins, which film records get the poster hero, and how the route index is generated.
 - Audited all 1061 CSS rules against every markup, template and JS file. Found 62 rules referencing classes that appear nowhere. Most are reserved for planned or documented pages and were left alone and labelled; the genuine dead-code candidates are listed in `AGENTS.md` rather than deleted, because the automated pass that removed them also dropped all 10 `@keyframes` blocks and would have killed the animations.
 
 ## 2026-09-30 — Restore the /bff23/, /bff24/ and /bff2024/ compatibility redirects

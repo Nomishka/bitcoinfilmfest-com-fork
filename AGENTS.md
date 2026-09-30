@@ -123,14 +123,11 @@ Sites like this also reward a static sweep: crawl the built `_site`, collect eve
 
 ## Reserved code: do not delete because it looks unused
 
-Some CSS targets classes that appear in no markup today. That is intentional - the page is
-planned, not abandoned. Before removing a block, check whether a plan doc references it.
+The page is live at `/sitemap/` and linked from the shared footer (not the primary nav).
+Its current-page groups are generated from Jekyll pages/collections; legacy migration rows
+come from `site/_data/sitemap.json`. Keep counts out of the template and update the source
+inventory only when status changes.
 
-- **`/sitemap/` route styling** - `.route-key`, `.route-dot*`, `.route-state*`,
-  `.route-planned`, `.sitemap-index`, `.sitemap-group`, `.sitemap-exclusions`. The page is
-  specced in `SITEMAP-PLAN.md` and described as live in `HANDOFF-SESSION-3.md`, but
-  `site/sitemap.md` does **not** exist in the repo and nothing links to `/sitemap/`. Either
-  the page needs restoring or this block needs a decision - do not silently drop it.
 - **`.edition-masthead`, `.edition-year`, `.edition-date`, `.edition-intro`,
   `.edition-actions`** - referenced in the edition handoff docs.
 - **`.bff26 .friends-grid`, `.friends-fw`, `.friends-tier-label`, `.prague-teaser`,

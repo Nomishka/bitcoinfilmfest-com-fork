@@ -1192,10 +1192,9 @@ article img,
 }
 
 /*
-  RESERVED - the /sitemap/ route. Nothing renders these classes today: site/sitemap.md
-  does not exist and no page links to /sitemap/. The page is specced in SITEMAP-PLAN.md
-  and described as live in HANDOFF-SESSION-3.md, so this is planned styling, not dead
-  code. Do not delete without deciding the page's fate first (see AGENTS.md).
+  Generated /sitemap/ route. Its live routes come from Jekyll pages/collections and its
+  legacy migration rows come from _data/sitemap.json. Keep route inventory out of the
+  template; update that source data only when migration status changes.
 */
 /* Site map */
 .route-key {
@@ -1316,6 +1315,52 @@ article img,
 
 .sitemap-exclusions ul {
   padding-inline-start: var(--space-lg);
+}
+
+.sitemap-planned,
+.sitemap-redirects {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sitemap-planned li,
+.sitemap-redirects li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-xs);
+  margin: 0;
+  padding-block: var(--space-sm);
+  border-block-start: var(--rule-thin) solid var(--color-rule);
+}
+
+.sitemap-planned li > *,
+.sitemap-redirects li > * {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.sitemap-destination {
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+}
+
+.sitemap-source-note {
+  margin-block-start: var(--space-xl);
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+}
+
+@media (min-width: 48rem) {
+  .sitemap-planned li {
+    grid-template-columns: minmax(0, 1.4fr) minmax(10rem, 0.6fr) minmax(11rem, 0.8fr);
+    align-items: baseline;
+  }
+
+  .sitemap-redirects li {
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: baseline;
+  }
 }
 
 /* Shared footer close: a distinct lifted grey auditorium screen, never a thin strip. */
