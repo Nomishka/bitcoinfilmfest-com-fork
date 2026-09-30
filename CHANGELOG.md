@@ -12,6 +12,18 @@ Short, human-readable record of public website changes. One dated entry is requi
 - Film profiles now use `og:type: video.movie` instead of `website`, share their own poster instead of the generic festival card, and no longer claim a 1200x630 image size for a portrait poster.
 - Reel entries now use `og:type: article`.
 
+## 2026-09-30 — Restore the /bff23/, /bff24/ and /bff2024/ compatibility redirects
+
+- Added compatibility routes for the remaining old edition URLs: `/bff23/` and `/bff24/`, plus the older `/bff2024/` address documented in `docs/context/LEGACY-CONTENT-MIGRATION-QUEUE.md`.
+- Each one is `robots: noindex, follow` and `sitemap: false`, like the existing `/bff25/` and `/bff26/` routes.
+- Verified in a local Jekyll build that every stub emits a canonical link and a meta refresh to its `/23/`, `/24/` or `/26/` archive, and that none of them appears in `sitemap.xml`.
+
+## 2026-09-30 — Restore the /bff26/ compatibility redirect
+
+- Added the missing `/bff26/` compatibility route, so the old BFF'26 URL now redirects to the canonical `/26/` recap instead of a 404. `/bff25/` already did this.
+- The route is `robots: noindex, follow` and `sitemap: false`, matching `/bff25/` and the other legacy routes.
+- Verified with a local Jekyll build that the generated `/bff26/index.html` carries `<link rel="canonical" href="https://bitcoinfilmfest.com/26/">` and the `meta http-equiv="refresh"` to `/26/`.
+
 ## 2026-09-28 — Replace the seat image with 3D cinema seats on every page
 
 - Every page now has three solid rows of CSS cinema seats in perspective. As you scroll you walk slowly toward the screen; rows you pass slide out under the bottom edge, and the room turns slightly with the mouse.

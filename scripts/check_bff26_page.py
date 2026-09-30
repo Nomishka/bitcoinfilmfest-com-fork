@@ -534,11 +534,38 @@ def check_assets(
             failures.append(f"assets: missing {normalized_relative}")
 
 
+def validate_compatibility_route(root: Path, failures: list[str]) -> None:
+    """The old WordPress-era /bff26/ URL must keep redirecting to canonical /26/."""
+    legacy_path = root / "site" / "bff26-legacy.md"
+    text = read_text(legacy_path, "compatibility", failures)
+    if text is None:
+        failures.append(f"compatibility: missing route page {legacy_path}")
+        return
+
+    assignments = front_matter_assignments(text, failures)
+    if assignments.get("permalink") != "/bff26/":
+        failures.append("compatibility: /bff26/ route must declare permalink: /bff26/")
+    if assignments.get("redirect_to") != "/26/":
+        failures.append("compatibility: /bff26/ route must redirect_to: /26/")
+    if assignments.get("robots") != "noindex, follow":
+        failures.append("compatibility: /bff26/ route must stay robots: noindex, follow")
+    if assignments.get("sitemap") != "false":
+        failures.append("compatibility: /bff26/ route must stay out of sitemap.xml")
+    if "{{ '/26/' | relative_url }}" not in text:
+        failures.append("compatibility: /bff26/ route must link to the canonical /26/ page")
+
+
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source", required=True, type=Path, help="Jekyll source page")
     parser.add_argument("--built", required=True, type=Path, help="built HTML route")
     parser.add_argument("--assets", required=True, type=Path, help="legacy 26-assets directory")
+    parser.add_argument(
+        "--root",
+        type=Path,
+        default=Path(__file__).resolve().parents[1],
+        help="repository root used to locate the /bff26/ compatibility page",
+    )
     return parser.parse_args(argv)
 
 
@@ -553,6 +580,7 @@ def main(argv: list[str] | None = None) -> int:
         validate_source(source_text, failures)
     if built_text is not None:
         validate_built(built_text, args.assets, failures)
+    validate_compatibility_route(args.root.resolve(), failures)
 
     if failures:
         for failure in failures:
