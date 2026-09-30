@@ -2,6 +2,12 @@
 
 Short, human-readable record of public website changes. One dated entry is required for every source change that affects the website.
 
+## 2026-09-30 — Restore the /bff23/, /bff24/ and /bff2024/ compatibility redirects
+
+- Added compatibility routes for the remaining old edition URLs: `/bff23/` and `/bff24/`, plus the older `/bff2024/` address documented in `docs/context/LEGACY-CONTENT-MIGRATION-QUEUE.md`.
+- Each one is `robots: noindex, follow` and `sitemap: false`, like the existing `/bff25/` and `/bff26/` routes.
+- Verified in a local Jekyll build that every stub emits a canonical link and a meta refresh to its `/23/`, `/24/` or `/26/` archive, and that none of them appears in `sitemap.xml`.
+
 ## 2026-09-30 — Restore the /bff26/ compatibility redirect
 
 - Added the missing `/bff26/` compatibility route, so the old BFF'26 URL now redirects to the canonical `/26/` recap instead of a 404. `/bff25/` already did this.
