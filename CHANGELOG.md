@@ -2,6 +2,15 @@
 
 Short, human-readable record of public website changes. One dated entry is required for every source change that affects the website.
 
+## 2026-09-30 — Fix the newsletter redirect and 12 dead links, add Movie structured data
+
+- The newsletter form no longer sends new subscribers to the temporary GitHub Pages preview. Its `_next` value now uses the site URL helper, so it resolves to `/thanks/` on whichever domain the build targets.
+- Fixed eleven dead `Read more →` links on `/reel/`. `_chronicle` entries carry their destination in front matter, but the Reel template read `entry.url` — a field Jekyll reserves for the document's own route, which shadows front matter and is never written because the collection has `output: false`. The key is now `link:` and the template reads it.
+- Fixed the dead "second annual edition" link on `/about/`, which pointed at `/festival-flashbacks/`, a legacy route that was never built.
+- Every film profile now publishes `Movie` structured data — name, description, poster, year, runtime, director, cast, studio, country and (for documentaries) genre. The fields were already in the film records.
+- Film profiles now use `og:type: video.movie` instead of `website`, share their own poster instead of the generic festival card, and no longer claim a 1200x630 image size for a portrait poster.
+- Reel entries now use `og:type: article`.
+
 ## 2026-09-28 — Replace the seat image with 3D cinema seats on every page
 
 - Every page now has three solid rows of CSS cinema seats in perspective. As you scroll you walk slowly toward the screen; rows you pass slide out under the bottom edge, and the room turns slightly with the mouse.
