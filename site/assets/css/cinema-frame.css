@@ -1191,6 +1191,12 @@ article img,
   margin-block-start: clamp(var(--space-3xl), 10vw, var(--space-4xl));
 }
 
+/*
+  RESERVED - the /sitemap/ route. Nothing renders these classes today: site/sitemap.md
+  does not exist and no page links to /sitemap/. The page is specced in SITEMAP-PLAN.md
+  and described as live in HANDOFF-SESSION-3.md, so this is planned styling, not dead
+  code. Do not delete without deciding the page's fate first (see AGENTS.md).
+*/
 /* Site map */
 .route-key {
   display: flex;
@@ -2029,6 +2035,13 @@ body.is-navigating {
 }
 
 /* Single-page Cinema catalogue */
+/*
+  WARNING: `.cinema-hero` is styled a second time further down this file (the film-profile
+  hero) and that later block wins on every conflicting property. So the grid declared here
+  is NOT what /cinema/ renders - it gets flex, align-items: flex-end, min-height: 55vh and a
+  negative top margin from the later block. Editing this block in isolation will not do what
+  you expect, and it silently affects film profiles too. See AGENTS.md.
+*/
 .cinema-hero {
   display: grid;
   grid-template-columns: minmax(0, 1.35fr) minmax(13rem, 0.65fr);

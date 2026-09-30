@@ -4,6 +4,14 @@ layout: default
 <article class="cinema-profile">
   <a class="cinema-back" href="{{ '/cinema/films/' | relative_url }}">← All films</a>
 
+  {% comment %}
+    Two hero variants, decided by whether the record has artwork. 38 of the 64 film
+    records have a poster or stills and get the poster hero; the other 26 fall through to
+    the plain masthead. Both variants render the `← All films` link above, and only the
+    poster hero pulls itself up under the fixed nav - which is why the back link used to be
+    unclickable on those 38 and fine on the other 26. See the .cinema-profile .cinema-hero
+    rule in cinema-frame.css and AGENTS.md.
+  {% endcomment %}
   {% if page.poster or page.stills %}
     {% assign hero_image = page.poster %}
     {% if page.stills and page.stills.size > 0 %}

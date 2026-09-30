@@ -12,6 +12,12 @@ Short, human-readable record of public website changes. One dated entry is requi
 - Film profiles now use `og:type: video.movie` instead of `website`, share their own poster instead of the generic festival card, and no longer claim a 1200x630 image size for a portrait poster.
 - Reel entries now use `og:type: article`.
 
+### Housekeeping in the same pass
+
+- Added `AGENTS.md` at the repo root: where things live, the build and gate commands, the four traps that have already caused shipped bugs (the `entry.url` shadow, the `.cinema-hero` pull-up, the duplicated `.cinema-hero` block, `_films/` not declaring `layout:`), the pixel-diff verification method, and a map of which unused-looking CSS is deliberately reserved rather than dead.
+- Commented the non-obvious decisions in place: why the newsletter `_next` must be `absolute_url`, why the Reel template reads `entry.link`, which of the two `.cinema-hero` blocks actually wins, which film records get the poster hero, and that the `/sitemap/` styling is reserved for a planned page.
+- Audited all 1061 CSS rules against every markup, template and JS file. Found 62 rules referencing classes that appear nowhere. Most are reserved for planned or documented pages and were left alone and labelled; the genuine dead-code candidates are listed in `AGENTS.md` rather than deleted, because the automated pass that removed them also dropped all 10 `@keyframes` blocks and would have killed the animations.
+
 ## 2026-09-30 — Restore the /bff23/, /bff24/ and /bff2024/ compatibility redirects
 
 - Added compatibility routes for the remaining old edition URLs: `/bff23/` and `/bff24/`, plus the older `/bff2024/` address documented in `docs/context/LEGACY-CONTENT-MIGRATION-QUEUE.md`.
