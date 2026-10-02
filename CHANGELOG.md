@@ -2,6 +2,12 @@
 
 Short, human-readable record of public website changes. One dated entry is required for every source change that affects the website.
 
+## 2026-10-02 — Homepage hero text moves right, clear of the logo
+
+- On screens 1024px and wider, the homepage title, tagline and showtimes now sit on the right half of the blue screen. Before, they printed over the large BFF aperture logo in the background art on the left.
+- The block keeps a right margin so the showtimes stay clear of Mr. Rabbit's camera. Tablet portrait and phone layouts are unchanged.
+- Verified with a local Jekyll build and screenshots at 1919, 1366, 1024 and 390px wide.
+
 ## 2026-09-30 — Fork deploys: styled GitHub Pages and Cloudflare preview links
 
 - The Pages deploy now asks GitHub for the repository's own Pages address before building. Forks such as `Nomishka/bitcoinfilmfest-com-fork` (served at `/bitcoinfilmfest-com-fork/`) load their styles, scripts, and images again instead of showing a plain unstyled page. The main site on `bitcoinfilmfest.com` builds exactly as before.

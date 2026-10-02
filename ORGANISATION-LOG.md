@@ -16,6 +16,13 @@ Entry template:
 
 ---
 
+## 2026-10-02 — Upstream sync and homepage hero moved right
+
+- Who: Claude (agent), asked by Nomishka.
+- Done: Synced the fork with upstream: fork PR 10 merged upstream `main` (CHANGELOG conflict resolved by keeping both sides). Merged the new `main` into every other fork branch except `restore-cloudflare-preview`, which is superseded by `main`. Then, on branch `fix/home-hero-text-right`, moved the homepage hero copy to the right half on screens 1024px and wider so it no longer prints over the aperture logo in the background art (`site/assets/css/cinema-frame.css`).
+- PR: fork pull request from `fix/home-hero-text-right` (see the fork's pull requests).
+- Open / next: Nomishka checks the Cloudflare preview, merges into the fork, then sends the CSS + CHANGELOG change upstream to Tomek (without the fork-only log files).
+
 ## 2026-09-30 — Fork work redone on top of current upstream
 
 - Who: Claude (agent), asked by Nomishka.
