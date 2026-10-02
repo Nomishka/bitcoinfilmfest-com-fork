@@ -2,26 +2,26 @@
 
 This is the builder-safe route inventory for the current Jekyll source. It replaces the older 64/66-route migration estimate, which mixed legacy source URLs with pages that now belong inside the Cinema and Reel hubs.
 
-## Current build counts
+## Current build counts (verified 2026-09-30)
 
-- Generated routes: 101
-- Public/indexable routes: 89
-- Shared core pages: 16
-- Compatibility redirect outputs: 11
-- Film profiles: 20
+- Generated HTML routes: 176
+- Public/indexable routes: 157
+- Shared/core pages: 21 (including this generated sitemap)
+- Compatibility redirect outputs: 16
+- Film profiles: 64
 - Company profiles: 7
-- Newsletter detail pages: 1
-- Reel detail pages: 10
+- Newsletter detail pages: 0
+- Reel detail pages: 30
 - Press room pages: 34 (`/26/press/`, EN/PL hub, info-base and article pages)
 - Press kit page: 1 (`/presskit/`)
-- Builder-only/private route: 1 (`/effect-lab/`, `noindex, nofollow`)
-- Legacy-only routes still requiring a decision: 48 planned rows plus 2 redirect candidates
+- Builder/lab routes excluded from indexing: 2 (`/effect-lab/`, `/lab/seats/`)
+- Legacy-only routes still requiring a decision: 48 planned rows
 
-The generated-route count includes the root route. The public/indexable count excludes `/bff25/` and `/effect-lab/`. The 10 `_chronicle/` files are source notes with `output: false` and produce no routes. The 34 static press-room pages and `/presskit/` are now public outputs copied from the verified local press/branding sources. Private source material is not part of this inventory.
+The generated-route count includes the root route, `/sitemap/`, and the generated `/404.html`; the indexable count excludes all 16 compatibility redirects, both noindex builder/lab pages, and the 404 page. The 10 `_chronicle/` files have `output: false` and produce no routes. Counts were verified against the production-config build on 2026-09-30. The human-readable `/sitemap/` is generated from Jekyll's pages and collections; do not copy counts into its template.
 
 ## Current public routes
 
-### Shared core and compatibility output (16 + 11 redirects)
+### Shared core and compatibility output (21 + 16 redirects)
 
 | Route | Source | State |
 |---|---|---|
@@ -43,23 +43,25 @@ The generated-route count includes the root route. The public/indexable count ex
 | `/presskit/` | `site/presskit/index.html` | implemented, branding book and downloadable logo/laurel assets |
 | `/26/press/` | `site/26/press/index.html` | implemented, restored BFF’26 press room hub |
 | `/thanks/` | `site/thanks.md` | implemented |
-| `/bff25/` | `site/bff25-legacy.md` | compatibility redirect to `/25/`, not a page |
+| `/sitemap/` | `site/sitemap.md` | generated human-readable public route index |
+| `/bff23/`, `/bff24/`, `/bff25/`, `/bff26/`, `/bff2024/` | `site/*-legacy.md` | compatibility redirects to canonical edition pages |
+| 10 migrated Reel legacy routes | `site/legacy-redirects/` | noindex compatibility redirects |
 
-`/bff25/` and the 10 migrated legacy article routes are listed for link compatibility but are not counted as additional public pages. The canonical public page count is now 89, while the generated build has 101 route outputs including 11 redirects, 34 BFF’26 press-room pages, the `/presskit/` branding book, and the private effect lab.
+The 16 compatibility outputs and `/sitemap/` are listed separately so the indexable-page count remains auditable. The 10 `_chronicle/` source notes have `output: false`; they create no routes.
 
 ### Collection routes
 
-- 20 film details under `/cinema/films/<slug>/`, from `site/_films/`.
+- 64 film details under `/cinema/films/<slug>/`, from `site/_films/`.
 - 7 company details under `/cinema/companies/<slug>/`, from `site/_companies/`.
-- 1 newsletter detail under `/newsletters/2024-06-19-summer-2024/`, from `site/_newsletters/`.
-- 10 Reel details under `/reel/<slug>/`, from `site/_reel/`; interviews, guest posts, and the BFF24 event report share this collection.
+- 30 Reel details under `/reel/<slug>/`, from `site/_reel/`; interviews, guest posts, and festival coverage share this collection.
 - 34 BFF’26 press-room pages under `/26/press/`, including the EN/PL hub, info-base, press articles and article stylesheet.
 - 1 standalone `/presskit/` branding book with 14 copied public download assets from the verified local `logos-page` source.
-- 10 legacy article routes redirect to their corresponding Reel detail; these are `noindex, follow` compatibility outputs, not duplicate content pages.
+- 10 legacy article routes redirect to their corresponding Reel detail; five edition aliases and `/webmail/` account for the other six compatibility outputs.
 
-### Builder-only route
+## Builder-only routes
 
 - `/effect-lab/` is a local effect comparison tool. It is deliberately `noindex, nofollow`, should not be promoted in navigation, and must not be treated as public content or a migration target.
+- `/lab/seats/` is a local design/effect experiment. It is `noindex` and excluded from the public sitemap.
 
 ## Legacy reconciliation
 
@@ -91,9 +93,7 @@ These are folds, not permission to copy private notes or recreate campaign micro
 
 ### Redirects
 
-- `/bff25/` -> `/25/` (implemented compatibility redirect; never duplicate the BFF'25 page).
-- `/bff26/` -> `/26/` (legacy alias; use a redirect if the old URL is retained).
-- `/bff2024/` -> `/24/` (legacy alias; use a redirect if the old URL is retained).
+- `/bff25/` -> `/25/`, `/bff26/` -> `/26/`, `/bff2024/` -> `/24/`, `/bff23/` -> `/23/`, and `/bff24/` -> `/24/` (all implemented compatibility redirects; never duplicate the canonical edition page).
 - Legacy individual article, interview, and newsletter URLs should redirect to their Reel entry after migration. Do not create duplicate top-level pages for them.
 
 ## Source boundaries and next step
