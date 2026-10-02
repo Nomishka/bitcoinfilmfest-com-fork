@@ -1,25 +1,25 @@
 {
-  "generated": "2026-09-16",
+  "generated": "2026-09-30",
   "summary": {
-    "generated_routes": 101,
-    "public_indexable_routes": 89,
-    "shared_core_pages": 16,
-    "film_profiles": 20,
+    "generated_routes": 176,
+    "public_indexable_routes": 157,
+    "shared_core_pages": 21,
+    "film_profiles": 64,
     "company_profiles": 7,
-    "newsletter_pages": 1,
-    "reel_pages": 10,
+    "newsletter_pages": 0,
+    "reel_pages": 30,
     "press_room_pages": 34,
     "presskit_pages": 1,
-    "compatibility_redirects": 11,
-    "builder_only_routes": 1,
+    "compatibility_redirects": 16,
+    "builder_only_routes": 2,
     "legacy_planned_rows": 48,
-    "legacy_redirect_candidates": 2,
+    "legacy_redirect_candidates": 0,
     "excluded_or_separate": 4
   },
   "count_notes": [
-    "Generated routes = 16 shared core pages + 11 compatibility redirects + 20 film profiles + 7 company profiles + 1 newsletter + 10 Reel entries + 34 BFF’26 press-room pages + 1 presskit + 1 builder-only effect lab.",
-    "Public/indexable routes exclude all 11 compatibility redirects and /effect-lab/, so 16 + 20 + 7 + 1 + 10 + 34 + 1 = 89.",
-    "The 10 _chronicle files have output: false and create no routes."
+    "Generated routes = 21 shared/core pages (including this site map) + 16 compatibility outputs + 64 film profiles + 7 company profiles + 30 Reel entries + 34 press-room pages + 1 presskit + 2 noindex builder/lab pages + 1 generated 404 page.",
+    "Public/indexable routes = the 157 public routes above; excludes 16 noindex compatibility redirects, /effect-lab/, /lab/seats/, and the generated /404.html error page.",
+    "The 10 _chronicle files have output: false and create no routes; there is no newsletter collection in the current build. Counts were checked against the 2026-09-30 production-config build."
   ],
   "categories": [
     {
@@ -42,22 +42,28 @@
         {"route": "/join/", "title": "Contribute", "source": "site/join.md", "status": "implemented"},
         {"route": "/reel/", "title": "Reel", "source": "site/reel.md", "status": "implemented"},
         {"route": "/sponsor/", "title": "Become a Friend", "source": "site/sponsor.md", "status": "implemented", "note": "Stub page; linked only from existing /26/ Friends CTAs, not from primary nav."},
-        {"route": "/thanks/", "title": "Thanks", "source": "site/thanks.md", "status": "implemented"}
+        {"route": "/thanks/", "title": "Thanks", "source": "site/thanks.md", "status": "implemented"},
+        {"route": "/sitemap/", "title": "Site map", "source": "site/sitemap.md", "status": "implemented", "note": "Generated from Jekyll pages and collections; linked only from the footer."}
       ]
     },
     {
       "name": "Compatibility",
       "status": "current",
       "pages": [
+        {"route": "/bff23/", "title": "BFF’23 legacy route", "source": "site/bff23-legacy.md", "status": "redirect", "target": "/23/"},
+        {"route": "/bff24/", "title": "BFF’24 legacy route", "source": "site/bff24-legacy.md", "status": "redirect", "target": "/24/"},
         {"route": "/bff25/", "title": "BFF’25 archive route moved", "source": "site/bff25-legacy.md", "status": "redirect", "target": "/25/", "note": "Compatibility redirect only; never a duplicate page."},
-        {"route": "10 legacy article routes", "title": "Migrated Reel legacy routes", "source": "site/legacy-redirects/", "status": "redirect", "count": 10, "note": "Noindex compatibility redirects only; never duplicate Reel entries."}
+        {"route": "/bff26/", "title": "BFF’26 legacy route", "source": "site/bff26-legacy.md", "status": "redirect", "target": "/26/"},
+        {"route": "/bff2024/", "title": "BFF’24 legacy route", "source": "site/bff2024-legacy.md", "status": "redirect", "target": "/24/"},
+        {"route": "10 legacy article routes", "title": "Migrated Reel legacy routes", "source": "site/legacy-redirects/", "status": "redirect", "count": 10, "note": "Noindex compatibility redirects only; never duplicate Reel entries."},
+        {"route": "/webmail/", "title": "Webmail redirect", "source": "site/", "status": "redirect", "note": "Compatibility route; noindex."}
       ]
     },
     {
       "name": "Cinema profiles",
       "status": "current",
       "pages": [
-        {"route": "/cinema/films/<slug>/", "title": "20 film profiles", "source": "site/_films/", "status": "implemented", "count": 20},
+        {"route": "/cinema/films/<slug>/", "title": "64 film profiles", "source": "site/_films/", "status": "implemented", "count": 64},
         {"route": "/cinema/companies/<slug>/", "title": "7 company profiles", "source": "site/_companies/", "status": "implemented", "count": 7}
       ]
     },
@@ -65,8 +71,7 @@
       "name": "Reel and newsletters",
       "status": "current",
       "pages": [
-        {"route": "/reel/<slug>/", "title": "10 public-safe Reel entries", "source": "site/_reel/", "status": "implemented", "count": 10},
-        {"route": "/newsletters/2024-06-19-summer-2024/", "title": "Bitcoin Cinema Digest: Summer 2024", "source": "site/_newsletters/2024-06-19-summer-2024.md", "status": "implemented"}
+        {"route": "/reel/<slug>/", "title": "30 public Reel entries", "source": "site/_reel/", "status": "implemented", "count": 30}
       ]
     },
     {
@@ -90,7 +95,7 @@
     "fold_into_existing_hubs_or_editions": [
       {"routes": ["/bff24-event-coverage-bitesize-media-may-2024/", "/bff24-official-selection-freedom-themed-films/"], "destination": "/24/ or /reel/<slug>/", "action": "fold or migrate as a Reel entry"},
       {"routes": ["/26/laurels/"], "destination": "/presskit/", "action": "fold"},
-      {"routes": ["/festival-flashbacks/", "/bff-rabits/", "/press-and-media/"], "destination": "/26/press/ and /presskit/", "action": "restored press room and branding book"},
+      {"routes": ["/festival-flashbacks/", "/bff-rabits/", "/press-and-media/"], "destination": "/reel/ archive, /26/press/ and /presskit/", "action": "folded archive / restored press room and branding book"},
       {"routes": ["/cinema-digest-monthly-content/", "/cinematic-hub/", "/blog/", "/cinema-digest/", "/bff-interviews/"], "destination": "/cinema/ and /reel/", "action": "hub concepts, not duplicate collections"},
       {"routes": ["/part-one-official-selection-feature-films-at-bff25/", "/part-two-official-selection-experimental-shorts-at-bff25/"], "destination": "/25/", "action": "fold"},
       {"routes": ["/wall/", "/qr/", "/linktree/", "/bitcoin-filmfest-2024-european-halving-party-🐇/", "/european-halving-party-thankyou/", "/europeanhalvingparty/"], "destination": "/24/", "action": "fold or redirect"},
