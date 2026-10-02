@@ -5,6 +5,12 @@ Updated: 2026-09-19
 
 Work also happens in the fork `Nomishka/bitcoinfilmfest-com-fork`. Agents follow `CLAUDE.md`: changes go through PRs into the fork's `main`, every session ends with an `ORGANISATION-LOG.md` entry and a handoff update, and Nomishka sends merged work upstream using `docs/GITHUB-GUIDE-NOMISHKA.md`.
 
+## Fork status (2026-10-02)
+
+- Fork `main` synced with upstream through fork PR 10 (CHANGELOG conflict: both sides kept). All active fork branches were updated from it; `restore-cloudflare-preview` is superseded by `main`.
+- Open: fork PR 11 (`fix/home-hero-text-right`) moves the homepage hero copy to the right half on screens 1024px+ so it no longer covers the aperture mark in the background art. Only its CSS + CHANGELOG commit should go upstream.
+- Cloudflare preview builds sometimes do not start for a push (no `Workers Builds` check appears on the commit). Settings were checked and allow every branch; a new push triggers a build.
+
 ## Cross-project architecture
 
 The website is a curated public projection of the wider private project knowledge base in `C:\Users\Lenovo\OneDrive\Bitcoin FilmFest\Claude news\`. The CRM remains split across its existing local files and spreadsheets for now. Do not import the private KB or CRM into the Jekyll build. Read `PLAN-WEBSITE-ROADMAP.md` and `C:\Users\Lenovo\OneDrive\Bitcoin FilmFest\Claude news\HANDOFF-TO-VERIFIER-2026-08-31.md` before reorganizing or adding broad content.
