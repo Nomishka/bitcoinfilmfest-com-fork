@@ -28,7 +28,7 @@ For journalists, filmmakers and partners: [open the Bitcoin FilmFest press kit](
 
 ## ⭐ Bitcoin Film First
 
-The project made its debut in March 2023 by running the world's first large-scale Bitcoin Film Festival (aka BFF) in Warsaw, the capital of Poland. Its [success led to more events](/press-and-media/), known as 'BFF minis', held in Lisbon, Lugano, San Salvador, Cape Town, Funchal, and Maribor, bringing a cinematic touch to renowned conferences. The [second annual edition](/festival-flashbacks/), linked to the halving celebrations, took place in April 2024, combining screenings with numerous side events and transforming Warsaw into the capital of Bitcoin culture.
+The project made its debut in March 2023 by running the world's first large-scale Bitcoin Film Festival (aka BFF) in Warsaw, the capital of Poland. Its [success led to more events](/press-and-media/), known as 'BFF minis', held in Lisbon, Lugano, San Salvador, Cape Town, Funchal, and Maribor, bringing a cinematic touch to renowned conferences. The [second annual edition](/24/), linked to the halving celebrations, took place in April 2024, combining screenings with numerous side events and transforming Warsaw into the capital of Bitcoin culture.
 
 ## From Red to Orange 🏰
 
