@@ -8,6 +8,41 @@ Short, human-readable record of public website changes. One dated entry is requi
 - Added `wrangler.jsonc` and `scripts/cloudflare-build.sh` so Cloudflare Workers Builds can publish a preview link for every branch of the fork. GitHub Pages remains the production site.
 - Added agent rules (`CLAUDE.md`), an organisation log, and a GitHub guide for the fork workflow.
 
+## 2026-09-30 — Style the missing-page route
+
+- Replaced the bare 404 with a missing-frame page using the shared BFF cinema layout and paper-screen treatment.
+- Added links to the lobby, Cinema hub and BFF’27, and kept the error page out of search results.
+- Verified the generated page, Jekyll build, public-repository safety scan and Python tests.
+
+## 2026-09-30 — Fix the newsletter redirect, 12 dead links and the unclickable "All films" link, add Movie structured data
+
+- The newsletter form no longer sends new subscribers to the temporary GitHub Pages preview. Its `_next` value now uses the site URL helper, so it resolves to `/thanks/` on whichever domain the build targets.
+- Fixed eleven dead `Read more →` links on `/reel/`. `_chronicle` entries carry their destination in front matter, but the Reel template read `entry.url` — a field Jekyll reserves for the document's own route, which shadows front matter and is never written because the collection has `output: false`. The key is now `link:` and the template reads it.
+- Fixed the dead "second annual edition" link on `/about/`, which pointed at `/festival-flashbacks/`, a legacy route that was never built.
+- Fixed the `← All films` back link, which was unclickable on the 38 film profiles that show a poster hero. The hero pulls itself up under the fixed navigation with a negative top margin, which assumes it is the first thing in the content flow — true on `/cinema/`, but on a film profile the back link sits above it, so the pull-up covered the link's descenders and swallowed every click aimed at it. The pull-up is now scoped to exclude film profiles; `/cinema/` renders pixel-identically.
+- Every film profile now publishes `Movie` structured data — name, description, poster, year, runtime, director, cast, studio, country and (for documentaries) genre. The fields were already in the film records.
+- Film profiles now use `og:type: video.movie` instead of `website`, share their own poster instead of the generic festival card, and no longer claim a 1200x630 image size for a portrait poster.
+- Reel entries now use `og:type: article`.
+
+### Housekeeping in the same pass
+
+- Added a generated `/sitemap/` route linked from the footer, not primary navigation. Current routes come from Jekyll pages and collections; redirect aliases and legacy migrations are listed separately. Updated route inventory counts against the production-config build (176 HTML outputs, 157 indexable public routes).
+- Added `AGENTS.md` at the repo root: where things live, the build and gate commands, the four traps that have already caused shipped bugs (the `entry.url` shadow, the `.cinema-hero` pull-up, the duplicated `.cinema-hero` block, `_films/` not declaring `layout:`), the pixel-diff verification method, and a map of which unused-looking CSS is deliberately reserved rather than dead.
+- Commented the non-obvious decisions in place: why the newsletter `_next` must be `absolute_url`, why the Reel template reads `entry.link`, which of the two `.cinema-hero` blocks actually wins, which film records get the poster hero, and how the route index is generated.
+- Audited all 1061 CSS rules against every markup, template and JS file. Found 62 rules referencing classes that appear nowhere. Most are reserved for planned or documented pages and were left alone and labelled; the genuine dead-code candidates are listed in `AGENTS.md` rather than deleted, because the automated pass that removed them also dropped all 10 `@keyframes` blocks and would have killed the animations.
+
+## 2026-09-30 — Restore the /bff23/, /bff24/ and /bff2024/ compatibility redirects
+
+- Added compatibility routes for the remaining old edition URLs: `/bff23/` and `/bff24/`, plus the older `/bff2024/` address documented in `docs/context/LEGACY-CONTENT-MIGRATION-QUEUE.md`.
+- Each one is `robots: noindex, follow` and `sitemap: false`, like the existing `/bff25/` and `/bff26/` routes.
+- Verified in a local Jekyll build that every stub emits a canonical link and a meta refresh to its `/23/`, `/24/` or `/26/` archive, and that none of them appears in `sitemap.xml`.
+
+## 2026-09-30 — Restore the /bff26/ compatibility redirect
+
+- Added the missing `/bff26/` compatibility route, so the old BFF'26 URL now redirects to the canonical `/26/` recap instead of a 404. `/bff25/` already did this.
+- The route is `robots: noindex, follow` and `sitemap: false`, matching `/bff25/` and the other legacy routes.
+- Verified with a local Jekyll build that the generated `/bff26/index.html` carries `<link rel="canonical" href="https://bitcoinfilmfest.com/26/">` and the `meta http-equiv="refresh"` to `/26/`.
+
 ## 2026-09-28 — Replace the seat image with 3D cinema seats on every page
 
 - Every page now has three solid rows of CSS cinema seats in perspective. As you scroll you walk slowly toward the screen; rows you pass slide out under the bottom edge, and the room turns slightly with the mouse.
