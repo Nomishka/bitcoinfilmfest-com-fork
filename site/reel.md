@@ -26,6 +26,12 @@ screen: paper
     <p class="reel-lede">Short, dated notes on films, festivals, and the people making them — each one links out to where we found it.</p>
 
     {% assign chronicle_entries = site.chronicle | sort: 'date' | reverse %}
+    {% comment %}
+      `entry.link`, not `entry.url`: Jekyll reserves `url` on a collection document for
+      the document's own generated route, which shadows the front-matter `url:` key.
+      Because `_chronicle` has `output: false`, that route is never written and every
+      link would 404. See CHANGELOG 2026-09-30.
+    {% endcomment %}
     {% if chronicle_entries.size > 0 %}
       <ol class="chronicle">
         {% for entry in chronicle_entries %}
@@ -36,7 +42,7 @@ screen: paper
             </div>
             <div class="chronicle-body">
               {{ entry.content }}
-              {% if entry.url %}<p><a href="{{ entry.url }}" target="_blank" rel="noopener noreferrer">Read more →</a></p>{% endif %}
+              {% if entry.link %}<p><a href="{{ entry.link }}" target="_blank" rel="noopener noreferrer">Read more →</a></p>{% endif %}
             </div>
           </li>
         {% endfor %}
