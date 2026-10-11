@@ -2,6 +2,10 @@
 
 Short, human-readable record of public website changes. One dated entry is required for every source change that affects the website.
 
+## 2026-10-11 — IndexNow key file
+
+- Added the IndexNow verification key file at the site root so new and updated pages can be submitted to Bing and other participating search engines. No visible page changes.
+
 ## 2026-10-09 — Press kit current-edition assets only
 
 - Replaced the visible BFF’26 blue laurel with a 2027 version and made 2027 award-laurel file names/card labels explicit. Added a sponsor-free vertical BFF’27 poster alongside the horizontal one.
