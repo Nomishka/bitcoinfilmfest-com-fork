@@ -2,6 +2,60 @@
 
 Short, human-readable record of public website changes. One dated entry is required for every source change that affects the website.
 
+## 2026-10-11 — IndexNow key file
+
+- Added the IndexNow verification key file at the site root so new and updated pages can be submitted to Bing and other participating search engines. No visible page changes.
+
+## 2026-10-09 — Press kit current-edition assets only
+
+- Replaced the visible BFF’26 blue laurel with a 2027 version and made 2027 award-laurel file names/card labels explicit. Added a sponsor-free vertical BFF’27 poster alongside the horizontal one.
+- Hid BFF’26 event/selection laurels and posters from the current `/presskit/` index; the original BFF’26 poster files remain available for existing BFF’26 press-room links. The current press kit brand heading stays year-neutral.
+
+## 2026-10-09 — BFF'27 social artwork and press kit
+
+- Created BFF'27 poster artwork from the existing BFF'26 horizontal poster, changing the year and dates to June 24–27, 2027, and created a 1200×630 OG/social card. Updated the BFF'27 page, site-wide default social image and explicit BFF'26 preview image so edition shares use the correct edition.
+- Added matching 2027 event and Official Selection laurels, carrying forward the original laurel artwork with the year updated.
+- Expanded partner logo choices with the original wordmark PNG/SVG and blue-outline icon. Updated the press kit to make logos, laurels, posters and rabbit distinct, and explain that laurels are only for films selected or awarded at BFF; partners may choose the logo version that suits their layout.
+- Added BFF'27 poster and laurels cards, and updated the press-kit social preview, edition header and footer.
+
+## 2026-10-09 — Press kit: logos, laurels, posters and rabbit
+
+- Reorganised `/presskit/` into Logos, Laurels, Posters, Rabbit, and Colors & Type, with a jump menu at the top.
+- Moved the blue BFF’26 square (`bff26-minilogo.png`, now `bff26-laurels-blue.png`) into Laurels. Posters and the rabbit mascot now have their own sections instead of sitting under Logos.
+- Added the gradient icon and wordmark logos and a vector icon (SVG), the general white laurels, the four BFF’26 award laurels (web size), the five BFF’24 archive laurels, a sponsor-free BFF’26 poster, the BFF’24 poster, and the rabbit mark, ears and roadshow-car artwork.
+
+## 2026-10-09 — Press kit shortcuts and 404 redirect
+
+- Added `/logo/`, `/logos/`, `/laurels/`, `/26/logo/`, `/26/logos/` and `/26/laurels/` as noindex redirects to `/presskit/`. They are excluded from the sitemap.
+- The custom 404 page now shows a short countdown and sends visitors to the home page after 8 seconds. The link choices stay visible, and the script loads only on that page.
+
+## 2026-10-05 — GoatCounter analytics
+
+- Added the GoatCounter privacy-friendly analytics snippet to the shared cinema layout (`_layouts/default.html`), so every page reports to `bitcoinfilmfest.goatcounter.com`. Cookieless, ~3.5 KB, loads asynchronously before `</body>`.
+
+## 2026-10-04 — BFF’26 presented-title count (local draft)
+
+- Replaced the aggregate “16 films screened” claim on `/26/` and the BFF’26 recap statistics on `/27/` with “18 titles presented”. Clarified that the titles were at different stages of development, including concepts.
+- Preserved all 18 named recap titles. No individual title was assigned a completion stage or a new screening claim.
+- Added a regression test for the 18 unique titles and the distinction between presentations and finished-film screenings. These changes remain local; no publication is implied.
+
+## 2026-10-04 — BFF’27 gallery caption containment and contrast
+
+- Constrained the photo rail to the cinema screen instead of the viewport. The old viewport-wide rail put caption letters outside `.screen-canvas` and they were clipped on phones and desktops.
+- Switched the hero caption and section numbers to dark ink on blue, and the archive explanation to paper on black. The targeted small-text checks now meet 4.5:1 contrast.
+- Added `scripts/check_bff27_readability_browser.py`: optional Playwright checks all caption characters against clipping ancestors, checks small-text contrast, and covers nine widths from 320 to 1920 px. Requires Playwright plus Chromium; accepts a generated site directory or HTTP origin.
+- Page content, festival facts, shared cinema framing, and other edition pages are unchanged.
+
+## 2026-10-04 — Homepage rabbit fix, BFF’27 landing page, mobile touch-target pass
+
+- Homepage: below 64rem Mr. Rabbit used to sit on top of the Enter / Rewind / Join rows. He is now smaller and tucked into the bottom corner of the hero, which has matching bottom padding. Verified with a bounding-box sweep from 320 to 1920 px: no overlap with any text, no horizontal scroll.
+- `/27/` rebuilt as a landing page in the BFF’26 / BFF’25 style: hero with a disabled “Tickets coming soon” button and a “Tell me first” email link, what is BFF, BFF’26 in numbers, what to expect, the four-day rhythm (Thursday opening party, Friday films and panels, Saturday films, workshops and side events, Sunday gala, awards and goodbye party), a tickets block, the film call, collaboration links, BFF’26 friends logos, photo rail and a FAQ. Venue reads “Kinoteka, Warsaw”. The page says plainly that the programme is not announced and the four days follow the BFF’26 rhythm.
+- The two ticket placeholders are marked in a comment at the top of `site/27.md`; swap them for a link when the ticket URL exists.
+- `check_bff27_page.py` and `test_bff27_page.py` now assert the landing-page contract (ticket placeholder, venue, day headings) instead of the old early-bird wording.
+- Mobile pass (≤ 40rem): standalone text links on the homepage, edition pages, Reel tabs, back links, sources, contact and sitemap now have a 44 px touch target; the smallest BFF’26 and BFF’25 labels are lifted to 12 px.
+- Press kit and `/26/press/` (36 pages, EN and PL): removed the stale “Tickets” and “Get a ticket” header and footer links; BFF’26 is over.
+- `/26/` is unchanged on purpose.
+
 ## 2026-10-02 — Homepage hero text moves right, clear of the logo
 
 - On screens 1024px and wider, the homepage title, tagline and showtimes now sit on the right half of the blue screen. Before, they printed over the large BFF aperture logo in the background art on the left.
